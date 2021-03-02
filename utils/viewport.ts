@@ -37,7 +37,7 @@ export const updateWorld = (pixels: Pixel[]) => {
   if (spriteCache) {
     viewport.removeChild(spriteCache);
   }
-  console.log("here", viewport.children.length);
+
   spriteCache = viewport.addChildAt(new PIXI.Sprite(mainTexture), 0);
   spriteCache.width = SIZE;
   spriteCache.height = SIZE;
@@ -50,7 +50,7 @@ export const updateBorderLine = (pixels: Pixel[]) => {
     return;
   }
   const { max, min } = getMaxMinPoints(pixels);
-  console.log("maxMin", { max, min });
+
   borderLine = new PIXI.Graphics();
   borderLine.lineStyle(0.1, 0xd5402b, 1);
   borderLine.moveTo(min[0], min[1]);

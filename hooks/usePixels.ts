@@ -30,7 +30,7 @@ export const usePixels = (web3Contract: Web3Contract) => {
 
   const getPixels = async (instance: Contract) => {
     const p = await instance.methods.getPixels().call();
-    console.log("p", p);
+
     setPixels(
       p.map(
         ({
@@ -68,14 +68,13 @@ export const usePixels = (web3Contract: Web3Contract) => {
         creatorId: 0,
       }));
       const transaction = await contract.methods.create(valsToSend);
-      console.log({ transaction, accounts });
+
       transaction.send({
         from: accounts[0],
         value: web3.utils.toWei(".01", "ether"),
       });
       getPixels(contract);
     } else {
-      console.error(`There is no contact or web3`, { contract, web3 });
     }
   };
 

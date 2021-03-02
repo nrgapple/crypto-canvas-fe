@@ -26,8 +26,6 @@ const HomePage = () => {
     await updatePixels();
   };
 
-  console.log(pixels);
-
   return (
     <Layout title="Crypto Canvas">
       <div
