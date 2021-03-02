@@ -10,7 +10,6 @@ import { Bid, Pixel } from "../interfaces";
 import PixelToken from "../contracts/PixelToken.json";
 import { AbiItem } from "web3-utils";
 import { ethers } from "ethers";
-
 import getWeb3 from "../utils/getWeb3";
 import dynamic from "next/dynamic";
 
@@ -99,6 +98,7 @@ const IndexPage = () => {
 
   const handleBid = async () => {
     if (contract && web3) {
+      console.log("accouonts", accounts);
       await contract.methods.placeBid(0).send({
         from: accounts[0],
         value: web3.utils.toWei(".2", "ether"),
@@ -137,7 +137,7 @@ const IndexPage = () => {
   }
 
   return (
-    <Layout title="Home | Next.js + TypeScript Example">
+    <Layout title="Crypto Canvas">
       <div
         style={{
           display: "flex",
