@@ -33,11 +33,23 @@ export const usePixels = (web3Contract: Web3Contract) => {
     console.log("p", p);
     setPixels(
       p.map(
-        ({ x, y, hexColor }: { x: string; y: string; hexColor: string }) => ({
-          x: parseInt(x),
-          y: parseInt(y),
+        ({
+          x,
+          y,
           hexColor,
-        })
+          owner,
+        }: {
+          x: string;
+          y: string;
+          hexColor: string;
+          owner: string;
+        }) =>
+          ({
+            x: parseInt(x),
+            y: parseInt(y),
+            hexColor,
+            owner,
+          } as Pixel)
       )
     );
   };

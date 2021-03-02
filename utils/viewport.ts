@@ -10,6 +10,7 @@ export const displayScreen = (el: Element) => {
   app.renderer.backgroundColor = 0xeeeeee;
   // activate plugins
   viewport.drag().pinch().wheel().decelerate().fitWorld();
+  return app.view;
 };
 
 let spriteCache: PIXI.Sprite | undefined = undefined;

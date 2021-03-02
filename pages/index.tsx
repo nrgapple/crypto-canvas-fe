@@ -26,7 +26,7 @@ const HomePage = () => {
     await updatePixels();
   };
 
-  console.log(web3Contract);
+  console.log(pixels);
 
   return (
     <Layout title="Crypto Canvas">
