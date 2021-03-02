@@ -38,17 +38,20 @@ export const usePixels = (web3Contract: Web3Contract) => {
           y,
           hexColor,
           owner,
+          creatorId,
         }: {
           x: string;
           y: string;
           hexColor: string;
           owner: string;
+          creatorId: number;
         }) =>
           ({
             x: parseInt(x),
             y: parseInt(y),
             hexColor,
             owner,
+            creatorId,
           } as Pixel)
       )
     );

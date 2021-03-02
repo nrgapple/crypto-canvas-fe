@@ -1,10 +1,19 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { Pixel } from "../interfaces";
-import { currentColorState, isEditState, selectedPixelsState } from "../state";
+import {
+  currentColorState,
+  isEditState,
+  selectedPixelsState,
+  worldError,
+} from "../state";
 
-import { app, SIZE, viewport } from "../utils/index";
-import { displayScreen, updateWorld } from "../utils/viewport";
+import { app, checkIsRect, SIZE, viewport } from "../utils/index";
+import {
+  displayScreen,
+  updateBorderLine,
+  updateWorld,
+} from "../utils/viewport";
 //@ts-ignore
 import MouseTooltip from "react-sticky-mouse-tooltip";
 import useMouse from "@react-hook/mouse-position";
@@ -27,6 +36,13 @@ const World = ({ pixels }: Props) => {
   const mouse = useMouse(canvasRef, {
     fps: 10,
   });
+  const setWorldError = useSetRecoilState(worldError);
+
+  const checkForErrors = () => {
+    setWorldError(
+      !checkIsRect(selectedPixels) ? "Must be a closed rectangle of pixels" : ""
+    );
+  };
 
   const handleClickedEdit = useCallback(
     (el) => {
@@ -81,8 +97,8 @@ const World = ({ pixels }: Props) => {
     viewport.screenHeight = worldRef.current!.offsetHeight;
     viewport.clamp({ direction: "all" });
     viewport.clampZoom({
-      maxHeight: SIZE + SIZE * 0.5,
-      maxWidth: SIZE + SIZE * 0.5,
+      maxHeight: SIZE + SIZE * 1,
+      maxWidth: SIZE + SIZE * 1,
       minHeight: 5,
       minWidth: 5,
     });
@@ -91,22 +107,25 @@ const World = ({ pixels }: Props) => {
   }, []);
 
   useEffect(() => {
-    console.log(currPixels);
-
     updateWorld(currPixels);
   }, [currPixels]);
 
   useEffect(() => {
     if (!isEdit) {
       setCurrPixels(pixels);
+      updateBorderLine([]);
     } else {
       setCurrPixels([...pixels, ...selectedPixels]);
+      updateBorderLine(selectedPixels);
+      checkForErrors();
     }
   }, [isEdit]);
 
   useEffect(() => {
     if (isEdit) {
       setCurrPixels([...pixels, ...selectedPixels]);
+      updateBorderLine(selectedPixels);
+      checkForErrors();
     }
   }, [selectedPixels]);
 
@@ -124,7 +143,14 @@ const World = ({ pixels }: Props) => {
         ref={worldRef}
         className="world"
       ></div>
-      <MouseTooltip visible={overPixel != undefined} offsetX={15} offsetY={10}>
+      <MouseTooltip
+        visible={overPixel != undefined}
+        offsetX={15}
+        offsetY={10}
+        style={{
+          zIndex: "1000",
+        }}
+      >
         <div
           style={{
             background: overPixel?.hexColor,
@@ -133,30 +159,19 @@ const World = ({ pixels }: Props) => {
         >
           <div
             style={{
-              display: "flex",
-              flexDirection: "column",
+              display: "grid",
+              gridTemplateColumns: "auto auto",
+              gap: "2px",
               background: "#fff",
               margin: "2px",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                padding: "8px",
-              }}
-            >
-              <div>Owner: </div>
-              <div>{overPixel?.owner}</div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                padding: "8px",
-              }}
-            >
-              <div>Point: </div>
-              <div>{`{${overPixel?.x}, ${overPixel?.y}}`}</div>
-            </div>
+            <div>Owner: </div>
+            <div>{overPixel?.owner}</div>
+            <div>Image Id: </div>
+            <div>{overPixel?.creatorId}</div>
+            <div>Point: </div>
+            <div>{`{${overPixel?.x}, ${overPixel?.y}}`}</div>
           </div>
         </div>
       </MouseTooltip>

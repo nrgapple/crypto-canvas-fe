@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ChromePicker } from "react-color";
-import { useRecoilState } from "recoil";
-import { currentColorState, selectedPixelsState } from "../state";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { currentColorState, selectedPixelsState, worldError } from "../state";
 import { Button, Modal, ModalFooter, ModalBody } from "reactstrap";
 import { Pixel } from "../interfaces";
 
@@ -21,6 +21,7 @@ export default ({ onCheckout }: Props) => {
     toggleClearModal();
   };
   const toggleClearModal = () => setShowClearModal(!showClearModal);
+  const error = useRecoilValue(worldError);
 
   return (
     <div
@@ -44,6 +45,18 @@ export default ({ onCheckout }: Props) => {
         <div>Selected Pixels</div>
         <div>{selectedPixels.length}</div>
       </div>
+      {error && (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <div>Error</div>
+          <div>{error}</div>
+        </div>
+      )}
       <ChromePicker
         color={currentColor}
         onChange={(color) => setCurrentColor(color.hex)}

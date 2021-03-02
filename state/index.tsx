@@ -18,3 +18,8 @@ export const isEditState = atom({
   key: "is-edit",
   default: false,
 });
+
+export const worldError = atom({
+  key: "world-error",
+  default: "",
+});

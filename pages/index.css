@@ -12,3 +12,7 @@ body {
   flex-direction: column;
   height: 100vh;
 }
+
+.chrome-picker {
+  box-shadow: none !important;
+}
