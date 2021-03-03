@@ -2,12 +2,13 @@ import React from "react";
 import Layout from "../components/Layout";
 import { Button, Fade } from "reactstrap";
 import SidePanel from "../components/SidePanel";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { isEditState, selectedPixelsState } from "../state";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { isEditState, selectedBlockState, selectedPixelsState } from "../state";
 import dynamic from "next/dynamic";
 import { useWeb3 } from "../hooks/useWeb3";
 import { usePixels } from "../hooks/usePixels";
 import { Pixel } from "../interfaces";
+import BlockDetailPanel from "../components/BlockDetailPanel";
 
 const World = dynamic(() => import("../components/World"), {
   ssr: false,
@@ -18,6 +19,7 @@ const HomePage = () => {
   const { pixels, update: updatePixels, checkout } = usePixels(web3Contract);
   const [isEdit, setIsEdit] = useRecoilState(isEditState);
   const setSelectedPixels = useSetRecoilState(selectedPixelsState);
+  const selectedBlock = useRecoilValue(selectedBlockState);
 
   const handleCheckout = async (selected: Pixel[]) => {
     await checkout(selected);
@@ -72,6 +74,9 @@ const HomePage = () => {
             }}
           >
             <World pixels={pixels} />
+            {!isEdit && selectedBlock && (
+              <BlockDetailPanel pixels={pixels} web3Contract={web3Contract} />
+            )}
             {isEdit && <SidePanel onCheckout={handleCheckout} />}
           </div>
         </Fade>

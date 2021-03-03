@@ -1,15 +1,20 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Bid, Web3Contract } from "../interfaces";
 import { Contract } from "web3-eth-contract";
 
 interface UseBidsReturn {
+  loading: boolean;
   bids: Bid[];
   update: () => void;
-  placeBid: () => void;
+  placeBid: (amount: number) => Promise<void>;
 }
 
-export const useBids = (web3Contract: Web3Contract) => {
+export const useBids = (
+  web3Contract: Web3Contract,
+  blockId: number | undefined
+) => {
   const [bids, setBids] = useState<Bid[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const { contract, web3, accounts } = useMemo(
     () =>
@@ -22,38 +27,47 @@ export const useBids = (web3Contract: Web3Contract) => {
   );
 
   useEffect(() => {
-    if (contract) {
-      getBids(contract);
-    }
-  }, [contract]);
+    update();
+  }, [contract, blockId]);
 
-  const getBids = async (instance: Contract) => {
-    const b = await instance.methods.getBids().call();
-    setBids(
-      b.map(
-        ({ fromAddress, amount }: { fromAddress: string; amount: number }) => ({
+  const getBids = async (instance: Contract, blockId: number) => {
+    setLoading(true);
+    const b = await instance.methods.getBids(blockId).call();
+    const newBids = b.map(
+      ({ fromAddress, amount }: { fromAddress: string; amount: string }) =>
+        ({
           from: fromAddress,
-          amount: amount,
-        })
-      )
+          amount: parseFloat(web3.utils.fromWei(amount)),
+        } as Bid)
     );
+
+    console.log("bids", newBids);
+    setBids(newBids);
+    setLoading(false);
   };
 
-  const handleBid = async () => {
-    if (contract && accounts && web3) {
-      console.log("accouonts", accounts);
-      await contract.methods.placeBid(0).send({
-        from: accounts[0],
-        value: web3.utils.toWei(".2", "ether"),
-      });
-    } else {
-      console.error(`There is no contact or web3`, { contract, web3 });
-    }
-  };
+  const handleBid = useCallback(
+    async (amount: number) => {
+      if (contract && accounts && web3) {
+        console.log("accouonts", accounts);
+        await contract.methods.placeBid(blockId).send({
+          from: accounts[0],
+          value: web3.utils.toWei(amount.toString(), "ether"),
+        });
+      } else {
+        console.error(`There is no contact or web3`, { contract, web3 });
+      }
+    },
+    [blockId]
+  );
 
   const update = () => {
-    getBids(contract);
+    if (contract && blockId) {
+      getBids(contract, blockId);
+    } else {
+      setBids([]);
+    }
   };
 
-  return { bids, update, placeBid: handleBid } as UseBidsReturn;
+  return { bids, update, placeBid: handleBid, loading } as UseBidsReturn;
 };

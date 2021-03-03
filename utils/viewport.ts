@@ -2,6 +2,8 @@ import { app, getMaxMinPoints, SIZE, viewport } from "./index";
 import * as PIXI from "pixi.js";
 import hexRgb from "hex-rgb";
 import { Pixel } from "../interfaces";
+//@ts-ignore
+import avgColor from "@bencevans/color-array-average";
 
 export const displayScreen = (el: Element) => {
   el.appendChild(app.view);
@@ -14,7 +16,6 @@ export const displayScreen = (el: Element) => {
 };
 
 let spriteCache: PIXI.Sprite | undefined = undefined;
-let borderLine: PIXI.Graphics | undefined = undefined;
 
 export const updateWorld = (pixels: Pixel[]) => {
   let buffer = new Uint8Array(SIZE * SIZE * 4);
@@ -44,19 +45,68 @@ export const updateWorld = (pixels: Pixel[]) => {
   spriteCache.position.set(0, 0);
 };
 
+export const updateSelectedBlockLine = (pixels: Pixel[]) => {
+  updateLine(pixels, "selected-block-line");
+};
+
+export const updateBlockLine = (pixels: Pixel[]) => {
+  updateLine(pixels, "block-line");
+};
+
 export const updateBorderLine = (pixels: Pixel[]) => {
-  viewport.removeChild(borderLine!);
+  updateLine(pixels, "border-line");
+};
+
+export const updateLine = (pixels: Pixel[], name: string) => {
+  viewport.removeChild(viewport.getChildByName(name));
   if (pixels.length < 1) {
     return;
   }
   const { max, min } = getMaxMinPoints(pixels);
 
-  borderLine = new PIXI.Graphics();
-  borderLine.lineStyle(0.1, 0xd5402b, 1);
-  borderLine.moveTo(min[0], min[1]);
-  borderLine.lineTo(max[0] + 1, min[1]);
-  borderLine.lineTo(max[0] + 1, max[1] + 1);
-  borderLine.lineTo(min[0], max[1] + 1);
-  borderLine.lineTo(min[0], min[1]);
-  viewport.addChildAt(borderLine, 0);
+  console.log(pixels);
+  const color = invertColor(avgColor(pixels.map((x) => x.hexColor)), false);
+  console.log(color);
+  const line = new PIXI.Graphics();
+  line.name = name;
+  line.lineStyle(0.1, parseInt(color.substring(1), 16), 1);
+  line.moveTo(min[0], min[1]);
+  line.lineTo(max[0] + 1, min[1]);
+  line.lineTo(max[0] + 1, max[1] + 1);
+  line.lineTo(min[0], max[1] + 1);
+  line.lineTo(min[0], min[1]);
+  console.log(line);
+
+  viewport.addChild(line);
+};
+
+const padZero = (str: string, len: number = 2) => {
+  var zeros = new Array(len).join("0");
+  return (zeros + str).slice(-len);
+};
+
+export const invertColor = (hex: string, bw: boolean) => {
+  if (hex.indexOf("#") === 0) {
+    hex = hex.slice(1);
+  }
+  // convert 3-digit hex to 6-digits.
+  if (hex.length === 3) {
+    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+  }
+  if (hex.length !== 6) {
+    throw new Error("Invalid HEX color.");
+  }
+  var r: string | number = parseInt(hex.slice(0, 2), 16),
+    g: string | number = parseInt(hex.slice(2, 4), 16),
+    b: string | number = parseInt(hex.slice(4, 6), 16);
+  if (bw) {
+    // http://stackoverflow.com/a/3943023/112731
+    return r * 0.299 + g * 0.587 + b * 0.114 > 186 ? "#000000" : "#FFFFFF";
+  }
+  // invert color components
+  r = (255 - r).toString(16);
+  g = (255 - g).toString(16);
+  b = (255 - b).toString(16);
+  // pad each with zeros and return
+  return "#" + padZero(r) + padZero(g) + padZero(b);
 };

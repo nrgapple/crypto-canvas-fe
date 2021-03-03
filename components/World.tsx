@@ -1,9 +1,15 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from "recoil";
 import { Pixel } from "../interfaces";
 import {
   currentColorState,
   isEditState,
+  selectedBlockState,
   selectedPixelsState,
   worldError,
 } from "../state";
@@ -11,7 +17,9 @@ import {
 import { app, checkIsRect, SIZE, viewport } from "../utils/index";
 import {
   displayScreen,
+  updateBlockLine,
   updateBorderLine,
+  updateSelectedBlockLine,
   updateWorld,
 } from "../utils/viewport";
 //@ts-ignore
@@ -33,6 +41,9 @@ const World = ({ pixels }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement>(app.view);
   const isEdit = useRecoilValue(isEditState);
   const [overPixel, setOverPixel] = useState<Pixel | undefined>(undefined);
+  const [overBlock, setOverBlock] = useState<number | undefined>(undefined);
+  const [selectedBlock, setSelectedBlock] = useRecoilState(selectedBlockState);
+
   const mouse = useMouse(canvasRef, {
     fps: 10,
   });
@@ -54,6 +65,9 @@ const World = ({ pixels }: Props) => {
       let selected;
       const match = (s: Pixel) => newPoint.x === s.x && newPoint.y === s.y;
       const notMatch = (s: Pixel) => !match(s);
+      if (pixels.some(match)) {
+        return;
+      }
       // clicked an already selected pixel?
       if (selectedPixels.some(match)) {
         selected = selectedPixels.filter(notMatch);
@@ -65,6 +79,34 @@ const World = ({ pixels }: Props) => {
     },
     [currentColor, isEdit, selectedPixels]
   );
+
+  const handleClickedDetail = useCallback(
+    (el) => {
+      const newPoint = {
+        x: Math.floor(el.world.x),
+        y: Math.floor(el.world.y),
+        hexColor: currentColor,
+      } as Pixel;
+      const match = (s: Pixel) => newPoint.x === s.x && newPoint.y === s.y;
+      const pixel = pixels.find(match);
+      if (pixel) {
+        setSelectedBlock(pixel.creatorId);
+      } else {
+        setSelectedBlock(undefined);
+      }
+    },
+    [pixels]
+  );
+
+  useEffect(() => {
+    if (selectedBlock) {
+      updateSelectedBlockLine(
+        pixels.filter((p) => selectedBlock === p.creatorId)
+      );
+    } else {
+      updateSelectedBlockLine([]);
+    }
+  }, [selectedBlock]);
 
   useEffect(() => {
     const worldPoint = viewport.toWorld(new Point(mouse.x!, mouse.y!));
@@ -83,6 +125,20 @@ const World = ({ pixels }: Props) => {
   }, [mouse]);
 
   useEffect(() => {
+    if (!overPixel) {
+      setOverBlock(undefined);
+    } else if (overPixel.creatorId !== overBlock) {
+      setOverBlock(overPixel.creatorId!);
+    }
+  }, [overPixel]);
+
+  useEffect(() => {
+    updateBlockLine(
+      overBlock ? pixels.filter((p) => p.creatorId === overBlock) : []
+    );
+  }, [overBlock]);
+
+  useEffect(() => {
     if (isEdit) {
       viewport.addListener("clicked", handleClickedEdit);
       return () => {
@@ -90,6 +146,15 @@ const World = ({ pixels }: Props) => {
       };
     }
   }, [handleClickedEdit, isEdit]);
+
+  useEffect(() => {
+    if (!isEdit) {
+      viewport.addListener("clicked", handleClickedDetail);
+      return () => {
+        if (viewport) viewport.removeListener("clicked", handleClickedDetail);
+      };
+    }
+  }, [handleClickedDetail, isEdit]);
 
   useEffect(() => {
     const canvas = displayScreen(worldRef.current!);
@@ -168,7 +233,7 @@ const World = ({ pixels }: Props) => {
           >
             <div>Owner: </div>
             <div>{overPixel?.owner}</div>
-            <div>Image Id: </div>
+            <div>Block: </div>
             <div>{overPixel?.creatorId}</div>
             <div>Point: </div>
             <div>{`{${overPixel?.x}, ${overPixel?.y}}`}</div>

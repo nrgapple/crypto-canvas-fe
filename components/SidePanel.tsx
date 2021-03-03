@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { ChromePicker } from "react-color";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { currentColorState, selectedPixelsState, worldError } from "../state";
@@ -22,6 +22,8 @@ export default ({ onCheckout }: Props) => {
   };
   const toggleClearModal = () => setShowClearModal(!showClearModal);
   const error = useRecoilValue(worldError);
+
+  const isError = useMemo(() => error != "", [error]);
 
   return (
     <div
@@ -47,6 +49,7 @@ export default ({ onCheckout }: Props) => {
       </div>
       {error && (
         <div
+          className="error"
           style={{
             display: "flex",
             flexDirection: "column",
@@ -71,7 +74,9 @@ export default ({ onCheckout }: Props) => {
         }}
       >
         <Button onClick={() => toggleClearModal()}>Clear</Button>
-        <Button onClick={() => onCheckout(selectedPixels)}>Check out</Button>
+        <Button onClick={() => onCheckout(selectedPixels)} disabled={isError}>
+          Check out
+        </Button>
       </div>
       <Modal isOpen={showClearModal} toggle={() => toggleClearModal()}>
         <ModalBody>Are you sure you want to clear?</ModalBody>

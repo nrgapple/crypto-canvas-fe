@@ -16,3 +16,7 @@ body {
 .chrome-picker {
   box-shadow: none !important;
 }
+
+.error {
+  color: red;
+}

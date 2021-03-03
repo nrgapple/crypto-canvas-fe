@@ -8,6 +8,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@bencevans/color-array-average": "^1.0.1",
     "@react-hook/mouse-position": "^4.1.0",
     "@types/react-color": "^3.0.4",
     "bootstrap": "^4.6.0",

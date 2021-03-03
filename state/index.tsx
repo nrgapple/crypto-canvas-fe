@@ -23,3 +23,8 @@ export const worldError = atom({
   key: "world-error",
   default: "",
 });
+
+export const selectedBlockState = atom({
+  key: "selected-block",
+  default: undefined as number | undefined,
+});

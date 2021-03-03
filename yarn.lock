@@ -46,6 +46,11 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@bencevans/color-array-average@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@bencevans/color-array-average/-/color-array-average-1.0.1.tgz#ae3e7cc5aa4647f2f0fc7395e7d24b3c02780e3c"
+  integrity sha512-auELaUrdijKJQ5V8zTSCgtBOY0rZUDwS68dxTokTa57fYfvw7sIRJzQoC7A0eeq54UvHeNCztWiYGrM6bjk9jg==
+
 "@ethersproject/abi@5.0.12", "@ethersproject/abi@^5.0.10":
   version "5.0.12"
   resolved "https://registry.yarnpkg.com/@ethersproject/abi/-/abi-5.0.12.tgz#9aebe6aedc05ce45bb6c41b06d80bd195b7de77c"
