@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
-import { Button, Input } from "reactstrap";
+import React, { useEffect, useMemo } from "react";
 import { useRecoilState } from "recoil";
 import { useBids } from "../hooks/useBids";
 import { Pixel, Web3Contract } from "../interfaces";
 import { selectedBlockState } from "../state";
+import AcceptBid from "./AcceptBid";
+import PlaceBid from "./PlaceBid";
 
 interface Props {
   pixels: Pixel[];
@@ -13,7 +14,6 @@ interface Props {
 const BlockDetailPanel = ({ pixels, web3Contract }: Props) => {
   const [selectedBlock, setSelectedBlock] = useRecoilState(selectedBlockState);
   const { bids, placeBid, loading } = useBids(web3Contract, selectedBlock);
-  const [bidAmount, setBidAmount] = useState(0);
 
   const blocksPixels = useMemo(() => {
     return pixels.filter((p) => p.creatorId === selectedBlock);
@@ -25,10 +25,10 @@ const BlockDetailPanel = ({ pixels, web3Contract }: Props) => {
   }, [bids]);
 
   useEffect(() => {
-    if (highestBid) {
-      setBidAmount(highestBid.amount + highestBid.amount * 0.05);
-    }
-  }, [highestBid]);
+    return () => {
+      setSelectedBlock(undefined);
+    };
+  }, []);
 
   return (
     <div
@@ -54,38 +54,16 @@ const BlockDetailPanel = ({ pixels, web3Contract }: Props) => {
         ) : (
           <>
             <h1>Block: {blocksPixels[0].creatorId}</h1>
-            {bids.length > 0 ? (
-              <>
-                <div
-                  style={{
-                    display: "grid",
-                    gridRow: "auto auto",
-                  }}
-                >
-                  <div>Current Bid</div>
-                  <div>{highestBid.amount}</div>
-                  <div>User</div>
-                  <div>{highestBid.from}</div>
-                </div>
-              </>
+            {blocksPixels.length > 0 &&
+            blocksPixels[0].owner === web3Contract.accounts[0] ? (
+              <AcceptBid bids={bids} highestBid={highestBid} />
             ) : (
-              <div>Currently no bids</div>
-            )}
-            <div>Place Bid</div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "auto auto",
-                padding: "8px",
-              }}
-            >
-              <Input
-                type="number"
-                value={bidAmount}
-                onChange={(e) => setBidAmount(parseFloat(e.target.value))}
+              <PlaceBid
+                bids={bids}
+                highestBid={highestBid}
+                onPlaceBid={placeBid}
               />
-              <Button onClick={() => placeBid(bidAmount)}>Place Bid</Button>
-            </div>
+            )}
           </>
         )}
       </div>
