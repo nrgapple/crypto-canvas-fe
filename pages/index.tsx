@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../components/Layout";
 import { Button, Fade } from "reactstrap";
 import SidePanel from "../components/SidePanel";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { isEditState, selectedBlockState, selectedPixelsState } from "../state";
+import {
+  isEditState,
+  selectedBlockState,
+  selectedPixelsState,
+  transactionsInSessionState,
+} from "../state";
 import dynamic from "next/dynamic";
 import { useWeb3 } from "../hooks/useWeb3";
 import { usePixels } from "../hooks/usePixels";
@@ -16,16 +21,19 @@ const World = dynamic(() => import("../components/World"), {
 
 const HomePage = () => {
   const { loading, web3Contract } = useWeb3();
-  const { pixels, update: updatePixels, checkout } = usePixels(web3Contract);
+  const { pixels, checkout } = usePixels(web3Contract);
   const [isEdit, setIsEdit] = useRecoilState(isEditState);
   const setSelectedPixels = useSetRecoilState(selectedPixelsState);
   const selectedBlock = useRecoilValue(selectedBlockState);
 
   const handleCheckout = async (selected: Pixel[]) => {
-    await checkout(selected);
-    setSelectedPixels([]);
-    setIsEdit(false);
-    await updatePixels();
+    try {
+      await checkout(selected);
+      setSelectedPixels([]);
+      setIsEdit(false);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -52,7 +60,7 @@ const HomePage = () => {
           {!isEdit ? "Buy" : "Cancel"}
         </Button>
       </div>
-      {loading ? (
+      {loading && !web3Contract ? (
         <div
           style={{
             display: "flex",
@@ -64,7 +72,7 @@ const HomePage = () => {
           <h3>Loading Web3</h3>
         </div>
       ) : (
-        <Fade in={!loading} timeout={1000}>
+        <Fade in={!loading && web3Contract != undefined} timeout={1000}>
           <div
             style={{
               display: "flex",
@@ -73,7 +81,7 @@ const HomePage = () => {
               margin: "8px",
             }}
           >
-            <World pixels={pixels} you={web3Contract.accounts[0]} />
+            <World pixels={pixels} you={web3Contract?.accounts[0] ?? ""} />
             {!isEdit && selectedBlock && (
               <BlockDetailPanel pixels={pixels} web3Contract={web3Contract} />
             )}

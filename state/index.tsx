@@ -1,6 +1,7 @@
 import { atom } from "recoil";
 import { Pixel } from "../interfaces";
 import { localStorageEffect } from "./utils";
+import { EventData } from "web3-eth-contract";
 
 export const selectedPixelsState = atom({
   key: "selected-pixels",
@@ -27,4 +28,9 @@ export const worldError = atom({
 export const selectedBlockState = atom({
   key: "selected-block",
   default: undefined as number | undefined,
+});
+
+export const transactionsInSessionState = atom({
+  key: "transactions-in-session",
+  default: [] as EventData[],
 });

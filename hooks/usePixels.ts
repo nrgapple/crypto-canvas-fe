@@ -57,26 +57,43 @@ export const usePixels = (web3Contract: Web3Contract) => {
     );
   };
 
-  const handleCheckout = async (selected: Pixel[]) => {
-    if (contract && web3) {
-      const valsToSend = selected.map(({ x, y, hexColor }) => ({
-        x: x.toString(),
-        y: y.toString(),
-        hexColor,
-        id: ethers.utils.formatBytes32String("null"),
-        owner: accounts[0],
-        creatorId: 0,
-      }));
-      const transaction = await contract.methods.create(valsToSend);
+  const handleCheckout = (selected: Pixel[]) =>
+    new Promise((res, rej) => {
+      if (contract && web3) {
+        const valsToSend = selected.map(({ x, y, hexColor }) => ({
+          x: x.toString(),
+          y: y.toString(),
+          hexColor,
+          id: ethers.utils.formatBytes32String("null"),
+          owner: accounts[0],
+          creatorId: 0,
+        }));
+        const transaction = contract.methods.create(valsToSend);
 
-      transaction.send({
-        from: accounts[0],
-        value: web3.utils.toWei(".01", "ether"),
-      });
-      getPixels(contract);
-    } else {
-    }
-  };
+        //const estimatedGas = transaction.es
+        transaction
+          .send({
+            from: accounts[0],
+            value: web3.utils.toWei(".01", "ether"),
+          })
+          .once("receipt", (e: any) => {
+            console.log("receipt", e);
+            update();
+            res(e as string);
+          })
+          .once("error", (e: any) => {
+            console.error(e);
+            rej(e);
+          })
+          .catch((e: any) => {
+            console.error(e);
+            rej(e);
+          });
+      } else {
+        console.error(`There is no contact or web3`, { contract, web3 });
+        rej(`There is no contact or web3`);
+      }
+    });
 
   const update = async () => {
     await getPixels(contract);

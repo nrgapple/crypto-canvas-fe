@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button, Input } from "reactstrap";
 import { useRecoilState } from "recoil";
 import { useBids } from "../hooks/useBids";
@@ -23,6 +23,12 @@ const BlockDetailPanel = ({ pixels, web3Contract }: Props) => {
     const bidsSorted = bids.sort((a, b) => b.amount - a.amount);
     return bidsSorted[0];
   }, [bids]);
+
+  useEffect(() => {
+    if (highestBid) {
+      setBidAmount(highestBid.amount + highestBid.amount * 0.05);
+    }
+  }, [highestBid]);
 
   return (
     <div
@@ -58,6 +64,8 @@ const BlockDetailPanel = ({ pixels, web3Contract }: Props) => {
                 >
                   <div>Current Bid</div>
                   <div>{highestBid.amount}</div>
+                  <div>User</div>
+                  <div>{highestBid.from}</div>
                 </div>
               </>
             ) : (

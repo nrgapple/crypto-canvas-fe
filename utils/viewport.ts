@@ -64,9 +64,8 @@ export const updateLine = (pixels: Pixel[], name: string) => {
   }
   const { max, min } = getMaxMinPoints(pixels);
 
-  console.log(pixels);
   const color = invertColor(avgColor(pixels.map((x) => x.hexColor)), false);
-  console.log(color);
+
   const line = new PIXI.Graphics();
   line.name = name;
   line.lineStyle(0.1, parseInt(color.substring(1), 16), 1);
@@ -75,7 +74,6 @@ export const updateLine = (pixels: Pixel[], name: string) => {
   line.lineTo(max[0] + 1, max[1] + 1);
   line.lineTo(min[0], max[1] + 1);
   line.lineTo(min[0], min[1]);
-  console.log(line);
 
   viewport.addChild(line);
 };
