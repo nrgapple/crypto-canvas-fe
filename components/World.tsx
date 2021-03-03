@@ -29,9 +29,10 @@ import { Point } from "pixi.js";
 
 interface Props {
   pixels: Pixel[];
+  you: string;
 }
 
-const World = ({ pixels }: Props) => {
+const World = ({ pixels, you }: Props) => {
   const [currPixels, setCurrPixels] = useState<Pixel[]>(pixels);
   const [selectedPixels, setSelectedPixels] = useRecoilState(
     selectedPixelsState
@@ -232,7 +233,11 @@ const World = ({ pixels }: Props) => {
             }}
           >
             <div>Owner: </div>
-            <div>{overPixel?.owner}</div>
+            <div>
+              {overPixel?.owner === you
+                ? "You own this Block"
+                : overPixel?.owner}
+            </div>
             <div>Block: </div>
             <div>{overPixel?.creatorId}</div>
             <div>Point: </div>

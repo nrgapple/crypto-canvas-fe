@@ -73,7 +73,7 @@ const HomePage = () => {
               margin: "8px",
             }}
           >
-            <World pixels={pixels} />
+            <World pixels={pixels} you={web3Contract.accounts[0]} />
             {!isEdit && selectedBlock && (
               <BlockDetailPanel pixels={pixels} web3Contract={web3Contract} />
             )}
