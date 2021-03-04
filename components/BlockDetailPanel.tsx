@@ -13,16 +13,14 @@ interface Props {
 
 const BlockDetailPanel = ({ pixels, web3Contract }: Props) => {
   const [selectedBlock, setSelectedBlock] = useRecoilState(selectedBlockState);
-  const { bids, placeBid, loading } = useBids(web3Contract, selectedBlock);
+  const { highestBid, placeBid, loading, acceptBid } = useBids(
+    web3Contract,
+    selectedBlock
+  );
 
   const blocksPixels = useMemo(() => {
     return pixels.filter((p) => p.creatorId === selectedBlock);
   }, [selectedBlock, pixels]);
-
-  const highestBid = useMemo(() => {
-    const bidsSorted = bids.sort((a, b) => b.amount - a.amount);
-    return bidsSorted[0];
-  }, [bids]);
 
   useEffect(() => {
     return () => {
@@ -56,13 +54,9 @@ const BlockDetailPanel = ({ pixels, web3Contract }: Props) => {
             <h1>Block: {blocksPixels[0].creatorId}</h1>
             {blocksPixels.length > 0 &&
             blocksPixels[0].owner === web3Contract.accounts[0] ? (
-              <AcceptBid bids={bids} highestBid={highestBid} />
+              <AcceptBid highestBid={highestBid} onAcceptBid={acceptBid} />
             ) : (
-              <PlaceBid
-                bids={bids}
-                highestBid={highestBid}
-                onPlaceBid={placeBid}
-              />
+              <PlaceBid highestBid={highestBid} onPlaceBid={placeBid} />
             )}
           </>
         )}

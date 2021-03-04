@@ -68,6 +68,7 @@ export const usePixels = (web3Contract: Web3Contract) => {
           owner: accounts[0],
           creatorId: 0,
         }));
+
         const transaction = contract.methods.create(valsToSend);
 
         //const estimatedGas = transaction.es

@@ -3,12 +3,10 @@ import { Button, Input } from "reactstrap";
 import { Bid } from "../interfaces";
 
 const PlaceBid = ({
-  bids,
   highestBid,
   onPlaceBid,
 }: {
-  bids: Bid[];
-  highestBid: Bid;
+  highestBid: Bid | undefined;
   onPlaceBid: (bidAmount: number) => void;
 }) => {
   const [bidAmount, setBidAmount] = useState(0);
@@ -20,7 +18,7 @@ const PlaceBid = ({
 
   return (
     <>
-      {bids.length > 0 ? (
+      {highestBid ? (
         <>
           <div
             style={{

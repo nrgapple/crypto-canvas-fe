@@ -2,11 +2,17 @@ import React from "react";
 import { Button } from "reactstrap";
 import { Bid } from "../interfaces";
 
-const AcceptBid = ({ bids, highestBid }: { bids: Bid[]; highestBid: Bid }) => {
+const AcceptBid = ({
+  highestBid,
+  onAcceptBid,
+}: {
+  highestBid: Bid | undefined;
+  onAcceptBid: () => void;
+}) => {
   return (
     <div>
       <div>You own this block.</div>
-      {bids.length > 0 ? (
+      {highestBid ? (
         <>
           <div
             style={{
@@ -18,7 +24,7 @@ const AcceptBid = ({ bids, highestBid }: { bids: Bid[]; highestBid: Bid }) => {
             <div>Current Highest Bid:</div>
             <div>{highestBid.amount}</div>
           </div>
-          <Button>Accept Bid</Button>
+          <Button onClick={onAcceptBid}>Accept Bid</Button>
         </>
       ) : (
         <div>Currently no bids</div>

@@ -46,15 +46,6 @@ export const useWeb3 = () => {
     };
   }, [web3Contract, handleMineComplete]);
 
-  // useEffect(() => {
-  //   if (web3Contract?.web3) {
-  //     const { web3 } = web3Contract;
-  //     web3.eth.subscribe("pendingTransactions", (e) =>
-  //       console.log("pending transactions", e)
-  //     );
-  //   }
-  // }, [web3Contract]);
-
   const init = async () => {
     setLoading(true);
     try {
@@ -67,6 +58,7 @@ export const useWeb3 = () => {
       const networkId = await web3.eth.net.getId();
       //@ts-ignore
       const deployedNetwork = PixelToken.networks[networkId];
+
       const instance = new web3.eth.Contract(
         PixelToken.abi as AbiItem[] | AbiItem,
         deployedNetwork && deployedNetwork.address

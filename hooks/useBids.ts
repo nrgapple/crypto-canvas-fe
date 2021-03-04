@@ -7,16 +7,17 @@ import { rejects } from "node:assert";
 
 interface UseBidsReturn {
   loading: boolean;
-  bids: Bid[];
+  highestBid: Bid | undefined;
   update: () => void;
   placeBid: (amount: number) => Promise<void>;
+  acceptBid: () => Promise<void>;
 }
 
 export const useBids = (
   web3Contract: Web3Contract,
   blockId: number | undefined
 ) => {
-  const [bids, setBids] = useState<Bid[]>([]);
+  const [highestBid, setHighestBid] = useState<Bid | undefined>(undefined);
   const [loading, setLoading] = useState(false);
   const [transactionsInSession, setTransactionsInSession] = useRecoilState(
     transactionsInSessionState
@@ -44,20 +45,44 @@ export const useBids = (
 
   const getBids = async (contact: Contract, blockId: number) => {
     setLoading(true);
-    const b = await contact.methods.getBids(blockId).call();
-    const newBids = b.map(
-      ({ fromAddress, amount }: { fromAddress: string; amount: string }) =>
-        ({
-          from: fromAddress,
-          amount: parseFloat(web3.utils.fromWei(amount)),
-        } as Bid)
-    );
+    const b = await contact.methods.getBid(blockId).call();
+    const newBid = {
+      from: b.fromAddress,
+      amount: parseFloat(web3.utils.fromWei(b.amount)),
+    } as Bid;
 
-    console.log("bids", newBids);
-
-    setBids(newBids);
+    setHighestBid(newBid);
     setLoading(false);
   };
+
+  const handleAcceptBid = useCallback(
+    () =>
+      new Promise((resolve, reject) => {
+        if (contract && accounts && web3) {
+          console.log("accouonts", accounts);
+          contract.methods
+            .acceptBid(blockId)
+            .send({ from: accounts[0] })
+            .once("receipt", (e: any) => {
+              console.log("receipt", e);
+              update();
+              resolve(e as string);
+            })
+            .once("error", (e: any) => {
+              console.error(e);
+              reject(e);
+            })
+            .catch((e: any) => {
+              console.error(e);
+              reject(e);
+            });
+        } else {
+          console.error(`There is no contact or web3`, { contract, web3 });
+          reject(`There is no contact or web3`);
+        }
+      }),
+    [blockId]
+  );
 
   const handleBid = useCallback(
     (amount: number) =>
@@ -95,9 +120,15 @@ export const useBids = (
     if (contract && blockId) {
       getBids(contract, blockId);
     } else {
-      setBids([]);
+      setHighestBid(undefined);
     }
   };
 
-  return { bids, update, placeBid: handleBid, loading } as UseBidsReturn;
+  return {
+    highestBid,
+    update,
+    placeBid: handleBid,
+    loading,
+    acceptBid: handleAcceptBid,
+  } as UseBidsReturn;
 };
