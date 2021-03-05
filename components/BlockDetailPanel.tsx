@@ -9,14 +9,20 @@ import PlaceBid from "./PlaceBid";
 interface Props {
   pixels: Pixel[];
   web3Contract: Web3Contract;
+  onRefresh: () => void;
 }
 
-const BlockDetailPanel = ({ pixels, web3Contract }: Props) => {
+const BlockDetailPanel = ({ pixels, web3Contract, onRefresh }: Props) => {
   const [selectedBlock, setSelectedBlock] = useRecoilState(selectedBlockState);
   const { highestBid, placeBid, loading, acceptBid } = useBids(
     web3Contract,
     selectedBlock
   );
+
+  const handleAcceptBid = async () => {
+    await acceptBid();
+    onRefresh();
+  };
 
   const blocksPixels = useMemo(() => {
     return pixels.filter((p) => p.creatorId === selectedBlock);
@@ -54,7 +60,10 @@ const BlockDetailPanel = ({ pixels, web3Contract }: Props) => {
             <h1>Block: {blocksPixels[0].creatorId}</h1>
             {blocksPixels.length > 0 &&
             blocksPixels[0].owner === web3Contract.accounts[0] ? (
-              <AcceptBid highestBid={highestBid} onAcceptBid={acceptBid} />
+              <AcceptBid
+                highestBid={highestBid}
+                onAcceptBid={handleAcceptBid}
+              />
             ) : (
               <PlaceBid highestBid={highestBid} onPlaceBid={placeBid} />
             )}

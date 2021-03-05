@@ -21,7 +21,7 @@ const World = dynamic(() => import("../components/World"), {
 
 const HomePage = () => {
   const { loading, web3Contract } = useWeb3();
-  const { pixels, checkout } = usePixels(web3Contract);
+  const { pixels, checkout, update } = usePixels(web3Contract);
   const [isEdit, setIsEdit] = useRecoilState(isEditState);
   const setSelectedPixels = useSetRecoilState(selectedPixelsState);
   const selectedBlock = useRecoilValue(selectedBlockState);
@@ -34,6 +34,10 @@ const HomePage = () => {
     } catch (e) {
       console.error(e);
     }
+  };
+
+  const refresh = () => {
+    update();
   };
 
   return (
@@ -83,7 +87,11 @@ const HomePage = () => {
           >
             <World pixels={pixels} you={web3Contract?.accounts[0] ?? ""} />
             {!isEdit && selectedBlock && (
-              <BlockDetailPanel pixels={pixels} web3Contract={web3Contract} />
+              <BlockDetailPanel
+                pixels={pixels}
+                web3Contract={web3Contract}
+                onRefresh={refresh}
+              />
             )}
             {isEdit && <SidePanel onCheckout={handleCheckout} />}
           </div>
