@@ -1,18 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Layout from "../components/Layout";
 import { Button, Fade } from "reactstrap";
 import SidePanel from "../components/SidePanel";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import {
-  isEditState,
-  selectedBlockState,
-  selectedPixelsState,
-  transactionsInSessionState,
-} from "../state";
+import { selectedBlockState, selectedPixelsState, worldState } from "../state";
 import dynamic from "next/dynamic";
 import { useWeb3 } from "../hooks/useWeb3";
 import { usePixels } from "../hooks/usePixels";
-import { Pixel } from "../interfaces";
+import { Pixel, WorldStateType } from "../interfaces";
 import BlockDetailPanel from "../components/BlockDetailPanel";
 
 const World = dynamic(() => import("../components/World"), {
@@ -22,7 +17,7 @@ const World = dynamic(() => import("../components/World"), {
 const HomePage = () => {
   const { loading, web3Contract } = useWeb3();
   const { pixels, checkout, update } = usePixels(web3Contract);
-  const [isEdit, setIsEdit] = useRecoilState(isEditState);
+  const [world, setWorld] = useRecoilState(worldState);
   const setSelectedPixels = useSetRecoilState(selectedPixelsState);
   const selectedBlock = useRecoilValue(selectedBlockState);
 
@@ -30,7 +25,7 @@ const HomePage = () => {
     try {
       await checkout(selected);
       setSelectedPixels([]);
-      setIsEdit(false);
+      setWorld(WorldStateType.view);
     } catch (e) {
       console.error(e);
     }
@@ -60,8 +55,16 @@ const HomePage = () => {
         >
           Crypto Pixels
         </h5>
-        <Button onClick={() => setIsEdit(!isEdit)}>
-          {!isEdit ? "Buy" : "Cancel"}
+        <Button
+          onClick={() =>
+            setWorld(
+              world !== WorldStateType.view
+                ? WorldStateType.view
+                : WorldStateType.create
+            )
+          }
+        >
+          {world === WorldStateType.view ? "Create" : "Cancel"}
         </Button>
       </div>
       {loading && !web3Contract ? (
@@ -86,14 +89,16 @@ const HomePage = () => {
             }}
           >
             <World pixels={pixels} you={web3Contract?.accounts[0] ?? ""} />
-            {!isEdit && selectedBlock && (
+            {world !== WorldStateType.create && selectedBlock && (
               <BlockDetailPanel
                 pixels={pixels}
                 web3Contract={web3Contract}
                 onRefresh={refresh}
               />
             )}
-            {isEdit && <SidePanel onCheckout={handleCheckout} />}
+            {world === WorldStateType.create && (
+              <SidePanel onCheckout={handleCheckout} />
+            )}
           </div>
         </Fade>
       )}

@@ -1,7 +1,6 @@
 import { atom } from "recoil";
-import { Pixel } from "../interfaces";
+import { Pixel, WorldStateType } from "../interfaces";
 import { localStorageEffect } from "./utils";
-import { EventData } from "web3-eth-contract";
 
 export const selectedPixelsState = atom({
   key: "selected-pixels",
@@ -15,9 +14,9 @@ export const currentColorState = atom({
   effects_UNSTABLE: [localStorageEffect("current_color")],
 });
 
-export const isEditState = atom({
-  key: "is-edit",
-  default: false,
+export const worldState = atom({
+  key: "world",
+  default: WorldStateType.view,
 });
 
 export const worldError = atom({
@@ -30,7 +29,7 @@ export const selectedBlockState = atom({
   default: undefined as number | undefined,
 });
 
-export const transactionsInSessionState = atom({
-  key: "transactions-in-session",
-  default: [] as EventData[],
+export const editedBlockState = atom({
+  key: "edited-block",
+  default: [] as Pixel[],
 });

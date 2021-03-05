@@ -1,9 +1,11 @@
 import React, { useEffect, useMemo } from "react";
+import { Button } from "reactstrap";
 import { useRecoilState } from "recoil";
 import { useBids } from "../hooks/useBids";
-import { Pixel, Web3Contract } from "../interfaces";
-import { selectedBlockState } from "../state";
+import { Pixel, Web3Contract, WorldStateType } from "../interfaces";
+import { selectedBlockState, worldState } from "../state";
 import AcceptBid from "./AcceptBid";
+import EditBlock from "./EditBlock";
 import PlaceBid from "./PlaceBid";
 
 interface Props {
@@ -18,6 +20,7 @@ const BlockDetailPanel = ({ pixels, web3Contract, onRefresh }: Props) => {
     web3Contract,
     selectedBlock
   );
+  const [world, setWorld] = useRecoilState(worldState);
 
   const handleAcceptBid = async () => {
     await acceptBid();
@@ -25,7 +28,7 @@ const BlockDetailPanel = ({ pixels, web3Contract, onRefresh }: Props) => {
   };
 
   const blocksPixels = useMemo(() => {
-    return pixels.filter((p) => p.creatorId === selectedBlock);
+    return pixels.filter((p) => p.blockId === selectedBlock);
   }, [selectedBlock, pixels]);
 
   useEffect(() => {
@@ -57,13 +60,24 @@ const BlockDetailPanel = ({ pixels, web3Contract, onRefresh }: Props) => {
           <h1>Loading</h1>
         ) : (
           <>
-            <h1>Block: {blocksPixels[0].creatorId}</h1>
+            <h1>Block: {blocksPixels[0].blockId}</h1>
             {blocksPixels.length > 0 &&
             blocksPixels[0].owner === web3Contract.accounts[0] ? (
-              <AcceptBid
-                highestBid={highestBid}
-                onAcceptBid={handleAcceptBid}
-              />
+              <>
+                {world === WorldStateType.edit ? (
+                  <EditBlock blocksPixels={blocksPixels} />
+                ) : (
+                  <>
+                    <AcceptBid
+                      highestBid={highestBid}
+                      onAcceptBid={handleAcceptBid}
+                    />
+                    <Button onClick={() => setWorld(WorldStateType.edit)}>
+                      Edit your Block
+                    </Button>
+                  </>
+                )}
+              </>
             ) : (
               <PlaceBid highestBid={highestBid} onPlaceBid={placeBid} />
             )}

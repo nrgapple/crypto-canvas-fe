@@ -38,20 +38,23 @@ export const usePixels = (web3Contract: Web3Contract) => {
           y,
           hexColor,
           owner,
-          creatorId,
+          blockId,
+          pixelId,
         }: {
           x: string;
           y: string;
           hexColor: string;
           owner: string;
-          creatorId: number;
+          blockId: number;
+          pixelId: string;
         }) =>
           ({
             x: parseInt(x),
             y: parseInt(y),
             hexColor,
             owner,
-            creatorId,
+            blockId,
+            pixelId,
           } as Pixel)
       )
     );
@@ -64,14 +67,14 @@ export const usePixels = (web3Contract: Web3Contract) => {
           x: x.toString(),
           y: y.toString(),
           hexColor,
-          id: ethers.utils.formatBytes32String("null"),
+          pixelId: ethers.utils.formatBytes32String("null"),
           owner: accounts[0],
-          creatorId: 0,
+          blockId: 0,
         }));
 
         const transaction = contract.methods.create(valsToSend);
 
-        //const estimatedGas = transaction.es
+        //const estimatedGas = transaction.
         transaction
           .send({
             from: accounts[0],

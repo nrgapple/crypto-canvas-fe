@@ -5,13 +5,14 @@ import {
   useResetRecoilState,
   useSetRecoilState,
 } from "recoil";
-import { Pixel } from "../interfaces";
+import { Pixel, WorldStateType } from "../interfaces";
 import {
   currentColorState,
-  isEditState,
+  editedBlockState,
   selectedBlockState,
   selectedPixelsState,
   worldError,
+  worldState,
 } from "../state";
 
 import { app, checkIsRect, SIZE, viewport } from "../utils/index";
@@ -40,10 +41,11 @@ const World = ({ pixels, you }: Props) => {
   const currentColor = useRecoilValue(currentColorState);
   const worldRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(app.view);
-  const isEdit = useRecoilValue(isEditState);
+  const world = useRecoilValue(worldState);
   const [overPixel, setOverPixel] = useState<Pixel | undefined>(undefined);
   const [overBlock, setOverBlock] = useState<number | undefined>(undefined);
   const [selectedBlock, setSelectedBlock] = useRecoilState(selectedBlockState);
+  const [editedBlock, setEditedBlock] = useRecoilState(editedBlockState);
 
   const mouse = useMouse(canvasRef, {
     fps: 10,
@@ -56,7 +58,7 @@ const World = ({ pixels, you }: Props) => {
     );
   };
 
-  const handleClickedEdit = useCallback(
+  const handleClickedCreate = useCallback(
     (el) => {
       const newPoint = {
         x: Math.floor(el.world.x),
@@ -69,16 +71,44 @@ const World = ({ pixels, you }: Props) => {
       if (pixels.some(match)) {
         return;
       }
+      console.log(el);
       // clicked an already selected pixel?
       if (selectedPixels.some(match)) {
         selected = selectedPixels.filter(notMatch);
-        setSelectedPixels(selected);
       } else {
         selected = [...selectedPixels, newPoint];
-        setSelectedPixels(selected);
+      }
+      setSelectedPixels(selected);
+    },
+    [currentColor, selectedPixels]
+  );
+
+  const handleClickedEdit = useCallback(
+    (el) => {
+      const newPoint = {
+        x: Math.floor(el.world.x),
+        y: Math.floor(el.world.y),
+        hexColor: currentColor,
+        blockId: selectedBlock,
+        owner: you,
+      } as Pixel;
+      let edited;
+      const match = (s: Pixel) =>
+        newPoint.x === s.x &&
+        newPoint.y === s.y &&
+        newPoint.blockId === s.blockId &&
+        newPoint.owner === s.owner;
+      const notMatch = (s: Pixel) => !match(s);
+
+      if (editedBlock.some(match)) {
+        edited = editedBlock.filter(notMatch);
+        setEditedBlock(edited);
+      } else if (pixels.some(match)) {
+        edited = [...editedBlock, newPoint];
+        setEditedBlock(edited);
       }
     },
-    [currentColor, isEdit, selectedPixels]
+    [currentColor, editedBlock, pixels, selectedBlock]
   );
 
   const handleClickedDetail = useCallback(
@@ -91,7 +121,7 @@ const World = ({ pixels, you }: Props) => {
       const match = (s: Pixel) => newPoint.x === s.x && newPoint.y === s.y;
       const pixel = pixels.find(match);
       if (pixel) {
-        setSelectedBlock(pixel.creatorId);
+        setSelectedBlock(pixel.blockId);
       } else {
         setSelectedBlock(undefined);
       }
@@ -102,7 +132,7 @@ const World = ({ pixels, you }: Props) => {
   useEffect(() => {
     if (selectedBlock) {
       updateSelectedBlockLine(
-        pixels.filter((p) => selectedBlock === p.creatorId)
+        pixels.filter((p) => selectedBlock === p.blockId)
       );
     } else {
       updateSelectedBlockLine([]);
@@ -128,34 +158,43 @@ const World = ({ pixels, you }: Props) => {
   useEffect(() => {
     if (!overPixel) {
       setOverBlock(undefined);
-    } else if (overPixel.creatorId !== overBlock) {
-      setOverBlock(overPixel.creatorId!);
+    } else if (overPixel.blockId !== overBlock) {
+      setOverBlock(overPixel.blockId!);
     }
   }, [overPixel]);
 
   useEffect(() => {
     updateBlockLine(
-      overBlock ? pixels.filter((p) => p.creatorId === overBlock) : []
+      overBlock ? pixels.filter((p) => p.blockId === overBlock) : []
     );
   }, [overBlock]);
 
   useEffect(() => {
-    if (isEdit) {
+    if (world === WorldStateType.create) {
+      viewport.addListener("clicked", handleClickedCreate);
+      return () => {
+        if (viewport) viewport.removeListener("clicked", handleClickedCreate);
+      };
+    }
+  }, [handleClickedCreate, world]);
+
+  useEffect(() => {
+    if (world === WorldStateType.edit) {
       viewport.addListener("clicked", handleClickedEdit);
       return () => {
         if (viewport) viewport.removeListener("clicked", handleClickedEdit);
       };
     }
-  }, [handleClickedEdit, isEdit]);
+  }, [handleClickedEdit, world]);
 
   useEffect(() => {
-    if (!isEdit) {
+    if (world === WorldStateType.view) {
       viewport.addListener("clicked", handleClickedDetail);
       return () => {
         if (viewport) viewport.removeListener("clicked", handleClickedDetail);
       };
     }
-  }, [handleClickedDetail, isEdit]);
+  }, [handleClickedDetail, world]);
 
   useEffect(() => {
     const canvas = displayScreen(worldRef.current!);
@@ -177,23 +216,41 @@ const World = ({ pixels, you }: Props) => {
   }, [currPixels]);
 
   useEffect(() => {
-    if (!isEdit) {
+    if (world === WorldStateType.view) {
       setCurrPixels(pixels);
       updateBorderLine([]);
-    } else {
+    } else if (world === WorldStateType.create) {
       setCurrPixels([...pixels, ...selectedPixels]);
       updateBorderLine(selectedPixels);
       checkForErrors();
+    } else if (world === WorldStateType.edit) {
+      if (editedBlock.length > 0 && editedBlock[0].blockId === selectedBlock) {
+        const pixelsWithoutEdited = pixels.filter((p) =>
+          editedBlock.every((ep) => ep.x !== p.x || ep.y !== p.y)
+        );
+        setCurrPixels([...pixelsWithoutEdited, ...editedBlock]);
+      } else {
+        setCurrPixels(pixels);
+      }
     }
-  }, [isEdit]);
+  }, [world]);
 
   useEffect(() => {
-    if (isEdit) {
+    if (world === WorldStateType.create) {
       setCurrPixels([...pixels, ...selectedPixels]);
       updateBorderLine(selectedPixels);
       checkForErrors();
     }
   }, [selectedPixels]);
+
+  useEffect(() => {
+    if (world === WorldStateType.edit) {
+      const pixelsWithoutEdited = pixels.filter((p) =>
+        editedBlock.every((ep) => ep.x !== p.x || ep.y !== p.y)
+      );
+      setCurrPixels([...pixelsWithoutEdited, ...editedBlock]);
+    }
+  }, [editedBlock]);
 
   useEffect(() => {
     setCurrPixels(pixels);
@@ -239,9 +296,11 @@ const World = ({ pixels, you }: Props) => {
                 : overPixel?.owner}
             </div>
             <div>Block: </div>
-            <div>{overPixel?.creatorId}</div>
+            <div>{overPixel?.blockId}</div>
             <div>Point: </div>
             <div>{`{${overPixel?.x}, ${overPixel?.y}}`}</div>
+            <div>Pixel Id: </div>
+            <div>{overPixel?.pixelId}</div>
           </div>
         </div>
       </MouseTooltip>

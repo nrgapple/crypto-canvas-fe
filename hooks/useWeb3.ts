@@ -1,11 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import getWeb3 from "../utils/getWeb3";
 import PixelToken from "../contracts/PixelToken.json";
 import { AbiItem } from "web3-utils";
 import { Web3Contract } from "../interfaces";
-import { EventData } from "web3-eth-contract";
-import { useRecoilState } from "recoil";
-import { transactionsInSessionState } from "../state";
 
 type UseWeb3Return = {
   loading: boolean;
@@ -15,9 +12,6 @@ type UseWeb3Return = {
 export const useWeb3 = () => {
   const [web3Contract, setWeb3Contract] = useState<Web3Contract>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [transactionsInSession, setTransactionsInSession] = useRecoilState(
-    transactionsInSessionState
-  );
 
   useEffect(() => {
     init();
@@ -27,24 +21,6 @@ export const useWeb3 = () => {
       }
     };
   }, []);
-
-  const handleMineComplete = useCallback((e: EventData) => {
-    console.log("Incoming data", e);
-    setTransactionsInSession((curr) => [...curr, e]);
-  }, []);
-
-  useEffect(() => {
-    if (web3Contract?.contract) {
-      const { contract } = web3Contract;
-      contract.events.allEvents().on("data", handleMineComplete);
-    }
-    return () => {
-      if (web3Contract?.contract) {
-        const { contract } = web3Contract;
-        contract.events.allEvents().off("data", handleMineComplete);
-      }
-    };
-  }, [web3Contract, handleMineComplete]);
 
   const init = async () => {
     setLoading(true);

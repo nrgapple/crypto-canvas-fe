@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Bid, Web3Contract } from "../interfaces";
 import { Contract } from "web3-eth-contract";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { transactionsInSessionState } from "../state";
-import { rejects } from "node:assert";
+import { useRecoilState } from "recoil";
+import { checkEmptyAddress } from "../utils/helpers";
 
 interface UseBidsReturn {
   loading: boolean;
@@ -19,9 +18,6 @@ export const useBids = (
 ) => {
   const [highestBid, setHighestBid] = useState<Bid | undefined>(undefined);
   const [loading, setLoading] = useState(false);
-  const [transactionsInSession, setTransactionsInSession] = useRecoilState(
-    transactionsInSessionState
-  );
 
   const { contract, web3, accounts } = useMemo(
     () =>
@@ -37,19 +33,18 @@ export const useBids = (
     update();
   }, [contract, blockId]);
 
-  useEffect(() => {
-    if (transactionsInSession.length > 0) {
-      update();
-    }
-  }, [transactionsInSession]);
-
   const getBids = async (contact: Contract, blockId: number) => {
     setLoading(true);
     const b = await contact.methods.getBid(blockId).call();
-    const newBid = {
-      from: b.fromAddress,
-      amount: parseFloat(web3.utils.fromWei(b.amount)),
-    } as Bid;
+
+    console.log(typeof b.fromAddress);
+
+    const newBid = !checkEmptyAddress(b.fromAddress)
+      ? ({
+          from: b.fromAddress,
+          amount: parseFloat(web3.utils.fromWei(b.amount)),
+        } as Bid)
+      : undefined;
 
     setHighestBid(newBid);
     setLoading(false);
