@@ -63,13 +63,13 @@ export const usePixels = (web3Contract: Web3Contract) => {
   const handleCheckout = (selected: Pixel[]) =>
     new Promise((res, rej) => {
       if (contract && web3) {
+        console.log("pixels", selected);
+
         const valsToSend = selected.map(({ x, y, hexColor }) => ({
           x: x.toString(),
           y: y.toString(),
           hexColor,
-          pixelId: ethers.utils.formatBytes32String("null"),
-          owner: accounts[0],
-          blockId: 0,
+          id: ethers.utils.formatBytes32String("null"),
         }));
 
         const transaction = contract.methods.create(valsToSend);
