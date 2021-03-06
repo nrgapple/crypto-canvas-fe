@@ -2,6 +2,11 @@ import { atom } from "recoil";
 import { Pixel, WorldStateType } from "../interfaces";
 import { localStorageEffect } from "./utils";
 
+export const pixelsState = atom({
+  key: "pixels",
+  default: [] as Pixel[],
+});
+
 export const selectedPixelsState = atom({
   key: "selected-pixels",
   default: [] as Pixel[],

@@ -1,25 +1,26 @@
 import React, { useEffect, useMemo } from "react";
 import { Button } from "reactstrap";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useBids } from "../hooks/useBids";
-import { Pixel, Web3Contract, WorldStateType } from "../interfaces";
-import { selectedBlockState, worldState } from "../state";
+import { Web3Contract, WorldStateType } from "../interfaces";
+import { pixelsState, selectedBlockState, worldState } from "../state";
 import AcceptBid from "./AcceptBid";
 import EditBlock from "./EditBlock";
 import PlaceBid from "./PlaceBid";
 
 interface Props {
-  pixels: Pixel[];
   web3Contract: Web3Contract;
   onRefresh: () => void;
 }
 
-const BlockDetailPanel = ({ pixels, web3Contract, onRefresh }: Props) => {
+const BlockDetailPanel = ({ web3Contract, onRefresh }: Props) => {
+  const pixels = useRecoilValue(pixelsState);
   const [selectedBlock, setSelectedBlock] = useRecoilState(selectedBlockState);
   const { highestBid, placeBid, loading, acceptBid } = useBids(
     web3Contract,
     selectedBlock
   );
+
   const [world, setWorld] = useRecoilState(worldState);
 
   const handleAcceptBid = async () => {
@@ -65,7 +66,10 @@ const BlockDetailPanel = ({ pixels, web3Contract, onRefresh }: Props) => {
             blocksPixels[0].owner === web3Contract.accounts[0] ? (
               <>
                 {world === WorldStateType.edit ? (
-                  <EditBlock blocksPixels={blocksPixels} />
+                  <EditBlock
+                    blocksPixels={blocksPixels}
+                    web3Contract={web3Contract}
+                  />
                 ) : (
                   <>
                     <AcceptBid

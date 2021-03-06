@@ -3,7 +3,12 @@ import Layout from "../components/Layout";
 import { Button, Fade } from "reactstrap";
 import SidePanel from "../components/SidePanel";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { selectedBlockState, selectedPixelsState, worldState } from "../state";
+import {
+  pixelsState,
+  selectedBlockState,
+  selectedPixelsState,
+  worldState,
+} from "../state";
 import dynamic from "next/dynamic";
 import { useWeb3 } from "../hooks/useWeb3";
 import { usePixels } from "../hooks/usePixels";
@@ -16,10 +21,11 @@ const World = dynamic(() => import("../components/World"), {
 
 const HomePage = () => {
   const { loading, web3Contract } = useWeb3();
-  const { pixels, checkout, update } = usePixels(web3Contract);
+  const { checkout, update } = usePixels(web3Contract);
   const [world, setWorld] = useRecoilState(worldState);
   const setSelectedPixels = useSetRecoilState(selectedPixelsState);
   const selectedBlock = useRecoilValue(selectedBlockState);
+  const pixels = useRecoilValue(pixelsState);
 
   const handleCheckout = async (selected: Pixel[]) => {
     try {
@@ -88,7 +94,7 @@ const HomePage = () => {
               margin: "8px",
             }}
           >
-            <World pixels={pixels} you={web3Contract?.accounts[0] ?? ""} />
+            <World you={web3Contract?.accounts[0] ?? ""} />
             {world !== WorldStateType.create && selectedBlock && (
               <BlockDetailPanel
                 pixels={pixels}

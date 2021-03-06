@@ -1,16 +1,18 @@
 import { ethers } from "ethers";
 import { useEffect, useMemo, useState } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { Contract } from "web3-eth-contract";
 import { Pixel, Web3Contract } from "../interfaces";
+import { pixelsState } from "../state";
 
 interface UsePixelsReturn {
-  pixels: Pixel[];
   update: () => Promise<void>;
   checkout: (selectedPixels: Pixel[]) => Promise<void>;
+  editPixels: (edited: Pixel[]) => Promise<void>;
 }
 
 export const usePixels = (web3Contract: Web3Contract) => {
-  const [pixels, setPixels] = useState<Pixel[]>([]);
+  const setPixels = useSetRecoilState(pixelsState);
 
   const { contract, web3, accounts } = useMemo(
     () =>
@@ -60,11 +62,51 @@ export const usePixels = (web3Contract: Web3Contract) => {
     );
   };
 
+  const handleEdit = (edited: Pixel[]) =>
+    new Promise((res, rej) => {
+      if (edited.length < 1) {
+        rej(`There is no pixels to edit`);
+      }
+      const valsToSend = edited.map(({ x, y, hexColor, pixelId }) => ({
+        x: x.toString(),
+        y: y.toString(),
+        hexColor,
+        id: pixelId,
+      }));
+
+      const transaction = contract.methods.changePixels(
+        edited[0].blockId,
+        valsToSend
+      );
+
+      transaction
+        .send({
+          from: accounts[0],
+        })
+        .once("receipt", (e: any) => {
+          console.log("receipt", e);
+          update();
+          res(e as string);
+        })
+        .once("error", (e: any) => {
+          console.error(e);
+          rej(e);
+        })
+        .catch((e: any) => {
+          console.error(e);
+          rej(e);
+        });
+
+      if (contract && web3) {
+      } else {
+        console.error(`There is no contact or web3`, { contract, web3 });
+        rej(`There is no contact or web3`);
+      }
+    });
+
   const handleCheckout = (selected: Pixel[]) =>
     new Promise((res, rej) => {
       if (contract && web3) {
-        console.log("pixels", selected);
-
         const valsToSend = selected.map(({ x, y, hexColor }) => ({
           x: x.toString(),
           y: y.toString(),
@@ -103,5 +145,9 @@ export const usePixels = (web3Contract: Web3Contract) => {
     await getPixels(contract);
   };
 
-  return { pixels, update, checkout: handleCheckout } as UsePixelsReturn;
+  return {
+    update,
+    checkout: handleCheckout,
+    editPixels: handleEdit,
+  } as UsePixelsReturn;
 };

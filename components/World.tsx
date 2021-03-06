@@ -1,14 +1,10 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import {
-  useRecoilState,
-  useRecoilValue,
-  useResetRecoilState,
-  useSetRecoilState,
-} from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { Pixel, WorldStateType } from "../interfaces";
 import {
   currentColorState,
   editedBlockState,
+  pixelsState,
   selectedBlockState,
   selectedPixelsState,
   worldError,
@@ -29,11 +25,11 @@ import useMouse from "@react-hook/mouse-position";
 import { Point } from "pixi.js";
 
 interface Props {
-  pixels: Pixel[];
   you: string;
 }
 
-const World = ({ pixels, you }: Props) => {
+const World = ({ you }: Props) => {
+  const pixels = useRecoilValue(pixelsState);
   const [currPixels, setCurrPixels] = useState<Pixel[]>(pixels);
   const [selectedPixels, setSelectedPixels] = useRecoilState(
     selectedPixelsState
@@ -104,6 +100,8 @@ const World = ({ pixels, you }: Props) => {
         edited = editedBlock.filter(notMatch);
         setEditedBlock(edited);
       } else if (pixels.some(match)) {
+        const otherPixel = pixels.find(match);
+        newPoint.pixelId = otherPixel?.pixelId;
         edited = [...editedBlock, newPoint];
         setEditedBlock(edited);
       }
