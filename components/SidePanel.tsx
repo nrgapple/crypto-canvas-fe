@@ -38,14 +38,7 @@ export default ({ onCheckout }: Props) => {
         <div>{selectedPixels.length}</div>
       </div>
       {error && (
-        <div
-          className="error"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-          }}
-        >
+        <div className="error flex-c-center">
           <div>Error</div>
           <div>{error}</div>
         </div>
@@ -59,12 +52,14 @@ export default ({ onCheckout }: Props) => {
         <div className="button" onClick={() => toggleClearModal()}>
           Clear
         </div>
-        <div
-          className={`button ${isError && "disabled"}`}
-          onClick={() => onCheckout(selectedPixels)}
-        >
-          Check out
-        </div>
+        {selectedPixels.length > 0 && (
+          <div
+            className={`button ${isError && "disabled"}`}
+            onClick={() => onCheckout(selectedPixels)}
+          >
+            Check out
+          </div>
+        )}
       </div>
       <Modal isOpen={showClearModal} toggle={() => toggleClearModal()}>
         <ModalBody>Are you sure you want to clear?</ModalBody>

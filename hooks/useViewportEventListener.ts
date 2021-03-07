@@ -17,5 +17,5 @@ export const useViewportEventListener = (
         if (viewport) viewport.removeListener(event, callback);
       };
     }
-  }, [worldStateType, callback]);
+  }, [worldStateType, callback, world]);
 };

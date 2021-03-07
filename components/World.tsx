@@ -44,7 +44,6 @@ const World = ({ you }: Props) => {
   const [selectedBlock, setSelectedBlock] = useRecoilState(selectedBlockState);
   const [editedBlock, setEditedBlock] = useRecoilState(editedBlockState);
   const { width, height } = useComponentSize(worldRef);
-
   const mouse = useMouse(canvasRef, {
     fps: 10,
   });
