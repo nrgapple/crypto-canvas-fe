@@ -22,8 +22,8 @@ import {
 //@ts-ignore
 import MouseTooltip from "react-sticky-mouse-tooltip";
 import useMouse from "@react-hook/mouse-position";
-import { InteractionEvent, Point } from "pixi.js";
 import useComponentSize from "@rehooks/component-size";
+import { useViewportEventListener } from "../hooks/useViewportEventListener";
 
 interface Props {
   you: string;
@@ -171,32 +171,15 @@ const World = ({ you }: Props) => {
     );
   }, [overBlock]);
 
-  useEffect(() => {
-    if (world === WorldStateType.create) {
-      viewport.addListener("clicked", handleClickedCreate);
-      return () => {
-        if (viewport) viewport.removeListener("clicked", handleClickedCreate);
-      };
-    }
-  }, [handleClickedCreate, world]);
+  useViewportEventListener(
+    "clicked",
+    handleClickedCreate,
+    WorldStateType.create
+  );
 
-  useEffect(() => {
-    if (world === WorldStateType.edit) {
-      viewport.addListener("clicked", handleClickedEdit);
-      return () => {
-        if (viewport) viewport.removeListener("clicked", handleClickedEdit);
-      };
-    }
-  }, [handleClickedEdit, world]);
+  useViewportEventListener("clicked", handleClickedEdit, WorldStateType.edit);
 
-  useEffect(() => {
-    if (world === WorldStateType.view) {
-      viewport.addListener("clicked", handleClickedDetail);
-      return () => {
-        if (viewport) viewport.removeListener("clicked", handleClickedDetail);
-      };
-    }
-  }, [handleClickedDetail, world]);
+  useViewportEventListener("clicked", handleClickedDetail, WorldStateType.view);
 
   useEffect(() => {
     const canvas = displayScreen(worldRef.current!);
