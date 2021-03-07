@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo } from "react";
-import { Button } from "reactstrap";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useBids } from "../hooks/useBids";
 import { Web3Contract, WorldStateType } from "../interfaces";
@@ -39,17 +38,7 @@ const BlockDetailPanel = ({ web3Contract, onRefresh }: Props) => {
   }, []);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "start",
-        borderRight: "1px solid black",
-        borderBottom: "1px solid black",
-        borderTop: "1px solid black",
-        padding: "8px",
-      }}
-    >
+    <div className="flex-c-space lb">
       <div
         style={{
           display: "flex",
@@ -76,9 +65,12 @@ const BlockDetailPanel = ({ web3Contract, onRefresh }: Props) => {
                       highestBid={highestBid}
                       onAcceptBid={handleAcceptBid}
                     />
-                    <Button onClick={() => setWorld(WorldStateType.edit)}>
+                    <div
+                      className="button"
+                      onClick={() => setWorld(WorldStateType.edit)}
+                    >
                       Edit your Block
-                    </Button>
+                    </div>
                   </>
                 )}
               </>

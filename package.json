@@ -10,6 +10,7 @@
   "dependencies": {
     "@bencevans/color-array-average": "^1.0.1",
     "@react-hook/mouse-position": "^4.1.0",
+    "@rehooks/component-size": "^1.0.3",
     "@types/react-color": "^3.0.4",
     "bootstrap": "^4.6.0",
     "ethers": "^5.0.31",

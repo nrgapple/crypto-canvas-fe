@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { ChromePicker } from "react-color";
-import { Button } from "reactstrap";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { usePixels } from "../hooks/usePixels";
 import { Pixel, Web3Contract, WorldStateType } from "../interfaces";
@@ -35,7 +34,9 @@ const EditBlock = ({ blocksPixels, web3Contract }: Props) => {
         disableAlpha={true}
       />
       {!editedBlock.every((x) => blocksPixels.includes(x)) && (
-        <Button onClick={() => handleEditSubmit()}>Update Block</Button>
+        <div className="button" onClick={() => handleEditSubmit()}>
+          Update Block
+        </div>
       )}
     </div>
   );

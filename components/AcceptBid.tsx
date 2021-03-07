@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "reactstrap";
 import { Bid } from "../interfaces";
 
 const AcceptBid = ({
@@ -24,7 +23,9 @@ const AcceptBid = ({
             <div>Current Highest Bid:</div>
             <div>{highestBid.amount}</div>
           </div>
-          <Button onClick={onAcceptBid}>Accept Bid</Button>
+          <div className="button" onClick={onAcceptBid}>
+            Accept Bid
+          </div>
         </>
       ) : (
         <div>Currently no bids</div>

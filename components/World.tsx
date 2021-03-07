@@ -22,7 +22,8 @@ import {
 //@ts-ignore
 import MouseTooltip from "react-sticky-mouse-tooltip";
 import useMouse from "@react-hook/mouse-position";
-import { Point } from "pixi.js";
+import { InteractionEvent, Point } from "pixi.js";
+import useComponentSize from "@rehooks/component-size";
 
 interface Props {
   you: string;
@@ -42,6 +43,7 @@ const World = ({ you }: Props) => {
   const [overBlock, setOverBlock] = useState<number | undefined>(undefined);
   const [selectedBlock, setSelectedBlock] = useRecoilState(selectedBlockState);
   const [editedBlock, setEditedBlock] = useRecoilState(editedBlockState);
+  const { width, height } = useComponentSize(worldRef);
 
   const mouse = useMouse(canvasRef, {
     fps: 10,
@@ -67,7 +69,7 @@ const World = ({ you }: Props) => {
       if (pixels.some(match)) {
         return;
       }
-      console.log(el);
+
       // clicked an already selected pixel?
       if (selectedPixels.some(match)) {
         selected = selectedPixels.filter(notMatch);
@@ -138,7 +140,9 @@ const World = ({ you }: Props) => {
   }, [selectedBlock]);
 
   useEffect(() => {
-    const worldPoint = viewport.toWorld(new Point(mouse.x!, mouse.y!));
+    const pos = app.renderer.plugins.interaction.mouse.global;
+    const worldPoint = viewport.toWorld(pos.x, pos.y);
+
     const worldPointFloored = {
       x: Math.floor(worldPoint.x),
       y: Math.floor(worldPoint.y),
@@ -210,6 +214,14 @@ const World = ({ you }: Props) => {
   }, []);
 
   useEffect(() => {
+    viewport.resize(
+      worldRef.current!.offsetWidth,
+      worldRef.current!.offsetHeight
+    );
+    viewport.fit();
+  }, [width, height]);
+
+  useEffect(() => {
     updateWorld(currPixels);
   }, [currPixels]);
 
@@ -256,14 +268,7 @@ const World = ({ you }: Props) => {
 
   return (
     <>
-      <div
-        style={{
-          padding: "16px",
-          border: "1px solid black",
-        }}
-        ref={worldRef}
-        className="world"
-      ></div>
+      <div ref={worldRef} className="world"></div>
       <MouseTooltip
         visible={overPixel != undefined}
         offsetX={15}

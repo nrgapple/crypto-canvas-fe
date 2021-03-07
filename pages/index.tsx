@@ -1,6 +1,5 @@
 import React from "react";
 import Layout from "../components/Layout";
-import { Button, Fade } from "reactstrap";
 import SidePanel from "../components/SidePanel";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
@@ -43,25 +42,17 @@ const HomePage = () => {
 
   return (
     <Layout title="Crypto Canvas">
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: "8px",
-          height: "50px",
-          borderBottom: "1px solid black",
-        }}
-      >
+      <div className="nav-bar">
         <h5
           style={{
             padding: "8px",
             marginBottom: "0px",
           }}
         >
-          Crypto Pixels
+          Crypto Canvas
         </h5>
-        <Button
+        <div
+          className="button"
           onClick={() =>
             setWorld(
               world !== WorldStateType.view
@@ -71,42 +62,33 @@ const HomePage = () => {
           }
         >
           {world === WorldStateType.view ? "Create" : "Cancel"}
-        </Button>
+        </div>
       </div>
       {loading && !web3Contract ? (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%",
-          }}
-        >
+        <div className="flex-center-center">
           <h3>Loading Web3</h3>
         </div>
       ) : (
-        <Fade in={!loading && web3Contract != undefined} timeout={1000}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "stretch",
-              justifyContent: "center",
-              margin: "8px",
-            }}
-          >
-            <World you={web3Contract?.accounts[0] ?? ""} />
-            {world !== WorldStateType.create && selectedBlock && (
-              <BlockDetailPanel
-                pixels={pixels}
-                web3Contract={web3Contract}
-                onRefresh={refresh}
-              />
-            )}
-            {world === WorldStateType.create && (
-              <SidePanel onCheckout={handleCheckout} />
-            )}
-          </div>
-        </Fade>
+        <>
+          {!loading && web3Contract != undefined && (
+            <div className="flex-space-strech m8">
+              <div className="frame">
+                <div className="border">
+                  <World you={web3Contract?.accounts[0] ?? ""} />
+                </div>
+              </div>
+              {world !== WorldStateType.create && selectedBlock && (
+                <BlockDetailPanel
+                  web3Contract={web3Contract}
+                  onRefresh={refresh}
+                />
+              )}
+              {world === WorldStateType.create && (
+                <SidePanel onCheckout={handleCheckout} />
+              )}
+            </div>
+          )}
+        </>
       )}
     </Layout>
   );

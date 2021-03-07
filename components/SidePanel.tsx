@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { ChromePicker } from "react-color";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { currentColorState, selectedPixelsState, worldError } from "../state";
-import { Button, Modal, ModalFooter, ModalBody } from "reactstrap";
+import { Modal, ModalFooter, ModalBody } from "reactstrap";
 import { Pixel } from "../interfaces";
 
 interface Props {
@@ -26,17 +26,7 @@ export default ({ onCheckout }: Props) => {
   const isError = useMemo(() => error != "", [error]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-evenly",
-        borderRight: "1px solid black",
-        borderBottom: "1px solid black",
-        borderTop: "1px solid black",
-        padding: "8px",
-      }}
-    >
+    <div className="flex-c-space p8 lb-t lb-b lb-r">
       <div
         style={{
           display: "flex",
@@ -65,28 +55,26 @@ export default ({ onCheckout }: Props) => {
         onChange={(color) => setCurrentColor(color.hex)}
         disableAlpha={true}
       />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          border: "1px solid black",
-        }}
-      >
-        <Button onClick={() => toggleClearModal()}>Clear</Button>
-        <Button onClick={() => onCheckout(selectedPixels)} disabled={isError}>
+      <div className="flex-space-center m8 lb p8">
+        <div className="button" onClick={() => toggleClearModal()}>
+          Clear
+        </div>
+        <div
+          className={`button ${isError && "disabled"}`}
+          onClick={() => onCheckout(selectedPixels)}
+        >
           Check out
-        </Button>
+        </div>
       </div>
       <Modal isOpen={showClearModal} toggle={() => toggleClearModal()}>
         <ModalBody>Are you sure you want to clear?</ModalBody>
         <ModalFooter>
-          <Button onClick={() => toggleClearModal()} variant="secondary">
+          <div className="button" onClick={() => toggleClearModal()}>
             Cancel
-          </Button>
-          <Button onClick={() => clearSelected()} variant="primary">
+          </div>
+          <div className="button" onClick={() => clearSelected()}>
             Clear
-          </Button>
+          </div>
         </ModalFooter>
       </Modal>
     </div>
