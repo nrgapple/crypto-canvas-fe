@@ -12,7 +12,7 @@ interface UsePixelsReturn {
 }
 
 export const usePixels = (web3Contract: Web3Contract) => {
-  const setPixels = useSetRecoilState(pixelsState);
+  const [pixels, setPixels] = useRecoilState(pixelsState);
 
   const { contract, web3, accounts } = useMemo(
     () =>
@@ -25,14 +25,13 @@ export const usePixels = (web3Contract: Web3Contract) => {
   );
 
   useEffect(() => {
-    if (contract) {
+    if (contract && !pixels.length) {
       getPixels(contract);
     }
   }, [contract]);
 
   const getPixels = async (instance: Contract) => {
     const p = await instance.methods.getPixels().call();
-    console.log("pixels", p);
 
     setPixels(
       p.map(
