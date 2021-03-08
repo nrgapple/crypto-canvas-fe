@@ -3,8 +3,7 @@ import Layout from "../components/Layout";
 import SidePanel from "../components/SidePanel";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
-  pixelsState,
-  selectedBlockState,
+  selectedExhibitState,
   selectedPixelsState,
   worldState,
 } from "../state";
@@ -12,7 +11,8 @@ import dynamic from "next/dynamic";
 import { useWeb3 } from "../hooks/useWeb3";
 import { usePixels } from "../hooks/usePixels";
 import { Pixel, WorldStateType } from "../interfaces";
-import BlockDetailPanel from "../components/BlockDetailPanel";
+import ExhibitDetailPanel from "../components/ExhibitDetailPanel";
+import Link from "next/Link";
 
 const World = dynamic(() => import("../components/World"), {
   ssr: false,
@@ -23,8 +23,7 @@ const HomePage = () => {
   const { checkout, update } = usePixels(web3Contract);
   const [world, setWorld] = useRecoilState(worldState);
   const setSelectedPixels = useSetRecoilState(selectedPixelsState);
-  const selectedBlock = useRecoilValue(selectedBlockState);
-  const pixels = useRecoilValue(pixelsState);
+  const selectedExhibit = useRecoilValue(selectedExhibitState);
 
   const handleCheckout = async (selected: Pixel[]) => {
     try {
@@ -43,14 +42,12 @@ const HomePage = () => {
   return (
     <Layout title="Crypto Canvas">
       <div className="nav-bar">
-        <h5
-          style={{
-            padding: "8px",
-            marginBottom: "0px",
-          }}
-        >
-          Crypto Canvas
-        </h5>
+        <div className="flex-center-baseline">
+          <h5>Crypto Canvas</h5>
+          <Link href={"/about"}>
+            <h6 className="clickable">about</h6>
+          </Link>
+        </div>
         <div
           className="button"
           onClick={() =>
@@ -77,8 +74,8 @@ const HomePage = () => {
                   <World you={web3Contract?.accounts[0] ?? ""} />
                 </div>
               </div>
-              {world !== WorldStateType.create && selectedBlock && (
-                <BlockDetailPanel
+              {world !== WorldStateType.create && selectedExhibit && (
+                <ExhibitDetailPanel
                   web3Contract={web3Contract}
                   onRefresh={refresh}
                 />

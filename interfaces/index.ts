@@ -13,7 +13,7 @@ export interface Pixel {
   hexColor: string;
   pixelId?: string;
   owner?: string;
-  blockId?: number;
+  exhibitId?: number;
 }
 
 export interface Bid {

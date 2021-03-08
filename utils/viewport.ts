@@ -45,12 +45,12 @@ export const updateWorld = (pixels: Pixel[]) => {
   spriteCache.position.set(0, 0);
 };
 
-export const updateSelectedBlockLine = (pixels: Pixel[]) => {
-  updateLine(pixels, "selected-block-line");
+export const updateSelectedExhibitLine = (pixels: Pixel[]) => {
+  updateLine(pixels, "selected-exhibit-line");
 };
 
-export const updateBlockLine = (pixels: Pixel[]) => {
-  updateLine(pixels, "block-line");
+export const updateExhibitLine = (pixels: Pixel[]) => {
+  updateLine(pixels, "exhibit-line");
 };
 
 export const updateBorderLine = (pixels: Pixel[]) => {

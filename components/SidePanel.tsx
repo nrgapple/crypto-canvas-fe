@@ -26,7 +26,7 @@ export default ({ onCheckout }: Props) => {
   const isError = useMemo(() => error != "", [error]);
 
   return (
-    <div className="plaque">
+    <div className="plaque side-panel">
       <div className="flex-c-space p8 hw100">
         <div
           style={{

@@ -14,7 +14,7 @@ interface UseBidsReturn {
 
 export const useBids = (
   web3Contract: Web3Contract,
-  blockId: number | undefined
+  exhibitId: number | undefined
 ) => {
   const [highestBid, setHighestBid] = useState<Bid | undefined>(undefined);
   const [loading, setLoading] = useState(false);
@@ -31,11 +31,11 @@ export const useBids = (
 
   useEffect(() => {
     update();
-  }, [contract, blockId]);
+  }, [contract, exhibitId]);
 
-  const getBids = async (contact: Contract, blockId: number) => {
+  const getBids = async (contact: Contract, exhibitId: number) => {
     setLoading(true);
-    const b = await contact.methods.getBid(blockId).call();
+    const b = await contact.methods.getBid(exhibitId).call();
 
     console.log(typeof b.fromAddress);
 
@@ -56,7 +56,7 @@ export const useBids = (
         if (contract && accounts && web3) {
           console.log("accouonts", accounts);
           contract.methods
-            .acceptBid(blockId)
+            .acceptBid(exhibitId)
             .send({ from: accounts[0] })
             .once("receipt", (e: any) => {
               console.log("receipt", e);
@@ -76,7 +76,7 @@ export const useBids = (
           reject(`There is no contact or web3`);
         }
       }),
-    [blockId]
+    [exhibitId]
   );
 
   const handleBid = useCallback(
@@ -85,7 +85,7 @@ export const useBids = (
         if (contract && accounts && web3) {
           console.log("accouonts", accounts);
           contract.methods
-            .placeBid(blockId)
+            .placeBid(exhibitId)
             .send({
               from: accounts[0],
               value: web3.utils.toWei(amount.toString(), "ether"),
@@ -108,12 +108,12 @@ export const useBids = (
           reject(`There is no contact or web3`);
         }
       }),
-    [blockId]
+    [exhibitId]
   );
 
   const update = () => {
-    if (contract && blockId) {
-      getBids(contract, blockId);
+    if (contract && exhibitId) {
+      getBids(contract, exhibitId);
     } else {
       setHighestBid(undefined);
     }

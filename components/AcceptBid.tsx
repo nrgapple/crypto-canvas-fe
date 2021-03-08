@@ -10,7 +10,7 @@ const AcceptBid = ({
 }) => {
   return (
     <div>
-      <div>You own this block.</div>
+      <div>You own this Exhibit.</div>
       {highestBid ? (
         <>
           <div

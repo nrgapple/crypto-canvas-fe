@@ -3,6 +3,7 @@
   --background-down: #dedede;
   --primary: #000;
   --secondary: #000;
+  --link: rgb(47, 101, 252);
   --error: #ff0000;
   --frame: #59503d;
 }
@@ -27,6 +28,7 @@ body {
 .chrome-picker {
   box-shadow: none !important;
   background: none !important;
+  width: 100% !important;
 }
 
 .error {
@@ -41,6 +43,21 @@ body {
   height: 50px;
   border-bottom: 1px solid var(--secondary);
   padding: 8px;
+}
+
+h5,
+h6 {
+  padding: 8px;
+  margin-bottom: 0px;
+}
+
+.clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.clickable:hover {
+  color: var(--link);
 }
 
 .button {
@@ -79,6 +96,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.flex-center-baseline {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
 }
 
 .flex-c-space {
@@ -163,6 +186,11 @@ body {
 .hw100 {
   height: 100%;
   width: 100%;
+}
+
+.side-panel {
+  width: 25vw;
+  margin-left: 8px;
 }
 
 canvas {

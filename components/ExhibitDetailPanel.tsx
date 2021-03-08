@@ -2,9 +2,9 @@ import React, { useEffect, useMemo } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useBids } from "../hooks/useBids";
 import { Web3Contract, WorldStateType } from "../interfaces";
-import { pixelsState, selectedBlockState, worldState } from "../state";
+import { pixelsState, selectedExhibitState, worldState } from "../state";
 import AcceptBid from "./AcceptBid";
-import EditBlock from "./EditBlock";
+import EditExhibit from "./EditExhibit";
 import PlaceBid from "./PlaceBid";
 
 interface Props {
@@ -12,12 +12,14 @@ interface Props {
   onRefresh: () => void;
 }
 
-const BlockDetailPanel = ({ web3Contract, onRefresh }: Props) => {
+const ExhibitDetailPanel = ({ web3Contract, onRefresh }: Props) => {
   const pixels = useRecoilValue(pixelsState);
-  const [selectedBlock, setSelectedBlock] = useRecoilState(selectedBlockState);
+  const [selectedExhibit, setSelectedExhibit] = useRecoilState(
+    selectedExhibitState
+  );
   const { highestBid, placeBid, loading, acceptBid } = useBids(
     web3Contract,
-    selectedBlock
+    selectedExhibit
   );
 
   const [world, setWorld] = useRecoilState(worldState);
@@ -27,30 +29,30 @@ const BlockDetailPanel = ({ web3Contract, onRefresh }: Props) => {
     onRefresh();
   };
 
-  const blocksPixels = useMemo(() => {
-    return pixels.filter((p) => p.blockId === selectedBlock);
-  }, [selectedBlock, pixels]);
+  const ExhibitPixels = useMemo(() => {
+    return pixels.filter((p) => p.exhibitId === selectedExhibit);
+  }, [selectedExhibit, pixels]);
 
   useEffect(() => {
     return () => {
-      setSelectedBlock(undefined);
+      setSelectedExhibit(undefined);
     };
   }, []);
 
   return (
-    <div className="flex-c-space plaque">
+    <div className="flex-c-space plaque side-panel p8">
       <div className="flex-c-space hw100 p8">
         {loading ? (
           <h1>Loading</h1>
         ) : (
           <>
-            <h1>Block: {blocksPixels[0].blockId}</h1>
-            {blocksPixels.length > 0 &&
-            blocksPixels[0].owner === web3Contract.accounts[0] ? (
+            <h1>Exhibit: {ExhibitPixels[0].exhibitId}</h1>
+            {ExhibitPixels.length > 0 &&
+            ExhibitPixels[0].owner === web3Contract.accounts[0] ? (
               <>
                 {world === WorldStateType.edit ? (
-                  <EditBlock
-                    blocksPixels={blocksPixels}
+                  <EditExhibit
+                    exhibitPixels={ExhibitPixels}
                     web3Contract={web3Contract}
                   />
                 ) : (
@@ -63,7 +65,7 @@ const BlockDetailPanel = ({ web3Contract, onRefresh }: Props) => {
                       className="button"
                       onClick={() => setWorld(WorldStateType.edit)}
                     >
-                      Edit your Block
+                      Edit your Exhibit
                     </div>
                   </>
                 )}
@@ -78,4 +80,4 @@ const BlockDetailPanel = ({ web3Contract, onRefresh }: Props) => {
   );
 };
 
-export default BlockDetailPanel;
+export default ExhibitDetailPanel;

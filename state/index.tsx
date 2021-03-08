@@ -29,12 +29,12 @@ export const worldError = atom({
   default: "",
 });
 
-export const selectedBlockState = atom({
-  key: "selected-block",
+export const selectedExhibitState = atom({
+  key: "selected-exhibit",
   default: undefined as number | undefined,
 });
 
-export const editedBlockState = atom({
-  key: "edited-block",
+export const editedExhibitState = atom({
+  key: "edited-exhibit",
   default: [] as Pixel[],
 });

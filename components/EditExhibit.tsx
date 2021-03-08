@@ -1,25 +1,25 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ChromePicker } from "react-color";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { usePixels } from "../hooks/usePixels";
 import { Pixel, Web3Contract, WorldStateType } from "../interfaces";
-import { currentColorState, editedBlockState, worldState } from "../state";
+import { currentColorState, editedExhibitState, worldState } from "../state";
 
 interface Props {
-  blocksPixels: Pixel[];
+  exhibitPixels: Pixel[];
   web3Contract: Web3Contract;
 }
 
-const EditBlock = ({ blocksPixels, web3Contract }: Props) => {
+const EditExhibit = ({ exhibitPixels, web3Contract }: Props) => {
   const [currentColor, setCurrentColor] = useRecoilState(currentColorState);
-  const [editedBlock, setEditedBlock] = useRecoilState(editedBlockState);
+  const [editedExhibit, setEditedExibit] = useRecoilState(editedExhibitState);
   const setWorld = useSetRecoilState(worldState);
   const { editPixels } = usePixels(web3Contract);
 
   const handleEditSubmit = async () => {
     try {
-      await editPixels(editedBlock);
-      setEditedBlock([]);
+      await editPixels(editedExhibit);
+      setEditedExibit([]);
       setWorld(WorldStateType.view);
     } catch (e) {
       console.error(e);
@@ -33,13 +33,13 @@ const EditBlock = ({ blocksPixels, web3Contract }: Props) => {
         onChange={(color) => setCurrentColor(color.hex)}
         disableAlpha={true}
       />
-      {!editedBlock.every((x) => blocksPixels.includes(x)) && (
+      {!editedExhibit.every((x) => exhibitPixels.includes(x)) && (
         <div className="button" onClick={() => handleEditSubmit()}>
-          Update Block
+          Update Exhibit
         </div>
       )}
     </div>
   );
 };
 
-export default EditBlock;
+export default EditExhibit;

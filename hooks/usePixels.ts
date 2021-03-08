@@ -32,6 +32,7 @@ export const usePixels = (web3Contract: Web3Contract) => {
 
   const getPixels = async (instance: Contract) => {
     const p = await instance.methods.getPixels().call();
+    console.log("pixels", p);
 
     setPixels(
       p.map(
@@ -40,14 +41,14 @@ export const usePixels = (web3Contract: Web3Contract) => {
           y,
           hexColor,
           owner,
-          blockId,
+          exhibitId,
           pixelId,
         }: {
           x: string;
           y: string;
           hexColor: string;
           owner: string;
-          blockId: number;
+          exhibitId: number;
           pixelId: string;
         }) =>
           ({
@@ -55,7 +56,7 @@ export const usePixels = (web3Contract: Web3Contract) => {
             y: parseInt(y),
             hexColor,
             owner,
-            blockId,
+            exhibitId: exhibitId,
             pixelId,
           } as Pixel)
       )
@@ -75,7 +76,7 @@ export const usePixels = (web3Contract: Web3Contract) => {
       }));
 
       const transaction = contract.methods.changePixels(
-        edited[0].blockId,
+        edited[0].exhibitId,
         valsToSend
       );
 
