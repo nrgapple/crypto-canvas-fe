@@ -26,40 +26,42 @@ export default ({ onCheckout }: Props) => {
   const isError = useMemo(() => error != "", [error]);
 
   return (
-    <div className="flex-c-space p8 lb-t lb-b lb-r">
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
-        <div>Selected Pixels</div>
-        <div>{selectedPixels.length}</div>
-      </div>
-      {error && (
-        <div className="error flex-c-center">
-          <div>Error</div>
-          <div>{error}</div>
+    <div className="plaque">
+      <div className="flex-c-space p8 hw100">
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <div>Selected Pixels</div>
+          <div>{selectedPixels.length}</div>
         </div>
-      )}
-      <ChromePicker
-        color={currentColor}
-        onChange={(color) => setCurrentColor(color.hex)}
-        disableAlpha={true}
-      />
-      <div className="flex-space-center m8 lb p8">
-        <div className="button" onClick={() => toggleClearModal()}>
-          Clear
-        </div>
-        {selectedPixels.length > 0 && (
-          <div
-            className={`button ${isError && "disabled"}`}
-            onClick={() => onCheckout(selectedPixels)}
-          >
-            Check out
+        {error && (
+          <div className="error flex-c-center">
+            <div>Error</div>
+            <div>{error}</div>
           </div>
         )}
+        <ChromePicker
+          color={currentColor}
+          onChange={(color) => setCurrentColor(color.hex)}
+          disableAlpha={true}
+        />
+        <div className="flex-space-center m8 p8">
+          <div className="button" onClick={() => toggleClearModal()}>
+            Clear
+          </div>
+          {selectedPixels.length > 0 && (
+            <div
+              className={`button ${isError && "disabled"}`}
+              onClick={() => onCheckout(selectedPixels)}
+            >
+              Check out
+            </div>
+          )}
+        </div>
       </div>
       <Modal isOpen={showClearModal} toggle={() => toggleClearModal()}>
         <ModalBody>Are you sure you want to clear?</ModalBody>

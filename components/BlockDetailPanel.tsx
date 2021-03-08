@@ -38,14 +38,8 @@ const BlockDetailPanel = ({ web3Contract, onRefresh }: Props) => {
   }, []);
 
   return (
-    <div className="flex-c-space lb">
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
+    <div className="flex-c-space plaque">
+      <div className="flex-c-space hw100 p8">
         {loading ? (
           <h1>Loading</h1>
         ) : (
