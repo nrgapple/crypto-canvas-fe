@@ -97,8 +97,13 @@ const World = ({ you }: Props) => {
         newPoint.owner === s.owner;
       const notMatch = (s: Pixel) => !match(s);
 
-      if (editedBlock.some(match)) {
-        edited = editedBlock.filter(notMatch);
+      const matchedPixel = editedBlock.find(match);
+      if (matchedPixel) {
+        if (matchedPixel.hexColor === newPoint.hexColor) {
+          edited = editedBlock.filter(notMatch);
+        } else {
+          edited = [...editedBlock.filter(notMatch), newPoint];
+        }
         setEditedBlock(edited);
       } else if (pixels.some(match)) {
         const otherPixel = pixels.find(match);
