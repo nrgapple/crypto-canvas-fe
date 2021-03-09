@@ -1,10 +1,8 @@
 import Layout from "../../components/Layout";
-import { useRouter } from "next/router";
 import React from "react";
 import Link from "next/link";
 
 const About = () => {
-  const router = useRouter();
   return (
     <Layout title="About">
       <div className="nav-bar">
