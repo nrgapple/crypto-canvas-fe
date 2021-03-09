@@ -10,7 +10,7 @@ import { allBidsState } from "../../state";
 const BidsPage = () => {
   const { loading, web3Contract } = useWeb3();
   useBids(web3Contract);
-  const [allBids, seetAllBids] = useRecoilState(allBidsState);
+  const [allBids] = useRecoilState(allBidsState);
 
   return (
     <Layout title="Bids">
