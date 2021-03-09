@@ -12,7 +12,7 @@ import { useWeb3 } from "../hooks/useWeb3";
 import { usePixels } from "../hooks/usePixels";
 import { Pixel, WorldStateType } from "../interfaces";
 import ExhibitDetailPanel from "../components/ExhibitDetailPanel";
-import Link from "next/Link";
+import Link from "next/link";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 
