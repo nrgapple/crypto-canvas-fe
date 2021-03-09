@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "next/Link";
 import React from "react";
 import { useRecoilState } from "recoil";
 import BidsList from "../../components/BidsList";
