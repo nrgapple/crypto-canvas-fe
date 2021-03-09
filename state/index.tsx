@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { Pixel, WorldStateType } from "../interfaces";
+import { Bid, Pixel, WorldStateType } from "../interfaces";
 import { localStorageEffect } from "./utils";
 
 export const pixelsState = atom({
@@ -37,4 +37,9 @@ export const selectedExhibitState = atom({
 export const editedExhibitState = atom({
   key: "edited-exhibit",
   default: [] as Pixel[],
+});
+
+export const allBidsState = atom({
+  key: "all-bids",
+  default: [] as Bid[],
 });

@@ -1,34 +1,41 @@
-import { useMemo } from "react";
-import { useBids } from "../hooks/useBids";
-import { Web3Contract } from "../interfaces";
+import { Table } from "reactstrap";
+import { Bid } from "../interfaces";
+import { useRouter } from "next/router";
 
 interface Props {
-  web3Contract: Web3Contract;
+  allBids: Bid[];
 }
 
-const BidsList = ({ web3Contract }: Props) => {
-  const { bids } = useBids(web3Contract);
-  const { web3 } = useMemo(
-    () => ({
-      web3: web3Contract?.web3,
-    }),
-    [web3Contract]
-  );
-
+const BidsList = ({ allBids }: Props) => {
+  const router = useRouter();
   return (
-    <ul>
-      {bids &&
-        bids.map((b, i) => (
-          <li key={i}>
-            <div>
-              <b>Ether</b> {web3.utils.fromWei(b.amount.toString())}
-            </div>
-            <div>
-              <b>From</b> {b.from}
-            </div>
-          </li>
-        ))}
-    </ul>
+    <Table>
+      <thead>
+        <tr>
+          <th>Exhibit Id</th>
+          <th>Highest Bidder</th>
+          <th>Amount (Eth)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {allBids &&
+          allBids.map((b, i) => (
+            <tr key={i}>
+              <th scope="row">{b.exhibitId}</th>
+              <td>{b.from}</td>
+              <td>{b.amount}</td>
+              <td>
+                <div
+                  className="button"
+                  onClick={() => router.push(`/?exhibit=${b.exhibitId}`)}
+                >
+                  View on Canvas
+                </div>
+              </td>
+            </tr>
+          ))}
+      </tbody>
+    </Table>
   );
 };
 

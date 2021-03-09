@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Bid, Web3Contract } from "../interfaces";
 import { Contract } from "web3-eth-contract";
-import { useRecoilState } from "recoil";
 import { checkEmptyAddress } from "../utils/helpers";
+import { useRecoilState } from "recoil";
+import { allBidsState } from "../state";
 
 interface UseBidsReturn {
   loading: boolean;
@@ -12,12 +13,16 @@ interface UseBidsReturn {
   acceptBid: () => Promise<void>;
 }
 
-export const useBids = (
-  web3Contract: Web3Contract,
-  exhibitId: number | undefined
-) => {
+interface AllBidsResponse {
+  fromAddress: string;
+  amount: string;
+  exhibitId: string;
+}
+
+export const useBids = (web3Contract: Web3Contract, exhibitId?: number) => {
   const [highestBid, setHighestBid] = useState<Bid | undefined>(undefined);
   const [loading, setLoading] = useState(false);
+  const [allBids, setAllBids] = useRecoilState(allBidsState);
 
   const { contract, web3, accounts } = useMemo(
     () =>
@@ -33,9 +38,15 @@ export const useBids = (
     update();
   }, [contract, exhibitId]);
 
-  const getBids = async (contact: Contract, exhibitId: number) => {
+  useEffect(() => {
+    if (contract && !allBids.length) {
+      getAllBids(contract);
+    }
+  }, [contract]);
+
+  const getBids = async (contract: Contract, exhibitId: number) => {
     setLoading(true);
-    const b = await contact.methods.getBid(exhibitId).call();
+    const b = await contract.methods.getBid(exhibitId).call();
 
     console.log(typeof b.fromAddress);
 
@@ -116,6 +127,30 @@ export const useBids = (
       getBids(contract, exhibitId);
     } else {
       setHighestBid(undefined);
+    }
+  };
+
+  const getAllBids = async (contract: Contract) => {
+    try {
+      if (contract) {
+        const currAllBids = await contract.methods.getAllHighestBids().call();
+        setAllBids(
+          currAllBids.map(
+            ({
+              fromAddress: from,
+              amount,
+              exhibitId: exId,
+            }: AllBidsResponse) => ({
+              from,
+              amount: parseFloat(web3.utils.fromWei(amount)),
+              exhibitId: parseInt(exId),
+            })
+          )
+        );
+      }
+    } catch (e) {
+      console.error(e);
+      setAllBids([]);
     }
   };
 

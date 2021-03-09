@@ -50,7 +50,9 @@ const PlaceBid = ({
           value={bidAmount}
           onChange={(e) => setBidAmount(parseFloat(e.target.value))}
         />
-        <div onClick={() => onPlaceBid(bidAmount)}>Place Bid</div>
+        <div className="button" onClick={() => onPlaceBid(bidAmount)}>
+          Place Bid
+        </div>
       </div>
     </>
   );

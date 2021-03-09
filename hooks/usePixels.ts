@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
-import { useEffect, useMemo, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useEffect, useMemo } from "react";
+import { useRecoilState } from "recoil";
 import { Contract } from "web3-eth-contract";
 import { Pixel, Web3Contract } from "../interfaces";
 import { pixelsState } from "../state";
@@ -32,7 +32,6 @@ export const usePixels = (web3Contract: Web3Contract) => {
 
   const getPixels = async (instance: Contract) => {
     const p = await instance.methods.getPixels().call();
-
     setPixels(
       p.map(
         ({
@@ -47,7 +46,7 @@ export const usePixels = (web3Contract: Web3Contract) => {
           y: string;
           hexColor: string;
           owner: string;
-          exhibitId: number;
+          exhibitId: string;
           pixelId: string;
         }) =>
           ({
@@ -55,7 +54,7 @@ export const usePixels = (web3Contract: Web3Contract) => {
             y: parseInt(y),
             hexColor,
             owner,
-            exhibitId: exhibitId,
+            exhibitId: parseInt(exhibitId),
             pixelId,
           } as Pixel)
       )
@@ -84,22 +83,18 @@ export const usePixels = (web3Contract: Web3Contract) => {
           from: accounts[0],
         })
         .once("receipt", (e: any) => {
-          console.log("receipt", e);
           update();
           res(e as string);
         })
         .once("error", (e: any) => {
-          console.error(e);
           rej(e);
         })
         .catch((e: any) => {
-          console.error(e);
           rej(e);
         });
 
       if (contract && web3) {
       } else {
-        console.error(`There is no contact or web3`, { contract, web3 });
         rej(`There is no contact or web3`);
       }
     });
@@ -123,20 +118,16 @@ export const usePixels = (web3Contract: Web3Contract) => {
             value: web3.utils.toWei(".01", "ether"),
           })
           .once("receipt", (e: any) => {
-            console.log("receipt", e);
             update();
             res(e as string);
           })
           .once("error", (e: any) => {
-            console.error(e);
             rej(e);
           })
           .catch((e: any) => {
-            console.error(e);
             rej(e);
           });
       } else {
-        console.error(`There is no contact or web3`, { contract, web3 });
         rej(`There is no contact or web3`);
       }
     });

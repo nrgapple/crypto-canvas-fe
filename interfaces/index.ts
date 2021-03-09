@@ -19,6 +19,7 @@ export interface Pixel {
 export interface Bid {
   from: string | undefined;
   amount: number;
+  exhibitId?: number;
 }
 
 export interface Web3Contract {

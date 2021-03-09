@@ -1,14 +1,24 @@
 import Layout from "../../components/Layout";
 import { useRouter } from "next/router";
+import React from "react";
+import Link from "next/link";
 
 const About = () => {
   const router = useRouter();
   return (
     <Layout title="About">
       <div className="nav-bar">
-        <h5 className="clickable" onClick={() => router.push("/")}>
-          Crypto Canvas
-        </h5>
+        <div className="flex-center-baseline">
+          <Link href={"/"}>
+            <h5 className="clickable">Crypto Canvas</h5>
+          </Link>
+          <Link href={"/about"}>
+            <h6 className="clickable">about</h6>
+          </Link>
+          <Link href={"/bids"}>
+            <h6 className="clickable">bids</h6>
+          </Link>
+        </div>
       </div>
       <div className="m8">
         <h1>Create, Buy, and Sell Art on a Global Canvas</h1>

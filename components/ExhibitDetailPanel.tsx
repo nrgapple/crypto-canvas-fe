@@ -30,7 +30,10 @@ const ExhibitDetailPanel = ({ web3Contract, onRefresh }: Props) => {
   };
 
   const ExhibitPixels = useMemo(() => {
-    return pixels.filter((p) => p.exhibitId === selectedExhibit);
+    if (pixels.length > 0 && selectedExhibit != undefined) {
+      return pixels.filter((p) => p.exhibitId === selectedExhibit);
+    }
+    return undefined;
   }, [selectedExhibit, pixels]);
 
   useEffect(() => {
@@ -42,7 +45,7 @@ const ExhibitDetailPanel = ({ web3Contract, onRefresh }: Props) => {
   return (
     <div className="flex-c-space plaque side-panel p8">
       <div className="flex-c-space hw100 p8">
-        {loading ? (
+        {loading || !ExhibitPixels ? (
           <h1>Loading</h1>
         ) : (
           <>

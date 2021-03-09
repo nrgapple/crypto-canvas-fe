@@ -37,7 +37,7 @@ export const useWeb3 = () => {
 
       const instance = new web3.eth.Contract(
         PixelToken.abi as AbiItem[] | AbiItem,
-        "0xbAbA8bD714d62C47AEaee54334EBCdE0F031Fd69"
+        deployedNetwork && deployedNetwork.address
       );
 
       // TODO: what is this?

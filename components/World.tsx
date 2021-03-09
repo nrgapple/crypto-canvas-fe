@@ -141,7 +141,7 @@ const World = ({ you }: Props) => {
   );
 
   useEffect(() => {
-    if (selectedExhibit) {
+    if (selectedExhibit != undefined) {
       updateSelectedExhibitLine(
         pixels.filter((p) => selectedExhibit === p.exhibitId)
       );
