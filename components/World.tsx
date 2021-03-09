@@ -178,7 +178,9 @@ const World = ({ you }: Props) => {
 
   useEffect(() => {
     updateExhibitLine(
-      overExhibit ? pixels.filter((p) => p.exhibitId === overExhibit) : []
+      overExhibit != undefined
+        ? pixels.filter((p) => p.exhibitId === overExhibit)
+        : []
     );
   }, [overExhibit]);
 
