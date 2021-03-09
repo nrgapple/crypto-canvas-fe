@@ -27,17 +27,19 @@ const EditExhibit = ({ exhibitPixels, web3Contract }: Props) => {
   };
 
   return (
-    <div>
+    <div className="border-sm p8 flex-c-center">
       <ChromePicker
         color={currentColor}
         onChange={(color) => setCurrentColor(color.hex)}
         disableAlpha={true}
       />
-      {!editedExhibit.every((x) => exhibitPixels.includes(x)) && (
-        <div className="button" onClick={() => handleEditSubmit()}>
-          Update Exhibit
-        </div>
-      )}
+      <div className="flex-space-center m8 p8">
+        {!editedExhibit.every((x) => exhibitPixels.includes(x)) && (
+          <div className="button" onClick={() => handleEditSubmit()}>
+            Update Exhibit
+          </div>
+        )}
+      </div>
     </div>
   );
 };

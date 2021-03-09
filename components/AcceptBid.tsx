@@ -9,26 +9,26 @@ const AcceptBid = ({
   onAcceptBid: () => void;
 }) => {
   return (
-    <div>
-      <div>You own this Exhibit.</div>
+    <div className="flex-c-center-center">
+      <div className="text-center">
+        <h5>You own this Exhibit</h5>
+      </div>
       {highestBid ? (
         <>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "auto auto",
-              gap: "4px",
-            }}
-          >
-            <div>Current Highest Bid:</div>
-            <div>{highestBid.amount}</div>
+          <div className="flex-c-center-center">
+            <div>
+              <h5>Current Highest Bid</h5>
+            </div>
+            <div>{highestBid.amount} Eth</div>
           </div>
           <div className="button" onClick={onAcceptBid}>
             Accept Bid
           </div>
         </>
       ) : (
-        <div>Currently no bids</div>
+        <div className="error">
+          <h5>Currently no bids</h5>
+        </div>
       )}
     </div>
   );

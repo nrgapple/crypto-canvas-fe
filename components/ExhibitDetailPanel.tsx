@@ -44,12 +44,14 @@ const ExhibitDetailPanel = ({ web3Contract, onRefresh }: Props) => {
 
   return (
     <div className="flex-c-space plaque side-panel p8">
-      <div className="flex-c-space hw100 p8">
+      <div className="flex-c-space-between hw100 p8">
         {loading || !ExhibitPixels ? (
           <h1>Loading</h1>
         ) : (
           <>
-            <h1>Exhibit: {ExhibitPixels[0].exhibitId}</h1>
+            <div className="flex-center-center title">
+              <h1>Exhibit: {ExhibitPixels[0].exhibitId}</h1>
+            </div>
             {ExhibitPixels.length > 0 &&
             ExhibitPixels[0].owner === web3Contract.accounts[0] ? (
               <>

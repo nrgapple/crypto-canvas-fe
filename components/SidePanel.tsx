@@ -27,40 +27,45 @@ export default ({ onCheckout }: Props) => {
 
   return (
     <div className="plaque side-panel">
-      <div className="flex-c-space p8 hw100">
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-          }}
-        >
-          <div>Selected Pixels</div>
+      <div className="flex-c-space-between p8 hw100">
+        <div className="flex-center-center title">
+          <h1>Create</h1>
+        </div>
+        <div className="flex-c-center-center">
+          <div>
+            <h5>Selected Pixels</h5>
+          </div>
           <div>{selectedPixels.length}</div>
         </div>
         {error && (
-          <div className="error flex-c-center">
-            <div>Error</div>
+          <div className="error flex-c-center-center">
+            <div>
+              <h5>Error</h5>
+            </div>
             <div>{error}</div>
           </div>
         )}
-        <ChromePicker
-          color={currentColor}
-          onChange={(color) => setCurrentColor(color.hex)}
-          disableAlpha={true}
-        />
-        <div className="flex-space-center m8 p8">
-          <div className="button" onClick={() => toggleClearModal()}>
-            Clear
+        <div className="border-sm p8 flex-c-center">
+          <ChromePicker
+            color={currentColor}
+            onChange={(color) => setCurrentColor(color.hex)}
+            disableAlpha={true}
+          />
+          <div className="flex-space-center m8 p8">
+            {selectedPixels.length > 0 && (
+              <>
+                <div className="button" onClick={() => toggleClearModal()}>
+                  Clear
+                </div>
+                <div
+                  className={`button ${isError && "disabled"}`}
+                  onClick={() => onCheckout(selectedPixels)}
+                >
+                  Check out
+                </div>
+              </>
+            )}
           </div>
-          {selectedPixels.length > 0 && (
-            <div
-              className={`button ${isError && "disabled"}`}
-              onClick={() => onCheckout(selectedPixels)}
-            >
-              Check out
-            </div>
-          )}
         </div>
       </div>
       <Modal isOpen={showClearModal} toggle={() => toggleClearModal()}>

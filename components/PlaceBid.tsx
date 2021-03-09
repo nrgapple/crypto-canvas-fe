@@ -19,39 +19,35 @@ const PlaceBid = ({
     <>
       {highestBid ? (
         <>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "auto 200px",
-              minWidth: "0",
-              overflow: "hidden",
-              gap: "4px",
-            }}
-          >
-            <div>Current Bid:</div>
-            <div>{highestBid.amount}</div>
-            <div>User:</div>
-            <div>{highestBid.from}</div>
+          <div className="flex-c-center-center">
+            <div>
+              <h5>Current Highest Bid</h5>
+            </div>
+            <div>{highestBid.amount} Eth</div>
+            <div>
+              <h5>User</h5>
+            </div>
+            <div className="address">{highestBid.from}</div>
           </div>
         </>
       ) : (
-        <div>Currently no bids</div>
+        <div className="flex-c-center-center">
+          <div>
+            <h5>Currently No Bids</h5>
+          </div>
+        </div>
       )}
-      <div>Place Bid</div>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "auto auto",
-          padding: "8px",
-        }}
-      >
-        <input
-          type="number"
-          value={bidAmount}
-          onChange={(e) => setBidAmount(parseFloat(e.target.value))}
-        />
-        <div className="button" onClick={() => onPlaceBid(bidAmount)}>
-          Place Bid
+      <div className="border-sm p8 flex-c-center">
+        <div>Place Bid</div>
+        <div className="flex-center-center p8">
+          <input
+            type="number"
+            value={bidAmount}
+            onChange={(e) => setBidAmount(parseFloat(e.target.value))}
+          />
+          <div className="button" onClick={() => onPlaceBid(bidAmount)}>
+            Place Bid
+          </div>
         </div>
       </div>
     </>
