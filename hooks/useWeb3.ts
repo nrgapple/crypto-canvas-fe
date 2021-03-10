@@ -3,8 +3,7 @@ import getWeb3 from "../utils/getWeb3";
 import PixelToken from "../contracts/PixelToken.json";
 import { AbiItem } from "web3-utils";
 import { Web3Contract } from "../interfaces";
-
-export const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
+import { contractAddress } from "../utils/helpers";
 
 type UseWeb3Return = {
   loading: boolean;

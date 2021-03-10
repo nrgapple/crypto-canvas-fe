@@ -123,7 +123,7 @@ export const useBids = (web3Contract: Web3Contract, exhibitId?: number) => {
   );
 
   const update = () => {
-    if (contract && exhibitId) {
+    if (contract && exhibitId != undefined) {
       getBids(contract, exhibitId);
     } else {
       setHighestBid(undefined);
