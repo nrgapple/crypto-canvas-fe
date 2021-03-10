@@ -31,20 +31,22 @@ export default ({ onCheckout }: Props) => {
         <div className="flex-center-center title">
           <h1>Create</h1>
         </div>
-        <div className="flex-c-center-center">
-          <div>
-            <h5>Selected Pixels</h5>
-          </div>
-          <div>{selectedPixels.length}</div>
-        </div>
-        {error && (
-          <div className="error flex-c-center-center">
-            <div>
-              <h5>Error</h5>
+        <div className="border-sm">
+          <div className="flex-c-center-center p8">
+            <div className="text-center">
+              <h5>Selected Pixels</h5>
             </div>
-            <div>{error}</div>
+            <div>{selectedPixels.length}</div>
           </div>
-        )}
+          {error && (
+            <div className="error flex-c-center-center">
+              <div>
+                <h5>Error</h5>
+              </div>
+              <div>{error}</div>
+            </div>
+          )}
+        </div>
         <div className="border-sm p8 flex-c-center">
           <ChromePicker
             color={currentColor}

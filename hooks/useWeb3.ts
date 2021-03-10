@@ -4,6 +4,8 @@ import PixelToken from "../contracts/PixelToken.json";
 import { AbiItem } from "web3-utils";
 import { Web3Contract } from "../interfaces";
 
+export const contractAddress = process.env.NEXT_PUBLIC_CONTACT_ADDRESS;
+
 type UseWeb3Return = {
   loading: boolean;
   web3Contract: Web3Contract;
@@ -37,7 +39,7 @@ export const useWeb3 = () => {
 
       const instance = new web3.eth.Contract(
         PixelToken.abi as AbiItem[] | AbiItem,
-        deployedNetwork && deployedNetwork.address
+        contractAddress ?? deployedNetwork.address
       );
 
       // TODO: what is this?
