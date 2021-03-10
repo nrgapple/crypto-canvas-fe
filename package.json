@@ -22,6 +22,7 @@
     "react-color": "^2.19.3",
     "react-dom": "^16.12.0",
     "react-sticky-mouse-tooltip": "^0.0.1",
+    "react-use": "^17.1.1",
     "reactstrap": "^8.9.0",
     "recoil": "^0.1.2",
     "typechain": "^4.0.2",

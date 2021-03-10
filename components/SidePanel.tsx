@@ -4,6 +4,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { currentColorState, selectedPixelsState, worldError } from "../state";
 import { Modal, ModalFooter, ModalBody } from "reactstrap";
 import { Pixel } from "../interfaces";
+import UploadModal from "./UploadModal";
 
 interface Props {
   onCheckout: (selectedPixels: Pixel[]) => void;
@@ -15,12 +16,14 @@ export default ({ onCheckout }: Props) => {
   );
   const [currentColor, setCurrentColor] = useRecoilState(currentColorState);
   const [showClearModal, setShowClearModal] = useState(false);
+  const [showUploadModal, setShowUploadModal] = useState(false);
 
   const clearSelected = () => {
     setSelectedPixels([]);
     toggleClearModal();
   };
   const toggleClearModal = () => setShowClearModal(!showClearModal);
+  const toggleUploadModal = () => setShowUploadModal(!showUploadModal);
   const error = useRecoilValue(worldError);
 
   const isError = useMemo(() => error != "", [error]);
@@ -53,19 +56,26 @@ export default ({ onCheckout }: Props) => {
             onChange={(color) => setCurrentColor(color.hex)}
             disableAlpha={true}
           />
-          <div className="flex-space-center m8 p8">
-            {selectedPixels.length > 0 && (
-              <>
-                <div className="button" onClick={() => toggleClearModal()}>
-                  Clear
-                </div>
-                <div
-                  className={`button ${isError && "disabled"}`}
-                  onClick={() => onCheckout(selectedPixels)}
-                >
-                  Check out
-                </div>
-              </>
+          <div className="flex-c-center-center">
+            <div className="flex-space-center m8">
+              {selectedPixels.length > 0 && (
+                <>
+                  <div className="button" onClick={() => toggleClearModal()}>
+                    Clear
+                  </div>
+                  <div
+                    className={`button ${isError && "disabled"}`}
+                    onClick={() => onCheckout(selectedPixels)}
+                  >
+                    Check out
+                  </div>
+                </>
+              )}
+            </div>
+            {selectedPixels.length == 1 && (
+              <div className="button" onClick={() => toggleUploadModal()}>
+                Upload at Pixel
+              </div>
             )}
           </div>
         </div>
@@ -81,6 +91,11 @@ export default ({ onCheckout }: Props) => {
           </div>
         </ModalFooter>
       </Modal>
+      <UploadModal
+        isOpen={showUploadModal}
+        close={() => toggleUploadModal()}
+        toggle={() => toggleUploadModal()}
+      />
     </div>
   );
 };
