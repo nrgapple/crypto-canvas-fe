@@ -8,7 +8,7 @@ type Props = {
   title?: string;
 };
 
-const Layout = ({ children, title = "Cryto Canvas" }: Props) => (
+const Layout = ({ children, title = "Exhibit (XBT)" }: Props) => (
   <>
     <Head>
       <title>{title}</title>
