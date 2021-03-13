@@ -24,8 +24,16 @@ import MouseTooltip from "react-sticky-mouse-tooltip";
 import useMouse from "@react-hook/mouse-position";
 import useComponentSize from "@rehooks/component-size";
 import { useViewportEventListener } from "../hooks/useViewportEventListener";
-import { Box } from "@chakra-ui/layout";
+import { Box, Divider, Heading, VStack } from "@chakra-ui/layout";
 import { checkIsRect } from "../utils/helpers";
+import {
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
+} from "@chakra-ui/popover";
+import { Portal, Stat, StatLabel, StatNumber } from "@chakra-ui/react";
 
 interface Props {
   you: string;
@@ -274,44 +282,31 @@ const World = ({ you }: Props) => {
   return (
     <>
       <Box maxHeight="100%" ref={worldRef} className="world"></Box>
-      <MouseTooltip
-        visible={overPixel != undefined}
-        offsetX={15}
-        offsetY={10}
-        style={{
-          zIndex: "1000",
-        }}
-      >
-        <div
-          style={{
-            background: overPixel?.hexColor,
-            padding: "2px",
-          }}
-        >
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "auto auto",
-              gap: "2px",
-              background: "#fff",
-              margin: "2px",
-            }}
+      <Portal>
+        {overPixel != undefined && (
+          <Box
+            top={mouse.pageY! + 10}
+            left={mouse.pageX! + 10}
+            position="absolute"
+            background="var(--background)"
+            borderColor={overPixel?.hexColor}
+            borderWidth="1px"
+            borderRadius="4px"
+            padding="8px"
           >
-            <div>Owner: </div>
-            <div>
-              {overPixel?.owner === you
-                ? "You own this Exhibit"
-                : overPixel?.owner}
-            </div>
-            <div>Exhibit: </div>
-            <div>{overPixel?.exhibitId}</div>
-            <div>Point: </div>
-            <div>{`{${overPixel?.x}, ${overPixel?.y}}`}</div>
-            <div>Pixel Id: </div>
-            <div>{overPixel?.pixelId}</div>
-          </div>
-        </div>
-      </MouseTooltip>
+            <VStack>
+              <Heading>Exhibit {overPixel?.exhibitId}</Heading>
+              <Divider />
+              <Stat>
+                <StatLabel>Pixel</StatLabel>
+                <StatNumber>
+                  {`{x: ${overPixel?.x}, y: ${overPixel?.y}}`}
+                </StatNumber>
+              </Stat>
+            </VStack>
+          </Box>
+        )}
+      </Portal>
     </>
   );
 };
