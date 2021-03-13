@@ -1,4 +1,3 @@
-import { Table } from "reactstrap";
 import { Bid } from "../interfaces";
 import { useRouter } from "next/router";
 
@@ -9,7 +8,7 @@ interface Props {
 const BidsList = ({ allBids }: Props) => {
   const router = useRouter();
   return (
-    <Table>
+    <table>
       <thead>
         <tr>
           <th>Exhibit Id</th>
@@ -35,7 +34,7 @@ const BidsList = ({ allBids }: Props) => {
             </tr>
           ))}
       </tbody>
-    </Table>
+    </table>
   );
 };
 

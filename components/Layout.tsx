@@ -1,5 +1,7 @@
 import React, { ReactNode } from "react";
 import Head from "next/head";
+import NavBar from "./NavBar";
+import { Box, Center, Flex } from "@chakra-ui/layout";
 
 type Props = {
   children?: ReactNode;
@@ -13,7 +15,12 @@ const Layout = ({ children, title = "Cryto Canvas" }: Props) => (
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
-    <div className="app">{children}</div>
+    <Flex direction="column" h="100%" w="100%">
+      <NavBar />
+      <Center w="100%" h="100%">
+        {children}
+      </Center>
+    </Flex>
   </>
 );
 

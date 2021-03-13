@@ -11,7 +11,7 @@ import {
   worldState,
 } from "../state";
 
-import { app, checkIsRect, SIZE, viewport } from "../utils/index";
+import { app, SIZE, viewport } from "../utils/index";
 import {
   displayScreen,
   updateExhibitLine,
@@ -24,6 +24,8 @@ import MouseTooltip from "react-sticky-mouse-tooltip";
 import useMouse from "@react-hook/mouse-position";
 import useComponentSize from "@rehooks/component-size";
 import { useViewportEventListener } from "../hooks/useViewportEventListener";
+import { Box } from "@chakra-ui/layout";
+import { checkIsRect } from "../utils/helpers";
 
 interface Props {
   you: string;
@@ -194,27 +196,31 @@ const World = ({ you }: Props) => {
 
   useViewportEventListener("clicked", handleClickedDetail, WorldStateType.view);
 
-  useEffect(() => {
-    const canvas = displayScreen(worldRef.current!);
-    viewport.screenWidth = worldRef.current!.offsetWidth;
-    viewport.screenHeight = worldRef.current!.offsetHeight;
-    viewport.clamp({ direction: "all" });
-    viewport.clampZoom({
-      maxHeight: SIZE + SIZE * 1,
-      maxWidth: SIZE + SIZE * 1,
-      minHeight: 5,
-      minWidth: 5,
-    });
-    viewport.fit();
-    canvasRef.current = canvas;
-  }, []);
-
-  useEffect(() => {
+  const resize = () => {
+    app.renderer.resize(width, height);
     viewport.resize(
       worldRef.current!.offsetWidth,
       worldRef.current!.offsetHeight
     );
+  };
+
+  useEffect(() => {
+    const canvas = displayScreen(worldRef.current!);
+    resize();
     viewport.fit();
+    viewport.moveCenter(5, 5);
+    viewport.clamp({ direction: "all" });
+    viewport.clampZoom({
+      maxHeight: SIZE + SIZE * 2,
+      maxWidth: SIZE + SIZE * 2,
+      minHeight: 5,
+      minWidth: 5,
+    });
+    canvasRef.current = canvas;
+  }, []);
+
+  useEffect(() => {
+    resize();
   }, [width, height]);
 
   useEffect(() => {
@@ -267,7 +273,7 @@ const World = ({ you }: Props) => {
 
   return (
     <>
-      <div ref={worldRef} className="world"></div>
+      <Box maxHeight="100%" ref={worldRef} className="world"></Box>
       <MouseTooltip
         visible={overPixel != undefined}
         offsetX={15}

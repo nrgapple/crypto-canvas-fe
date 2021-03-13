@@ -1,9 +1,10 @@
-import { app, getMaxMinPoints, SIZE, viewport } from "./index";
+import { app, SIZE, viewport } from "./index";
 import * as PIXI from "pixi.js";
 import hexRgb from "hex-rgb";
 import { Pixel } from "../interfaces";
 //@ts-ignore
 import avgColor from "@bencevans/color-array-average";
+import { getMaxMinPoints } from "./helpers";
 
 export const displayScreen = (el: Element) => {
   el.appendChild(app.view);
@@ -11,7 +12,7 @@ export const displayScreen = (el: Element) => {
   app.stage.addChild(viewport);
   app.renderer.backgroundColor = 0xeeeeee;
   // activate plugins
-  viewport.drag().pinch().wheel().decelerate().fitWorld();
+  viewport.drag().pinch().wheel().decelerate();
   return app.view;
 };
 
