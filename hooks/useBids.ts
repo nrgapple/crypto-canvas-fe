@@ -35,8 +35,6 @@ export const useBids = (web3Contract: Web3Contract, exhibitId?: number) => {
   );
 
   useEffect(() => {
-    console.log("here");
-
     update();
   }, [contract, exhibitId]);
 
@@ -49,9 +47,6 @@ export const useBids = (web3Contract: Web3Contract, exhibitId?: number) => {
   const getBids = async (contract: Contract, exhibitId: number) => {
     setLoading(true);
     const b = await contract.methods.getBid(exhibitId).call();
-
-    console.log(typeof b.fromAddress);
-
     const newBid = !checkEmptyAddress(b.fromAddress)
       ? ({
           from: b.fromAddress,

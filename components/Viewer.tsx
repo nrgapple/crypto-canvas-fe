@@ -3,14 +3,17 @@ import { Pixel } from "../interfaces";
 import { createImageFromPixels } from "../utils/helpers";
 import { Skeleton } from "@chakra-ui/skeleton";
 import { Image } from "@chakra-ui/image";
-import { Box } from "@chakra-ui/react";
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css';
+
 
 interface Props {
   pixels: Pixel[];
 }
 
 const Viewer = ({ pixels }: Props): JSX.Element => {
-  const [isloading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isImageOpen, setImageOpen] = useState<boolean>(false)
   const [imageUri, setImageUri] = useState<string>("");
   const getImage = async () => {
     setIsLoading(true);
@@ -24,7 +27,12 @@ const Viewer = ({ pixels }: Props): JSX.Element => {
       getImage();
     }
   }, [pixels]);
-  return <>{isloading ? <Skeleton /> : <Image src={imageUri} />}</>;
+  return (
+    <>
+      {isLoading ? <Skeleton /> : <Image onClick={() => setImageOpen(true)} src={imageUri} />}
+      {isImageOpen && <Lightbox mainSrc={imageUri} onCloseRequest={() => setImageOpen(false)} />}
+    </>
+  );
 };
 
 export default Viewer;
