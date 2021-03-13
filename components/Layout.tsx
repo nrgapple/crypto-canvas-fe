@@ -17,9 +17,9 @@ const Layout = ({ children, title = "Cryto Canvas" }: Props) => (
     </Head>
     <Flex direction="column" h="100%" w="100%">
       <NavBar />
-      <Center w="100%" h="100%">
+      <Box w="100%" h="100%">
         {children}
-      </Center>
+      </Box>
     </Flex>
   </>
 );

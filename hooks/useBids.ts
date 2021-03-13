@@ -35,6 +35,8 @@ export const useBids = (web3Contract: Web3Contract, exhibitId?: number) => {
   );
 
   useEffect(() => {
+    console.log("here");
+
     update();
   }, [contract, exhibitId]);
 

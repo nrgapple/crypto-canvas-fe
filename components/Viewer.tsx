@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pixel } from "../interfaces";
 import { createImageFromPixels } from "../utils/helpers";
 import { Skeleton } from "@chakra-ui/skeleton";
 import { Image } from "@chakra-ui/image";
+import { Box } from "@chakra-ui/react";
 
 interface Props {
   pixels: Pixel[];

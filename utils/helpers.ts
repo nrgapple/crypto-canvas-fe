@@ -51,7 +51,7 @@ export const createImageFromPixels = (pixels: Pixel[], scale: number = 100) =>
       const dataUri = canvas.toDataURL();
       console.log("data", dataUri);
 
-      //canvas.remove();
+      canvas.remove();
       res(dataUri);
     } else {
       console.error(`ctx not defined.`);

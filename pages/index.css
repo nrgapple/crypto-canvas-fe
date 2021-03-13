@@ -6,6 +6,7 @@
   --link: rgb(47, 101, 252);
   --error: #ff0000;
   --frame: #59503d;
+  --border: rgb(173, 173, 173);
 }
 
 body {
