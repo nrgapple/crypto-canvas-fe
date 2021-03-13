@@ -24,16 +24,16 @@ import MouseTooltip from "react-sticky-mouse-tooltip";
 import useMouse from "@react-hook/mouse-position";
 import useComponentSize from "@rehooks/component-size";
 import { useViewportEventListener } from "../hooks/useViewportEventListener";
-import { Box, Divider, Heading, VStack } from "@chakra-ui/layout";
+import { Box } from "@chakra-ui/layout";
 import { checkIsRect } from "../utils/helpers";
 import {
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
-} from "@chakra-ui/popover";
-import { Portal, Stat, StatLabel, StatNumber } from "@chakra-ui/react";
+  Divider,
+  Heading,
+  Stat,
+  StatLabel,
+  StatNumber,
+  VStack,
+} from "@chakra-ui/react";
 
 interface Props {
   you: string;
@@ -282,31 +282,35 @@ const World = ({ you }: Props) => {
   return (
     <>
       <Box maxHeight="100%" ref={worldRef} className="world"></Box>
-      <Portal>
-        {overPixel != undefined && (
-          <Box
-            top={mouse.pageY! + 10}
-            left={mouse.pageX! + 10}
-            position="absolute"
-            background="var(--background)"
-            borderColor={overPixel?.hexColor}
-            borderWidth="1px"
-            borderRadius="4px"
-            padding="8px"
-          >
-            <VStack>
-              <Heading>Exhibit {overPixel?.exhibitId}</Heading>
-              <Divider />
-              <Stat>
-                <StatLabel>Pixel</StatLabel>
-                <StatNumber>
-                  {`{x: ${overPixel?.x}, y: ${overPixel?.y}}`}
-                </StatNumber>
-              </Stat>
-            </VStack>
-          </Box>
-        )}
-      </Portal>
+      <MouseTooltip
+        visible={overPixel != undefined}
+        offsetX={15}
+        offsetY={10}
+        style={{
+          zIndex: "1000",
+        }}
+      >
+        <Box
+          background="var(--background)"
+          borderColor={overPixel?.hexColor}
+          borderWidth="1px"
+          borderRadius="4px"
+          padding="8px"
+        >
+          <VStack>
+            <Heading size="lg" as="h5">
+              Exhibit #{overPixel?.exhibitId}
+            </Heading>
+            <Divider />
+            <Stat>
+              <StatLabel>Pixel</StatLabel>
+              <StatNumber>
+                {`{x: ${overPixel?.x}, y: ${overPixel?.y}}`}
+              </StatNumber>
+            </Stat>
+          </VStack>
+        </Box>
+      </MouseTooltip>
     </>
   );
 };
