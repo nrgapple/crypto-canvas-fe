@@ -1,11 +1,9 @@
 import {
-  AspectRatio,
   Box,
-  HStack,
+  List,
   Square,
   Stack,
   VStack,
-  Wrap,
 } from "@chakra-ui/layout";
 import { GetServerSideProps } from "next";
 import React, { useMemo } from "react";
@@ -24,9 +22,13 @@ import {
   StatLabel,
   StatNumber,
   StatHelpText,
-  Flex,
+  AccordionItem,
+  AccordionButton,
+  AccordionIcon,
+  AccordionPanel,
 } from "@chakra-ui/react";
 import { useBids } from "../../hooks/useBids";
+import BidHistoryList from "../../components/BidHistoryList";
 
 interface DataProps {
   exhibitId?: number;
@@ -48,7 +50,7 @@ const Exhibit = ({ exhibitId }: DataProps) => {
   ]);
 
   return (
-    <Layout title={`${exhibitId}`}>
+    <Layout title={`Exhibit #${exhibitId}`}>
       <Stack
         flexDirection={{ base: "column", md: "row" }}
         alignItems={{ base: "stretch", md: "start" }}
@@ -75,7 +77,7 @@ const Exhibit = ({ exhibitId }: DataProps) => {
         >
           {done ? (
             <Heading textAlign="left" as="h2">
-              Exhibit {exhibitId}
+              Exhibit #{exhibitId}
             </Heading>
           ) : (
             <Skeleton />
@@ -90,7 +92,7 @@ const Exhibit = ({ exhibitId }: DataProps) => {
               <Stat>
                 <StatLabel>Current Price</StatLabel>
                 <StatNumber>
-                  Eth {highestBid ? highestBid.amount : 0}
+                  Ξ{highestBid ? highestBid.amount : 0}
                 </StatNumber>
                 {highestBid && <StatHelpText>{highestBid.from}</StatHelpText>}
               </Stat>
@@ -104,8 +106,26 @@ const Exhibit = ({ exhibitId }: DataProps) => {
               </Skeleton>
             )}
           </Box>
+          <Accordion>
+            <AccordionItem>
+              <h2>
+                <AccordionButton>
+                  <Box flex="1" textAlign="left">
+                      Price History
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel>
+                <List spacing={3}>
+                  {exhibitId !== undefined && <BidHistoryList exhibitId={exhibitId} /> }
+                </List>      
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
         </VStack>
       </Stack>
+
     </Layout>
   );
 };

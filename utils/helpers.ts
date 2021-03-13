@@ -1,9 +1,8 @@
-import hexRgb from "hex-rgb";
 import { Pixel } from "../interfaces";
 
 export const checkEmptyAddress = (address: string) => /^0x0+$/.test(address);
 
-export const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
+export const contractAddress = "0xD4FF17C5994Ce3921eCFfE0eD4eE4e47eA459453";
 
 export const getMaxMinPoints = (pixels: Pixel[]) => {
   const xMax = Math.max(...pixels.map((p) => p.x));
