@@ -7,6 +7,14 @@ import {
   StatNumber,
   ButtonGroup,
   Button,
+  Portal,
+  Modal,
+  useDisclosure,
+  ModalOverlay,
+  ModalContent,
+  ModalBody,
+  ModalHeader,
+  ModalFooter,
 } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import React, { useEffect } from "react";
@@ -20,7 +28,7 @@ import {
   selectedPixelsState,
   worldState,
 } from "../../state";
-import { ChromePicker } from "react-color";
+import { SwatchesPicker as Picker } from "react-color";
 import { WorldStateType } from "../../interfaces";
 
 const World = dynamic(() => import("../../components/World"), {
@@ -35,6 +43,12 @@ const EditorPage = () => {
   const [selectedPixels, setSelectedPixels] = useRecoilState(
     selectedPixelsState
   );
+  const {
+    isOpen: isClearOpen,
+    onOpen: onClearOpen,
+    onClose: onClearClose,
+    onToggle: onToggleClose,
+  } = useDisclosure();
 
   const onCheckout = async () => {
     try {
@@ -43,6 +57,11 @@ const EditorPage = () => {
     } catch (e) {
       console.error(e);
     }
+  };
+
+  const clearSelected = () => {
+    setSelectedPixels([]);
+    onToggleClose();
   };
 
   useEffect(() => {
@@ -63,10 +82,9 @@ const EditorPage = () => {
             flexBasis="800px"
           >
             <Square>
-              <ChromePicker
+              <Picker
                 color={currentColor}
                 onChange={(color) => setCurrentColor(color.hex)}
-                disableAlpha={true}
               />
             </Square>
             <Box>
@@ -76,7 +94,7 @@ const EditorPage = () => {
               </Stat>
             </Box>
             <ButtonGroup>
-              <Button>Clear</Button>
+              <Button onClick={onClearOpen}>Clear</Button>
               <Button onClick={() => onCheckout()}>Check out</Button>
             </ButtonGroup>
           </HStack>
@@ -97,6 +115,20 @@ const EditorPage = () => {
           )}
         </Square>
       </VStack>
+      <Portal>
+        <Modal isOpen={isClearOpen} onClose={onClearClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalBody>Are you sure you want to clear?</ModalBody>
+            <ModalFooter>
+              <Button onClick={onClearClose} mr={3}>
+                Cancel
+              </Button>
+              <Button onClick={() => clearSelected()}>Clear</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </Portal>
     </Layout>
   );
 };

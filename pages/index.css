@@ -29,8 +29,9 @@ body {
 .chrome-picker {
   box-shadow: none !important;
   background: none !important;
-  /* width: 100% !important; */
-  display: flex !important;
+  /* width: 100% !important;
+  height: 100% !important; */
+  /* display: flex !important; */
 }
 
 /* 
