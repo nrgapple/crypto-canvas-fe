@@ -41,7 +41,6 @@ const Home = () => {
             borderRadius="4px"
             border="1px solid var(--border)"
           >
-            {/* <Box background="#000" h="100%" w="100%" /> */}
             <World you={web3Contract?.accounts[0] ?? ""} />
           </Box>
         )}
