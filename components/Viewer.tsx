@@ -30,7 +30,12 @@ const Viewer = ({ pixels }: Props): JSX.Element => {
   return (
     <>
       {isLoading ? <Skeleton /> : <Image onClick={() => setImageOpen(true)} src={imageUri} />}
-      {isImageOpen && <Lightbox mainSrc={imageUri} onCloseRequest={() => setImageOpen(false)} />}
+      {isImageOpen 
+        && <Lightbox 
+              mainSrc={imageUri} 
+              onCloseRequest={() => setImageOpen(false)} 
+              enableZoom={false}
+        />}
     </>
   );
 };

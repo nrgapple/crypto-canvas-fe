@@ -14,19 +14,6 @@ const BidsPage = () => {
 
   return (
     <Layout title="Bids">
-      <div className="nav-bar">
-        <div className="flex-center-baseline">
-          <Link href={"/"}>
-            <h5 className="clickable">Crypto Canvas</h5>
-          </Link>
-          <Link href={"/about"}>
-            <h6 className="clickable">about</h6>
-          </Link>
-          <Link href={"/bids"}>
-            <h6 className="clickable">bids</h6>
-          </Link>
-        </div>
-      </div>
       {loading ? (
         <h1>Loading Bids</h1>
       ) : (

@@ -1,10 +1,7 @@
-import { Flex, HStack, Square, Stack, VStack } from "@chakra-ui/layout";
+import { Square, Stack, VStack } from "@chakra-ui/layout";
 import {
   Skeleton,
   Box,
-  Stat,
-  StatLabel,
-  StatNumber,
   ButtonGroup,
   Button,
   Portal,
@@ -24,11 +21,10 @@ import { usePixels } from "../../hooks/usePixels";
 import { useWeb3 } from "../../hooks/useWeb3";
 import {
   currentColorState,
-  selectedExhibitState,
   selectedPixelsState,
   worldState,
 } from "../../state";
-import { SwatchesPicker as Picker } from "react-color";
+import { ChromePicker as Picker } from "react-color";
 import { WorldStateType } from "../../interfaces";
 
 const World = dynamic(() => import("../../components/World"), {
@@ -70,35 +66,25 @@ const EditorPage = () => {
 
   return (
     <Layout>
-      <VStack w="100%" h="100%" padding="8px">
-        <HStack w="100%" justifyContent="center">
-          <HStack
-            w="100%"
-            h="200px"
-            justifyContent="space-evenly"
-            padding="8px"
-            borderRadius="4px"
-            border="1px solid var(--border)"
-            flexBasis="800px"
+      <Stack className="picker">
+        <Picker
+          color={currentColor}
+          disableAlpha={true}
+          onChange={(color) => setCurrentColor(color.hex)}
+        />
+          <Stack
+            justifyContent="flex-end"
           >
-            <Square>
-              <Picker
-                color={currentColor}
-                onChange={(color) => setCurrentColor(color.hex)}
-              />
-            </Square>
             <Box>
-              <Stat>
-                <StatLabel>SelectedPixels</StatLabel>
-                <StatNumber>{selectedPixels.length}</StatNumber>
-              </Stat>
+                {`Pixels ${selectedPixels.length}`}
             </Box>
-            <ButtonGroup>
+            <ButtonGroup justifyContent="center">
               <Button onClick={onClearOpen}>Clear</Button>
               <Button onClick={() => onCheckout()}>Check out</Button>
             </ButtonGroup>
-          </HStack>
-        </HStack>
+          </Stack>
+      </Stack>
+      <VStack w="100%" h="100%" padding="8px">
         <Square w="100%" h="100%" flex={1}>
           {loading && !web3Contract !== undefined ? (
             <Skeleton />
@@ -119,6 +105,7 @@ const EditorPage = () => {
         <Modal isOpen={isClearOpen} onClose={onClearClose}>
           <ModalOverlay />
           <ModalContent>
+            <ModalHeader>Clear Pixels</ModalHeader>
             <ModalBody>Are you sure you want to clear?</ModalBody>
             <ModalFooter>
               <Button onClick={onClearClose} mr={3}>

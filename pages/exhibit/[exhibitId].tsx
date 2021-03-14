@@ -6,7 +6,7 @@ import {
   VStack,
 } from "@chakra-ui/layout";
 import { GetServerSideProps } from "next";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
 import Layout from "../../components/Layout";
 import Viewer from "../../components/Viewer";
@@ -26,19 +26,22 @@ import {
   AccordionButton,
   AccordionIcon,
   AccordionPanel,
+  Button,
 } from "@chakra-ui/react";
 import { useBids } from "../../hooks/useBids";
 import BidHistoryList from "../../components/BidHistoryList";
+import OfferModal from "../../components/OfferModal";
 
 interface DataProps {
   exhibitId?: number;
 }
 
 const Exhibit = ({ exhibitId }: DataProps) => {
+  const [isOfferModalOpen, setOfferModalOpen] = useState<boolean>(false)
   const { loading, web3Contract } = useWeb3();
   usePixels(web3Contract);
   const pixels = useRecoilValue(pixelsState);
-  const { highestBid, loading: loadingBids } = useBids(web3Contract, exhibitId);
+  const { highestBid, loading: loadingBids, placeBid } = useBids(web3Contract, exhibitId);
 
   const exhibitPixels = useMemo(() => {
     return pixels.filter((p) => p.exhibitId === exhibitId);
@@ -48,6 +51,10 @@ const Exhibit = ({ exhibitId }: DataProps) => {
     loading,
     exhibitPixels,
   ]);
+
+  const handleSubmitOffer = (value: number) => {
+      placeBid(value);
+  }
 
   return (
     <Layout title={`Exhibit #${exhibitId}`}>
@@ -76,8 +83,13 @@ const Exhibit = ({ exhibitId }: DataProps) => {
           justifyContent="start"
         >
           {done ? (
-            <Heading textAlign="left" as="h2">
-              Exhibit #{exhibitId}
+            <Heading as="h2">
+              <Box>
+                Exhibit #{exhibitId}
+              </Box>
+              <Box>
+                <Button onClick={() => setOfferModalOpen(true)}>Make Offer</Button>
+              </Box>
             </Heading>
           ) : (
             <Skeleton />
@@ -124,8 +136,12 @@ const Exhibit = ({ exhibitId }: DataProps) => {
             </AccordionItem>
           </Accordion>
         </VStack>
+        <OfferModal 
+          isOpen={isOfferModalOpen} 
+          onClose={() => setOfferModalOpen(false)} 
+          onSubmit={handleSubmitOffer}
+        />
       </Stack>
-
     </Layout>
   );
 };

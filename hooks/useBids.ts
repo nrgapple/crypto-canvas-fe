@@ -62,7 +62,7 @@ export const useBids = (web3Contract: Web3Contract, exhibitId?: number) => {
     () =>
       new Promise((resolve, reject) => {
         if (contract && accounts && web3) {
-          console.log("accouonts", accounts);
+          console.log("accounts", accounts);
           contract.methods
             .acceptBid(exhibitId)
             .send({ from: accounts[0] })
@@ -91,7 +91,6 @@ export const useBids = (web3Contract: Web3Contract, exhibitId?: number) => {
     (amount: number) =>
       new Promise((resolve, reject) => {
         if (contract && accounts && web3) {
-          console.log("accouonts", accounts);
           contract.methods
             .placeBid(exhibitId)
             .send({
@@ -116,7 +115,7 @@ export const useBids = (web3Contract: Web3Contract, exhibitId?: number) => {
           reject(`There is no contact or web3`);
         }
       }),
-    [exhibitId]
+    [exhibitId, web3Contract]
   );
 
   const update = () => {

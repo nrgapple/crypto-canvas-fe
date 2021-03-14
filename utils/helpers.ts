@@ -3,6 +3,7 @@ import { Pixel } from "../interfaces";
 export const checkEmptyAddress = (address: string) => /^0x0+$/.test(address);
 
 export const contractAddress = "0xD4FF17C5994Ce3921eCFfE0eD4eE4e47eA459453";
+export const ETH_SYMBOL = "Ξ";
 
 export const getMaxMinPoints = (pixels: Pixel[]) => {
   const xMax = Math.max(...pixels.map((p) => p.x));
@@ -38,7 +39,6 @@ export const createImageFromPixels = (pixels: Pixel[], scale: number = 100) =>
     const ctx = canvas.getContext("2d");
     canvas.width = width * scale;
     canvas.height = height * scale;
-    console.log("pixels", pixelsSorted);
 
     if (ctx) {
       for (let y = 0; y < height; y++)
@@ -48,8 +48,6 @@ export const createImageFromPixels = (pixels: Pixel[], scale: number = 100) =>
           ctx.fillRect(x * scale, y * scale, scale, scale);
         }
       const dataUri = canvas.toDataURL();
-      console.log("data", dataUri);
-
       canvas.remove();
       res(dataUri);
     } else {
