@@ -115,7 +115,7 @@ export const useBids = (web3Contract: Web3Contract, exhibitId?: number) => {
           reject(`There is no contact or web3`);
         }
       }),
-    [exhibitId, web3Contract]
+    [exhibitId]
   );
 
   const update = () => {
