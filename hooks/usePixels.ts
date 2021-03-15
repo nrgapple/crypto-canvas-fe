@@ -1,14 +1,10 @@
-import { ethers } from "ethers";
-import hexRgb from "hex-rgb";
 import { useEffect, useMemo } from "react";
 import { useRecoilState } from "recoil";
-import rgbHex from "rgb-hex";
 import { Contract } from "web3-eth-contract";
-import { Bounds, Pixel, Web3Contract } from "../interfaces";
+import { Pixel, Web3Contract } from "../interfaces";
 import { pixelsState } from "../state";
 import {
   contractExhibitsRespToPixels,
-  getMaxMinPoints,
   pointsToContractData,
 } from "../utils/helpers";
 

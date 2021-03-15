@@ -10,7 +10,6 @@ import {
 
 export const checkEmptyAddress = (address: string) => /^0x0+$/.test(address);
 
-export const contractAddress = "0x00EbDb4b33c21f4b1F6c43852840Df8207bdBBF7";
 export const ETH_SYMBOL = "Ξ";
 export const SIZE = 50;
 

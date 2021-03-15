@@ -3,7 +3,7 @@ import getWeb3 from "../utils/getWeb3";
 import PixelToken from "../contracts/PixelToken.json";
 import { AbiItem } from "web3-utils";
 import { Web3Contract } from "../interfaces";
-import { contractAddress } from "../utils/helpers";
+import { config } from "../app.config";
 
 type UseWeb3Return = {
   loading: boolean;
@@ -38,7 +38,7 @@ export const useWeb3 = () => {
 
       const instance = new web3.eth.Contract(
         PixelToken.abi as AbiItem[] | AbiItem,
-        contractAddress ?? deployedNetwork.address
+        config.contractAddress ?? deployedNetwork.address
       );
 
       // TODO: what is this?
