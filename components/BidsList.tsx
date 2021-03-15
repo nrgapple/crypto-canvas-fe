@@ -14,7 +14,9 @@ const BidsList = ({ allBids }: Props) => {
 
   const renderBids = useMemo(() => {
     return allBids.map((bid) => {
-      const exhibitPixels = pixels.filter((p) => p.exhibitId === bid.exhibitId);
+      const exhibitPixels = pixels.filter(
+        (p) => p.exhibitId !== undefined && p.exhibitId === bid.exhibitId
+      );
 
       return (
         <ExhibitBox key={bid.exhibitId} pixels={exhibitPixels} bid={bid} />

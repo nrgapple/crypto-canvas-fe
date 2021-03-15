@@ -10,8 +10,9 @@ import {
   VStack,
   Flex,
   AspectRatio,
+  Skeleton,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useMemo } from "react";
 import { Bid, Pixel } from "../interfaces";
 import Viewer from "./Viewer";
 
@@ -21,6 +22,13 @@ interface Props {
 }
 
 const ExhibitBox = ({ pixels, bid }: Props) => {
+  console.log("expixels", pixels);
+
+  const isLoaded = useMemo(
+    () => pixels.length > 0 && pixels[0]?.exhibitId !== undefined,
+    [pixels]
+  );
+
   return (
     <LinkBox
       as="article"
@@ -29,25 +37,31 @@ const ExhibitBox = ({ pixels, bid }: Props) => {
       className="shadow-border-pressable"
       p="8px"
     >
-      <VStack w="100%" h="100%" justifyContent="space-between">
-        <VStack
-          p="8px"
-          w="100%"
-          height={{ base: "100px", md: "200px" }}
-          justifyContent="center"
-        >
-          <Viewer pixels={pixels} />
+      <Skeleton isLoaded={isLoaded}>
+        <VStack w="100%" h="100%" justifyContent="space-between">
+          <VStack
+            p="8px"
+            w="100%"
+            height={{ base: "100px", md: "200px" }}
+            justifyContent="center"
+          >
+            <Viewer pixels={pixels} />
+          </VStack>
+          <HStack w="100%" alignItems="center" justifyContent="space-between">
+            <LinkOverlay
+              href={isLoaded ? `/exhibit/${pixels[0].exhibitId}` : ""}
+            >
+              <Heading size="md">
+                Exhibit #{isLoaded ? pixels[0].exhibitId : ""}
+              </Heading>
+            </LinkOverlay>
+            <Stat size="sm" textAlign="end">
+              <StatLabel fontWeight="bold">Price</StatLabel>
+              <StatNumber>Ξ{bid?.amount ?? 0}</StatNumber>
+            </Stat>
+          </HStack>
         </VStack>
-        <HStack w="100%" alignItems="center" justifyContent="space-between">
-          <LinkOverlay href={`/exhibit/${pixels[0].exhibitId}`}>
-            <Heading size="md">Exhibit #{pixels[0].exhibitId}</Heading>
-          </LinkOverlay>
-          <Stat size="sm" textAlign="end">
-            <StatLabel fontWeight="bold">Price</StatLabel>
-            <StatNumber>Ξ{bid?.amount ?? 0}</StatNumber>
-          </Stat>
-        </HStack>
-      </VStack>
+      </Skeleton>
     </LinkBox>
   );
 };
