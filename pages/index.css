@@ -14,8 +14,6 @@
 body {
   overflow: hidden;
   height: 100vh;
-  background: url("https://www.subtlepatterns.com/patterns/brickwall.png");
-  background-size: 10%;
 }
 
 #__next {
