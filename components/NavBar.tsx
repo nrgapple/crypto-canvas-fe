@@ -81,6 +81,15 @@ export default function WithSubnavigation({ isEditor }: Props) {
               fontSize={"sm"}
               fontWeight={600}
               color={useColorModeValue("gray.600", "gray.200")}
+              href={"/profile"}
+            >
+              Profile
+            </Link>
+            <Link
+              display={{ base: "none", md: "inline-flex" }}
+              fontSize={"sm"}
+              fontWeight={600}
+              color={useColorModeValue("gray.600", "gray.200")}
               href={"/editor"}
             >
               Create

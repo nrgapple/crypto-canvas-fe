@@ -16,7 +16,9 @@ const BidsList = ({ allBids }: Props) => {
     return allBids.map((bid) => {
       const exhibitPixels = pixels.filter((p) => p.exhibitId === bid.exhibitId);
 
-      return <ExhibitBox pixels={exhibitPixels} bid={bid} />;
+      return (
+        <ExhibitBox key={bid.exhibitId} pixels={exhibitPixels} bid={bid} />
+      );
     });
   }, [pixels, allBids]);
 

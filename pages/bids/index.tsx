@@ -23,7 +23,7 @@ const BidsPage = () => {
         <h1>Loading Bids</h1>
       ) : (
         <VStack w="100%" h="100%" overflowY="scroll">
-          <Heading>Bids</Heading>
+          <Heading as="h1">Bids</Heading>
           <Divider />
           <BidsList allBids={allBids} />
         </VStack>

@@ -17,7 +17,7 @@ import Viewer from "./Viewer";
 
 interface Props {
   pixels: Pixel[];
-  bid: Bid;
+  bid?: Bid;
 }
 
 const ExhibitBox = ({ pixels, bid }: Props) => {
@@ -39,12 +39,12 @@ const ExhibitBox = ({ pixels, bid }: Props) => {
           <Viewer pixels={pixels} />
         </VStack>
         <HStack w="100%" alignItems="center" justifyContent="space-between">
-          <LinkOverlay href={`/exhibit/${bid.exhibitId}`}>
-            <Heading size="md">Exhibit #{bid.exhibitId}</Heading>
+          <LinkOverlay href={`/exhibit/${pixels[0].exhibitId}`}>
+            <Heading size="md">Exhibit #{pixels[0].exhibitId}</Heading>
           </LinkOverlay>
           <Stat size="sm" textAlign="end">
             <StatLabel fontWeight="bold">Price</StatLabel>
-            <StatNumber>Ξ{bid.amount}</StatNumber>
+            <StatNumber>Ξ{bid?.amount ?? 0}</StatNumber>
           </Stat>
         </HStack>
       </VStack>
