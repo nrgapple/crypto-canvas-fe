@@ -1,4 +1,4 @@
-import { Square, Stack, VStack } from "@chakra-ui/layout";
+import { Center, Square, Stack, VStack } from "@chakra-ui/layout";
 import {
   Skeleton,
   Box,
@@ -12,6 +12,9 @@ import {
   ModalBody,
   ModalHeader,
   ModalFooter,
+  Stat,
+  StatLabel,
+  StatNumber,
 } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import React, { useEffect } from "react";
@@ -65,42 +68,33 @@ const EditorPage = () => {
   }, []);
 
   return (
-    <Layout>
-      <Stack className="picker">
+    <Layout title="Editor" isEditor={true}>
+      <Stack className="picker overlay">
         <Picker
           color={currentColor}
           disableAlpha={true}
           onChange={(color) => setCurrentColor(color.hex)}
         />
-          <Stack
-            justifyContent="flex-end"
-          >
-            <Box>
-                {`Pixels ${selectedPixels.length}`}
-            </Box>
-            <ButtonGroup justifyContent="center">
-              <Button onClick={onClearOpen}>Clear</Button>
-              <Button onClick={() => onCheckout()}>Check out</Button>
-            </ButtonGroup>
-          </Stack>
+        <Stack justifyContent="flex-end">
+          <Stat mb={3} ml={8}>
+            <StatLabel>Pixels</StatLabel>
+            <StatNumber>{selectedPixels.length}</StatNumber>
+          </Stat>
+          <ButtonGroup justifyContent="center">
+            <Button onClick={onClearOpen}>Clear</Button>
+            <Button onClick={() => onCheckout()}>Check out</Button>
+          </ButtonGroup>
+        </Stack>
       </Stack>
-      <VStack w="100%" h="100%" padding="8px">
-        <Square w="100%" h="100%" flex={1}>
-          {loading && !web3Contract !== undefined ? (
-            <Skeleton />
-          ) : (
-            <Box
-              flexBasis="800px"
-              h="100%"
-              p="8px"
-              borderRadius="4px"
-              border="1px solid var(--border)"
-            >
-              <World you={web3Contract?.accounts[0] ?? ""} />
-            </Box>
-          )}
-        </Square>
-      </VStack>
+      <Square w="100%" h="100%" flex={1}>
+        {loading && !web3Contract !== undefined ? (
+          <Skeleton />
+        ) : (
+          <Box h="100%" p="8px" w="100%">
+            <World you={web3Contract?.accounts[0] ?? ""} />
+          </Box>
+        )}
+      </Square>
       <Portal>
         <Modal isOpen={isClearOpen} onClose={onClearClose}>
           <ModalOverlay />

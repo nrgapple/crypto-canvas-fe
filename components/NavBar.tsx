@@ -22,7 +22,11 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 
-export default function WithSubnavigation() {
+interface Props {
+  isEditor?: boolean;
+}
+
+export default function WithSubnavigation({ isEditor }: Props) {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -58,30 +62,31 @@ export default function WithSubnavigation() {
             fontFamily={"heading"}
             color={useColorModeValue("gray.800", "white")}
           >
-            Exhibit
+            Crypto Canvas
           </Text>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopNav />
           </Flex>
         </Flex>
-
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify={"flex-end"}
-          direction={"row"}
-          spacing={6}
-        >
-          <Link
-            display={{ base: "none", md: "inline-flex" }}
-            fontSize={"sm"}
-            fontWeight={600}
-            color={useColorModeValue("gray.600", "gray.200")}
-            href={"/editor"}
+        {!isEditor && (
+          <Stack
+            flex={{ base: 1, md: 0 }}
+            justify={"flex-end"}
+            direction={"row"}
+            spacing={6}
           >
-            Create
-          </Link>
-        </Stack>
+            <Link
+              display={{ base: "none", md: "inline-flex" }}
+              fontSize={"sm"}
+              fontWeight={600}
+              color={useColorModeValue("gray.600", "gray.200")}
+              href={"/editor"}
+            >
+              Create
+            </Link>
+          </Stack>
+        )}
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
@@ -250,7 +255,7 @@ interface NavItem {
 const NAV_ITEMS: Array<NavItem> = [
   {
     label: "Home",
-    href: "/"
+    href: "/",
   },
   {
     label: "Bids",
@@ -258,6 +263,6 @@ const NAV_ITEMS: Array<NavItem> = [
   },
   {
     label: "About",
-    href: "/about"
-  }
+    href: "/about",
+  },
 ];

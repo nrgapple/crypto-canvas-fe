@@ -131,17 +131,19 @@ export const useBids = (web3Contract: Web3Contract, exhibitId?: number) => {
       if (contract) {
         const currAllBids = await contract.methods.getAllHighestBids().call();
         setAllBids(
-          currAllBids.map(
-            ({
-              fromAddress: from,
-              amount,
-              exhibitId: exId,
-            }: AllBidsResponse) => ({
-              from,
-              amount: parseFloat(web3.utils.fromWei(amount)),
-              exhibitId: parseInt(exId),
-            })
-          )
+          currAllBids
+            .map(
+              ({
+                fromAddress: from,
+                amount,
+                exhibitId: exId,
+              }: AllBidsResponse) => ({
+                from,
+                amount: parseFloat(web3.utils.fromWei(amount)),
+                exhibitId: parseInt(exId),
+              })
+            )
+            .filter((b: Bid) => !checkEmptyAddress(b.from as string))
         );
       }
     } catch (e) {

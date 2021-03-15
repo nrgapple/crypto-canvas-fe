@@ -1,41 +1,26 @@
 import { Bid } from "../interfaces";
-import { useRouter } from "next/router";
+import { Wrap } from "@chakra-ui/layout";
+import { useRecoilValue } from "recoil";
+import { pixelsState } from "../state";
+import React, { useMemo } from "react";
+import ExhibitBox from "./ExhibitBox";
 
 interface Props {
   allBids: Bid[];
 }
 
 const BidsList = ({ allBids }: Props) => {
-  const router = useRouter();
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>Exhibit Id</th>
-          <th>Highest Bidder</th>
-          <th>Amount (Eth)</th>
-        </tr>
-      </thead>
-      <tbody>
-        {allBids &&
-          allBids.map((b, i) => (
-            <tr key={i}>
-              <th scope="row">{b.exhibitId}</th>
-              <td>{b.from}</td>
-              <td>{b.amount}</td>
-              <td>
-                <div
-                  className="button"
-                  onClick={() => router.push(`/?exhibit=${b.exhibitId}`)}
-                >
-                  View on Canvas
-                </div>
-              </td>
-            </tr>
-          ))}
-      </tbody>
-    </table>
-  );
+  const pixels = useRecoilValue(pixelsState);
+
+  const renderBids = useMemo(() => {
+    return allBids.map((bid) => {
+      const exhibitPixels = pixels.filter((p) => p.exhibitId === bid.exhibitId);
+
+      return <ExhibitBox pixels={exhibitPixels} bid={bid} />;
+    });
+  }, [pixels, allBids]);
+
+  return <Wrap>{renderBids}</Wrap>;
 };
 
 export default BidsList;

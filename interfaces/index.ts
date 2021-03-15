@@ -11,7 +11,6 @@ export interface Pixel {
   x: number;
   y: number;
   hexColor: string;
-  pixelId?: string;
   owner?: string;
   exhibitId?: number;
 }
@@ -26,4 +25,14 @@ export interface Web3Contract {
   contract: Contract;
   accounts: string[];
   web3: Web3;
+}
+
+export interface Bounds {
+  topLeft: Coord;
+  bottomRight: Coord;
+}
+
+export interface Coord {
+  x: number;
+  y: number;
 }

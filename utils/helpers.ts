@@ -2,7 +2,7 @@ import { Pixel } from "../interfaces";
 
 export const checkEmptyAddress = (address: string) => /^0x0+$/.test(address);
 
-export const contractAddress = "0xD4FF17C5994Ce3921eCFfE0eD4eE4e47eA459453";
+export const contractAddress = "0x00EbDb4b33c21f4b1F6c43852840Df8207bdBBF7";
 export const ETH_SYMBOL = "Ξ";
 
 export const getMaxMinPoints = (pixels: Pixel[]) => {

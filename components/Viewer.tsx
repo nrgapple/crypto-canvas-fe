@@ -3,17 +3,17 @@ import { Pixel } from "../interfaces";
 import { createImageFromPixels } from "../utils/helpers";
 import { Skeleton } from "@chakra-ui/skeleton";
 import { Image } from "@chakra-ui/image";
-import Lightbox from 'react-image-lightbox';
-import 'react-image-lightbox/style.css';
-
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css";
 
 interface Props {
   pixels: Pixel[];
+  disableLightBox?: boolean;
 }
 
-const Viewer = ({ pixels }: Props): JSX.Element => {
+const Viewer = ({ pixels, disableLightBox = false }: Props): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isImageOpen, setImageOpen] = useState<boolean>(false)
+  const [isImageOpen, setImageOpen] = useState<boolean>(false);
   const [imageUri, setImageUri] = useState<string>("");
   const getImage = async () => {
     setIsLoading(true);
@@ -29,13 +29,24 @@ const Viewer = ({ pixels }: Props): JSX.Element => {
   }, [pixels]);
   return (
     <>
-      {isLoading ? <Skeleton /> : <Image onClick={() => setImageOpen(true)} src={imageUri} />}
-      {isImageOpen 
-        && <Lightbox 
-              mainSrc={imageUri} 
-              onCloseRequest={() => setImageOpen(false)} 
-              enableZoom={false}
-        />}
+      {isLoading ? (
+        <Skeleton />
+      ) : (
+        <Image
+          onClick={() => !disableLightBox && setImageOpen(true)}
+          src={imageUri}
+          objectFit="contain"
+          maxH="100%"
+          width="auto"
+        />
+      )}
+      {isImageOpen && (
+        <Lightbox
+          mainSrc={imageUri}
+          onCloseRequest={() => setImageOpen(false)}
+          enableZoom={false}
+        />
+      )}
     </>
   );
 };

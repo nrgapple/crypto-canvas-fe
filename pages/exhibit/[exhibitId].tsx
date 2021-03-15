@@ -1,10 +1,4 @@
-import {
-  Box,
-  List,
-  Square,
-  Stack,
-  VStack,
-} from "@chakra-ui/layout";
+import { Box, List, Square, Stack, VStack } from "@chakra-ui/layout";
 import { GetServerSideProps } from "next";
 import React, { useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
@@ -37,11 +31,14 @@ interface DataProps {
 }
 
 const Exhibit = ({ exhibitId }: DataProps) => {
-  const [isOfferModalOpen, setOfferModalOpen] = useState<boolean>(false)
+  const [isOfferModalOpen, setOfferModalOpen] = useState<boolean>(false);
   const { loading, web3Contract } = useWeb3();
   usePixels(web3Contract);
   const pixels = useRecoilValue(pixelsState);
-  const { highestBid, loading: loadingBids, placeBid } = useBids(web3Contract, exhibitId);
+  const { highestBid, loading: loadingBids, placeBid } = useBids(
+    web3Contract,
+    exhibitId
+  );
 
   const exhibitPixels = useMemo(() => {
     return pixels.filter((p) => p.exhibitId === exhibitId);
@@ -53,8 +50,8 @@ const Exhibit = ({ exhibitId }: DataProps) => {
   ]);
 
   const handleSubmitOffer = (value: number) => {
-      placeBid(value);
-  }
+    placeBid(value);
+  };
 
   return (
     <Layout title={`Exhibit #${exhibitId}`}>
@@ -64,6 +61,7 @@ const Exhibit = ({ exhibitId }: DataProps) => {
         justifyContent="center"
         justifyItems="stretch"
         padding="8px"
+        overflowY="scroll"
       >
         <VStack p="8px" flexBasis="600px">
           <Square
@@ -84,11 +82,11 @@ const Exhibit = ({ exhibitId }: DataProps) => {
         >
           {done ? (
             <Heading as="h2">
+              <Box>Exhibit #{exhibitId}</Box>
               <Box>
-                Exhibit #{exhibitId}
-              </Box>
-              <Box>
-                <Button onClick={() => setOfferModalOpen(true)}>Make Offer</Button>
+                <Button onClick={() => setOfferModalOpen(true)}>
+                  Make Offer
+                </Button>
               </Box>
             </Heading>
           ) : (
@@ -103,9 +101,7 @@ const Exhibit = ({ exhibitId }: DataProps) => {
             {!loadingBids ? (
               <Stat>
                 <StatLabel>Current Price</StatLabel>
-                <StatNumber>
-                  Ξ{highestBid ? highestBid.amount : 0}
-                </StatNumber>
+                <StatNumber>Ξ{highestBid ? highestBid.amount : 0}</StatNumber>
                 {highestBid && <StatHelpText>{highestBid.from}</StatHelpText>}
               </Stat>
             ) : (
@@ -123,22 +119,24 @@ const Exhibit = ({ exhibitId }: DataProps) => {
               <h2>
                 <AccordionButton>
                   <Box flex="1" textAlign="left">
-                      Price History
+                    Price History
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
               <AccordionPanel>
                 <List spacing={3}>
-                  {exhibitId !== undefined && <BidHistoryList exhibitId={exhibitId} /> }
-                </List>      
+                  {exhibitId !== undefined && (
+                    <BidHistoryList exhibitId={exhibitId} />
+                  )}
+                </List>
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
         </VStack>
-        <OfferModal 
-          isOpen={isOfferModalOpen} 
-          onClose={() => setOfferModalOpen(false)} 
+        <OfferModal
+          isOpen={isOfferModalOpen}
+          onClose={() => setOfferModalOpen(false)}
           onSubmit={handleSubmitOffer}
         />
       </Stack>

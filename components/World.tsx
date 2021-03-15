@@ -291,11 +291,9 @@ const World = ({ you }: Props) => {
         }}
       >
         <Box
-          background="var(--background)"
+          className="overlay"
           borderColor={overPixel?.hexColor}
           borderWidth="1px"
-          borderRadius="4px"
-          padding="8px"
         >
           <VStack>
             <Heading size="lg" as="h5">

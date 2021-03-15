@@ -6,9 +6,10 @@ import { Box, Center, Flex } from "@chakra-ui/layout";
 type Props = {
   children?: ReactNode;
   title?: string;
+  isEditor?: boolean;
 };
 
-const Layout = ({ children, title = "Exhibit (XBT)" }: Props) => (
+const Layout = ({ children, title = "Exhibit (XBT)", isEditor }: Props) => (
   <>
     <Head>
       <title>{title}</title>
@@ -16,7 +17,7 @@ const Layout = ({ children, title = "Exhibit (XBT)" }: Props) => (
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
     <Flex direction="column" h="100%" w="100%">
-      <NavBar />
+      <NavBar isEditor={isEditor} />
       <Box w="100%" h="100%">
         {children}
       </Box>

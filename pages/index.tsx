@@ -34,13 +34,7 @@ const Home = () => {
         {loading && !web3Contract !== undefined ? (
           <Skeleton />
         ) : (
-          <Box
-            flexBasis="800px"
-            h="100%"
-            p="8px"
-            borderRadius="4px"
-            border="1px solid var(--border)"
-          >
+          <Box w="100%" h="100%" p="8px">
             <World you={web3Contract?.accounts[0] ?? ""} />
           </Box>
         )}
