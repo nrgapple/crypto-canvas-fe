@@ -21,14 +21,18 @@ const ProfilePage = () => {
     web3Contract,
   ]);
 
+  const you = useMemo(() => web3Contract?.accounts[0], [web3Contract]);
+
   const myExibits = useMemo(() => {
     const exibitMap = new Map<number, Pixel[]>();
-    pixels.map((p) =>
-      exibitMap.set(p.exhibitId!, [
-        ...(exibitMap.has(p.exhibitId!) ? exibitMap.get(p.exhibitId!)! : []),
-        p,
-      ])
-    );
+    pixels
+      .filter((p) => p.owner === you)
+      .map((p) =>
+        exibitMap.set(p.exhibitId!, [
+          ...(exibitMap.has(p.exhibitId!) ? exibitMap.get(p.exhibitId!)! : []),
+          p,
+        ])
+      );
     return Array.from(exibitMap);
   }, [pixels]);
 

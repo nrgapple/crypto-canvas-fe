@@ -21,6 +21,7 @@ import {
   AccordionIcon,
   AccordionPanel,
   Button,
+  ButtonGroup,
 } from "@chakra-ui/react";
 import { useBids } from "../../hooks/useBids";
 import BidHistoryList from "../../components/BidHistoryList";
@@ -40,9 +41,16 @@ const Exhibit = ({ exhibitId }: DataProps) => {
     exhibitId
   );
 
+  const you = useMemo(() => web3Contract?.accounts[0], [web3Contract]);
+
   const exhibitPixels = useMemo(() => {
     return pixels.filter((p) => p.exhibitId === exhibitId);
   }, [pixels]);
+
+  const isOwner = useMemo(() => you === exhibitPixels[0]?.owner, [
+    you,
+    exhibitPixels,
+  ]);
 
   const done = useMemo(() => !loading && exhibitPixels.length > 0, [
     loading,
@@ -84,16 +92,32 @@ const Exhibit = ({ exhibitId }: DataProps) => {
             <Heading as="h2">
               <Box>Exhibit #{exhibitId}</Box>
               <Box>
-                <Button onClick={() => setOfferModalOpen(true)}>
-                  Make Offer
-                </Button>
+                <ButtonGroup>
+                  {isOwner ? (
+                    <>
+                      {highestBid && (
+                        <Button onClick={() => setOfferModalOpen(true)}>
+                          Accept Bid
+                        </Button>
+                      )}
+                      <Button>Edit</Button>
+                    </>
+                  ) : (
+                    <Button onClick={() => setOfferModalOpen(true)}>
+                      Make Offer
+                    </Button>
+                  )}
+                </ButtonGroup>
               </Box>
             </Heading>
           ) : (
             <Skeleton />
           )}
           {done ? (
-            <Text fontSize="sm">Owned By {exhibitPixels[0].owner}</Text>
+            <Text fontSize="sm">
+              Owned By {exhibitPixels[0].owner}{" "}
+              {isOwner && <strong>(you)</strong>}
+            </Text>
           ) : (
             <Skeleton />
           )}
