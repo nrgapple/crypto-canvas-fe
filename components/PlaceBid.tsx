@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Input, InputGroup, InputGroupText } from "reactstrap";
 import { Bid } from "../interfaces";
 
 const PlaceBid = ({
@@ -43,14 +42,11 @@ const PlaceBid = ({
       <div className="border-sm flex-c-center">
         <div className="p8">Place Bid</div>
         <div className="p8">
-          <InputGroup className="p8tb">
-            <Input
-              type="number"
-              value={bidAmount}
-              onChange={(e) => setBidAmount(parseFloat(e.target.value))}
-            />
-            <InputGroupText>Eth</InputGroupText>
-          </InputGroup>
+          <input
+            type="number"
+            value={bidAmount}
+            onChange={(e) => setBidAmount(parseFloat(e.target.value))}
+          />
           <div className="button" onClick={() => onPlaceBid(bidAmount)}>
             Place Bid
           </div>

@@ -47,9 +47,6 @@ export const useBids = (web3Contract: Web3Contract, exhibitId?: number) => {
   const getBids = async (contract: Contract, exhibitId: number) => {
     setLoading(true);
     const b = await contract.methods.getBid(exhibitId).call();
-
-    console.log(typeof b.fromAddress);
-
     const newBid = !checkEmptyAddress(b.fromAddress)
       ? ({
           from: b.fromAddress,
@@ -65,7 +62,7 @@ export const useBids = (web3Contract: Web3Contract, exhibitId?: number) => {
     () =>
       new Promise((resolve, reject) => {
         if (contract && accounts && web3) {
-          console.log("accouonts", accounts);
+          console.log("accounts", accounts);
           contract.methods
             .acceptBid(exhibitId)
             .send({ from: accounts[0] })
@@ -94,7 +91,6 @@ export const useBids = (web3Contract: Web3Contract, exhibitId?: number) => {
     (amount: number) =>
       new Promise((resolve, reject) => {
         if (contract && accounts && web3) {
-          console.log("accouonts", accounts);
           contract.methods
             .placeBid(exhibitId)
             .send({
@@ -119,7 +115,7 @@ export const useBids = (web3Contract: Web3Contract, exhibitId?: number) => {
           reject(`There is no contact or web3`);
         }
       }),
-    [exhibitId]
+    [exhibitId, contract, accounts, web3]
   );
 
   const update = () => {
@@ -135,17 +131,19 @@ export const useBids = (web3Contract: Web3Contract, exhibitId?: number) => {
       if (contract) {
         const currAllBids = await contract.methods.getAllHighestBids().call();
         setAllBids(
-          currAllBids.map(
-            ({
-              fromAddress: from,
-              amount,
-              exhibitId: exId,
-            }: AllBidsResponse) => ({
-              from,
-              amount: parseFloat(web3.utils.fromWei(amount)),
-              exhibitId: parseInt(exId),
-            })
-          )
+          currAllBids
+            .map(
+              ({
+                fromAddress: from,
+                amount,
+                exhibitId: exId,
+              }: AllBidsResponse) => ({
+                from,
+                amount: parseFloat(web3.utils.fromWei(amount)),
+                exhibitId: parseInt(exId),
+              })
+            )
+            .filter((b: Bid) => !checkEmptyAddress(b.from as string))
         );
       }
     } catch (e) {

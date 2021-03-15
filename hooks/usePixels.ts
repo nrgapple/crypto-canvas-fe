@@ -1,9 +1,12 @@
-import { ethers } from "ethers";
 import { useEffect, useMemo } from "react";
 import { useRecoilState } from "recoil";
 import { Contract } from "web3-eth-contract";
 import { Pixel, Web3Contract } from "../interfaces";
 import { pixelsState } from "../state";
+import {
+  contractExhibitsRespToPixels,
+  pointsToContractData,
+} from "../utils/helpers";
 
 interface UsePixelsReturn {
   update: () => Promise<void>;
@@ -31,34 +34,9 @@ export const usePixels = (web3Contract: Web3Contract) => {
   }, [contract]);
 
   const getPixels = async (instance: Contract) => {
-    const p = await instance.methods.getPixels().call();
-    setPixels(
-      p.map(
-        ({
-          x,
-          y,
-          hexColor,
-          owner,
-          exhibitId,
-          pixelId,
-        }: {
-          x: string;
-          y: string;
-          hexColor: string;
-          owner: string;
-          exhibitId: string;
-          pixelId: string;
-        }) =>
-          ({
-            x: parseInt(x),
-            y: parseInt(y),
-            hexColor,
-            owner,
-            exhibitId: parseInt(exhibitId),
-            pixelId,
-          } as Pixel)
-      )
-    );
+    const exResp = await instance.methods.getPixels().call();
+    const newPixels = contractExhibitsRespToPixels(exResp);
+    setPixels(newPixels);
   };
 
   const handleEdit = (edited: Pixel[]) =>
@@ -66,18 +44,11 @@ export const usePixels = (web3Contract: Web3Contract) => {
       if (edited.length < 1) {
         rej(`There is no pixels to edit`);
       }
-      const valsToSend = edited.map(({ x, y, hexColor, pixelId }) => ({
-        x: x.toString(),
-        y: y.toString(),
-        hexColor,
-        id: pixelId,
-      }));
-
+      const { rgbArray } = pointsToContractData(edited);
       const transaction = contract.methods.changePixels(
         edited[0].exhibitId,
-        valsToSend
+        rgbArray
       );
-
       transaction
         .send({
           from: accounts[0],
@@ -92,7 +63,6 @@ export const usePixels = (web3Contract: Web3Contract) => {
         .catch((e: any) => {
           rej(e);
         });
-
       if (contract && web3) {
       } else {
         rej(`There is no contact or web3`);
@@ -102,14 +72,9 @@ export const usePixels = (web3Contract: Web3Contract) => {
   const handleCheckout = (selected: Pixel[]) =>
     new Promise((res, rej) => {
       if (contract && web3) {
-        const valsToSend = selected.map(({ x, y, hexColor }) => ({
-          x: x.toString(),
-          y: y.toString(),
-          hexColor,
-          id: ethers.utils.formatBytes32String("null"),
-        }));
+        const { bounds, rgbArray } = pointsToContractData(selected);
 
-        const transaction = contract.methods.create(valsToSend);
+        const transaction = contract.methods.create(rgbArray, bounds);
 
         //const estimatedGas = transaction.
         transaction

@@ -2,7 +2,6 @@ import React, { useMemo, useState } from "react";
 import { ChromePicker } from "react-color";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { currentColorState, selectedPixelsState, worldError } from "../state";
-import { Modal, ModalFooter, ModalBody } from "reactstrap";
 import { Pixel } from "../interfaces";
 
 interface Props {
@@ -70,7 +69,7 @@ export default ({ onCheckout }: Props) => {
           </div>
         </div>
       </div>
-      <Modal isOpen={showClearModal} toggle={() => toggleClearModal()}>
+      {/* <Modal isOpen={showClearModal} toggle={() => toggleClearModal()}>
         <ModalBody>Are you sure you want to clear?</ModalBody>
         <ModalFooter>
           <div className="button" onClick={() => toggleClearModal()}>
@@ -80,7 +79,7 @@ export default ({ onCheckout }: Props) => {
             Clear
           </div>
         </ModalFooter>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };
