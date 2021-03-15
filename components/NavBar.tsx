@@ -69,22 +69,22 @@ export default function WithSubnavigation({ isEditor }: Props) {
             <DesktopNav />
           </Flex>
         </Flex>
-        {!isEditor && (
-          <Stack
-            flex={{ base: 1, md: 0 }}
-            justify={"flex-end"}
-            direction={"row"}
-            spacing={6}
+        <Stack
+          flex={{ base: 1, md: 0 }}
+          justify={"flex-end"}
+          direction={"row"}
+          spacing={6}
+        >
+          <Link
+            display={{ base: "none", md: "inline-flex" }}
+            fontSize={"sm"}
+            fontWeight={600}
+            color={useColorModeValue("gray.600", "gray.200")}
+            href={"/profile"}
           >
-            <Link
-              display={{ base: "none", md: "inline-flex" }}
-              fontSize={"sm"}
-              fontWeight={600}
-              color={useColorModeValue("gray.600", "gray.200")}
-              href={"/profile"}
-            >
-              Profile
-            </Link>
+            Profile
+          </Link>
+          {isEditor && (
             <Link
               display={{ base: "none", md: "inline-flex" }}
               fontSize={"sm"}
@@ -94,8 +94,8 @@ export default function WithSubnavigation({ isEditor }: Props) {
             >
               Create
             </Link>
-          </Stack>
-        )}
+          )}
+        </Stack>
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>

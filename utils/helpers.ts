@@ -1,4 +1,12 @@
-import { Coord, Pixel } from "../interfaces";
+import hexRgb from "hex-rgb";
+import rgbHex from "rgb-hex";
+import {
+  Bounds,
+  ContractExhibitResp,
+  ContractPixelData,
+  Coord,
+  Pixel,
+} from "../interfaces";
 
 export const checkEmptyAddress = (address: string) => /^0x0+$/.test(address);
 
@@ -72,4 +80,86 @@ export const moveToPoint = (pixels: Pixel[], point: Coord) => {
         y: p.y + (point.y - min[1]),
       } as Pixel)
   );
+};
+
+export const midpoint = ([x1, y1]: number[], [x2, y2]: number[]) => [
+  (x1 + x2) / 2,
+  (y1 + y2) / 2,
+];
+
+export const pointsToContractData = (pixels: Pixel[]) => {
+  const { max, min } = getMaxMinPoints(pixels);
+  const pixelsSorted = [...pixels].sort((a, b) =>
+    a.y === b.y ? a.x - b.x : a.y - b.y
+  );
+  const rgbArray: number[] = [];
+  pixelsSorted.forEach((p) => {
+    const rgb = hexRgb(p.hexColor, { format: "array" });
+    rgbArray.push(rgb[0]);
+    rgbArray.push(rgb[1]);
+    rgbArray.push(rgb[2]);
+  });
+
+  const bounds = {
+    topLeft: {
+      x: min[0],
+      y: min[1],
+    },
+    bottomRight: { x: max[0], y: max[1] },
+  } as Bounds;
+
+  return {
+    bounds,
+    rgbArray,
+  } as ContractPixelData;
+};
+
+export const contractExhibitsRespToPixels = (exRes: ContractExhibitResp[]) => {
+  const newPixels: Pixel[] = [];
+  exRes.forEach(
+    ({
+      rgbArray,
+      bounds,
+      owner,
+      exhibitId,
+    }: {
+      rgbArray: string[];
+      bounds: {
+        topLeft: { x: string; y: string };
+        bottomRight: { x: string; y: string };
+      };
+      owner: string;
+      exhibitId: string;
+    }) => {
+      let count = 0;
+
+      const newBounds = {
+        topLeft: {
+          x: parseInt(bounds.topLeft.x),
+          y: parseInt(bounds.topLeft.y),
+        },
+        bottomRight: {
+          x: parseInt(bounds.bottomRight.x),
+          y: parseInt(bounds.bottomRight.y),
+        },
+      } as Bounds;
+      const width = newBounds.bottomRight.x - newBounds.topLeft.x + 1;
+      for (let i = 0; i < rgbArray.length; i += 3) {
+        const hex = `#${rgbHex(
+          parseInt(rgbArray[i]),
+          parseInt(rgbArray[i + 1]),
+          parseInt(rgbArray[i + 2])
+        )}`;
+        newPixels.push({
+          x: newBounds.topLeft.x + (count % width),
+          y: newBounds.topLeft.y + Math.floor(count / width),
+          hexColor: hex,
+          owner,
+          exhibitId: parseInt(exhibitId),
+        } as Pixel);
+        count++;
+      }
+    }
+  );
+  return newPixels;
 };

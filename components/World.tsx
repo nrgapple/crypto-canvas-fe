@@ -33,7 +33,13 @@ import useMouse from "@react-hook/mouse-position";
 import useComponentSize from "@rehooks/component-size";
 import { useViewportEventListener } from "../hooks/useViewportEventListener";
 import { Box } from "@chakra-ui/layout";
-import { checkIsRect, moveToPoint, SIZE } from "../utils/helpers";
+import {
+  checkIsRect,
+  getMaxMinPoints,
+  midpoint,
+  moveToPoint,
+  SIZE,
+} from "../utils/helpers";
 import {
   Divider,
   Heading,
@@ -42,6 +48,7 @@ import {
   StatNumber,
   VStack,
 } from "@chakra-ui/react";
+import { Point } from "pixi.js";
 
 interface Props {
   you: string;
@@ -70,6 +77,15 @@ const World = ({ you }: Props) => {
   const setWorldError = useSetRecoilState(worldError);
   const [center, setCenter] = useRecoilState(centerState);
   const [move, setMove] = useRecoilState(moveExhibitState);
+
+  const recenter = (pixels: Pixel[]) => {
+    const { max, min } = getMaxMinPoints(pixels);
+    const midp = midpoint(max, min);
+    const width = max[0] - min[0];
+    const height = max[1] - max[1];
+    viewport.fit(false, width, height);
+    viewport.moveCenter(new Point(midp[0], midp[1]));
+  };
 
   const checkForErrors = () => {
     setWorldError(
@@ -180,14 +196,18 @@ const World = ({ you }: Props) => {
   );
 
   useEffect(() => {
-    if (selectedExhibit != undefined) {
-      updateSelectedExhibitLine(
-        pixels.filter((p) => selectedExhibit === p.exhibitId)
+    if (selectedExhibit !== undefined) {
+      console.log("here");
+      const exhibitPoints = pixels.filter(
+        (p) => selectedExhibit === p.exhibitId
       );
+      updateSelectedExhibitLine(exhibitPoints);
+      recenter(exhibitPoints);
     } else {
+      console.log("there");
       updateSelectedExhibitLine([]);
     }
-  }, [selectedExhibit]);
+  }, [selectedExhibit, pixels]);
 
   useEffect(() => {
     const pos = app.renderer.plugins.interaction.mouse.global;
@@ -289,8 +309,14 @@ const World = ({ you }: Props) => {
 
   useEffect(() => {
     if (center) {
-      viewport.fit();
-      viewport.moveCenter(SIZE / 2, SIZE / 2);
+      if (world === WorldStateType.edit) {
+        recenter(pixels.filter((p) => selectedExhibit === p.exhibitId));
+      } else if (world === WorldStateType.create && selectedPixels.length > 0) {
+        recenter(selectedPixels);
+      } else {
+        viewport.fit();
+        viewport.moveCenter(SIZE / 2, SIZE / 2);
+      }
       setCenter(false);
     }
   }, [center]);

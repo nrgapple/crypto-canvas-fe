@@ -36,3 +36,18 @@ export interface Coord {
   x: number;
   y: number;
 }
+
+export interface ContractPixelData {
+  rgbArray: number[];
+  bounds: Bounds;
+}
+
+export interface ContractExhibitResp {
+  rgbArray: string[];
+  bounds: {
+    topLeft: { x: string; y: string };
+    bottomRight: { x: string; y: string };
+  };
+  owner: string;
+  exhibitId: string;
+}

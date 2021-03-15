@@ -22,10 +22,12 @@ import {
   AccordionPanel,
   Button,
   ButtonGroup,
+  Portal,
 } from "@chakra-ui/react";
 import { useBids } from "../../hooks/useBids";
 import BidHistoryList from "../../components/BidHistoryList";
 import OfferModal from "../../components/OfferModal";
+import Link from "next/link";
 
 interface DataProps {
   exhibitId?: number;
@@ -100,7 +102,9 @@ const Exhibit = ({ exhibitId }: DataProps) => {
                           Accept Bid
                         </Button>
                       )}
-                      <Button>Edit</Button>
+                      <Link href={`/editor/${exhibitId}`}>
+                        <Button>Edit</Button>
+                      </Link>
                     </>
                   ) : (
                     <Button onClick={() => setOfferModalOpen(true)}>
@@ -158,11 +162,13 @@ const Exhibit = ({ exhibitId }: DataProps) => {
             </AccordionItem>
           </Accordion>
         </VStack>
-        <OfferModal
-          isOpen={isOfferModalOpen}
-          onClose={() => setOfferModalOpen(false)}
-          onSubmit={handleSubmitOffer}
-        />
+        <Portal>
+          <OfferModal
+            isOpen={isOfferModalOpen}
+            onClose={() => setOfferModalOpen(false)}
+            onSubmit={handleSubmitOffer}
+          />
+        </Portal>
       </Stack>
     </Layout>
   );
