@@ -1,9 +1,17 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+} from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { Pixel, WorldStateType } from "../interfaces";
+import { Coord, Pixel, WorldStateType } from "../interfaces";
 import {
+  centerState,
   currentColorState,
   editedExhibitState,
+  moveExhibitState,
   pixelsState,
   selectedExhibitState,
   selectedPixelsState,
@@ -11,7 +19,7 @@ import {
   worldState,
 } from "../state";
 
-import { app, SIZE, viewport } from "../utils/index";
+import { app, viewport } from "../utils/index";
 import {
   displayScreen,
   updateExhibitLine,
@@ -25,7 +33,7 @@ import useMouse from "@react-hook/mouse-position";
 import useComponentSize from "@rehooks/component-size";
 import { useViewportEventListener } from "../hooks/useViewportEventListener";
 import { Box } from "@chakra-ui/layout";
-import { checkIsRect } from "../utils/helpers";
+import { checkIsRect, moveToPoint, SIZE } from "../utils/helpers";
 import {
   Divider,
   Heading,
@@ -60,6 +68,8 @@ const World = ({ you }: Props) => {
     fps: 10,
   });
   const setWorldError = useSetRecoilState(worldError);
+  const [center, setCenter] = useRecoilState(centerState);
+  const [move, setMove] = useRecoilState(moveExhibitState);
 
   const checkForErrors = () => {
     setWorldError(
@@ -124,7 +134,6 @@ const World = ({ you }: Props) => {
         setEditedExibit(edited);
       } else if (pixels.some(match)) {
         const otherPixel = pixels.find(match);
-        newPoint.pixelId = otherPixel?.pixelId;
         edited = [...editedExhibit, newPoint];
         setEditedExibit(edited);
       }
@@ -148,6 +157,26 @@ const World = ({ you }: Props) => {
       }
     },
     [pixels]
+  );
+
+  const handleClickedMove = useCallback(
+    (el) => {
+      try {
+        const newPixels = moveToPoint(selectedPixels, {
+          x: Math.floor(el.world.x),
+          y: Math.floor(el.world.y),
+        } as Coord);
+        console.log("selected", selectedPixels);
+        console.log("new", newPixels);
+
+        setSelectedPixels(newPixels);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setMove(false);
+      }
+    },
+    [selectedPixels]
   );
 
   useEffect(() => {
@@ -194,15 +223,33 @@ const World = ({ you }: Props) => {
     );
   }, [overExhibit]);
 
+  const worldAndMove = useCallback(
+    (type: WorldStateType) => world === type && !move,
+    [world, move]
+  );
+
   useViewportEventListener(
     "clicked",
     handleClickedCreate,
-    WorldStateType.create
+    worldAndMove(WorldStateType.create),
+    [world, move]
   );
 
-  useViewportEventListener("clicked", handleClickedEdit, WorldStateType.edit);
+  useViewportEventListener(
+    "clicked",
+    handleClickedEdit,
+    worldAndMove(WorldStateType.edit),
+    [world, move]
+  );
 
-  useViewportEventListener("clicked", handleClickedDetail, WorldStateType.view);
+  useViewportEventListener(
+    "clicked",
+    handleClickedDetail,
+    worldAndMove(WorldStateType.view),
+    [world, move]
+  );
+
+  useViewportEventListener("clicked", handleClickedMove, move, [world, move]);
 
   const resize = () => {
     app.renderer.resize(width, height);
@@ -216,16 +263,37 @@ const World = ({ you }: Props) => {
     const canvas = displayScreen(worldRef.current!);
     resize();
     viewport.fit();
-    viewport.moveCenter(5, 5);
-    viewport.clamp({ direction: "all" });
+    viewport.moveCenter(SIZE / 2, SIZE / 2);
+
+    canvasRef.current = canvas;
     viewport.clampZoom({
       maxHeight: SIZE + SIZE * 2,
       maxWidth: SIZE + SIZE * 2,
       minHeight: 5,
       minWidth: 5,
     });
-    canvasRef.current = canvas;
   }, []);
+
+  useEffect(() => {
+    if (world === WorldStateType.view) {
+      viewport.clamp({ direction: "all" });
+    } else {
+      viewport.clamp({
+        left: -(SIZE / 2),
+        right: SIZE + SIZE / 2,
+        top: -(SIZE / 2),
+        bottom: SIZE + SIZE / 2,
+      });
+    }
+  }, [world]);
+
+  useEffect(() => {
+    if (center) {
+      viewport.fit();
+      viewport.moveCenter(SIZE / 2, SIZE / 2);
+      setCenter(false);
+    }
+  }, [center]);
 
   useEffect(() => {
     resize();
@@ -261,6 +329,7 @@ const World = ({ you }: Props) => {
   useEffect(() => {
     if (world === WorldStateType.create) {
       setCurrPixels([...pixels, ...selectedPixels]);
+
       updateBorderLine(selectedPixels);
       checkForErrors();
     }
@@ -276,7 +345,11 @@ const World = ({ you }: Props) => {
   }, [editedExhibit]);
 
   useEffect(() => {
-    setCurrPixels(pixels);
+    if (world === WorldStateType.create) {
+      setCurrPixels([...pixels, ...selectedPixels]);
+    } else {
+      setCurrPixels(pixels);
+    }
   }, [pixels]);
 
   return (

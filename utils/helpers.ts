@@ -1,9 +1,10 @@
-import { Pixel } from "../interfaces";
+import { Coord, Pixel } from "../interfaces";
 
 export const checkEmptyAddress = (address: string) => /^0x0+$/.test(address);
 
 export const contractAddress = "0x00EbDb4b33c21f4b1F6c43852840Df8207bdBBF7";
 export const ETH_SYMBOL = "Ξ";
+export const SIZE = 50;
 
 export const getMaxMinPoints = (pixels: Pixel[]) => {
   const xMax = Math.max(...pixels.map((p) => p.x));
@@ -55,3 +56,20 @@ export const createImageFromPixels = (pixels: Pixel[], scale: number = 100) =>
       rej(null);
     }
   });
+
+export const moveToPoint = (pixels: Pixel[], point: Coord) => {
+  const { min, max } = getMaxMinPoints(pixels);
+  const height = max[1] - min[1];
+  const width = max[0] - min[0];
+  if (width + point.x >= SIZE || height + point.y >= SIZE) {
+    throw new Error("Out of bounds");
+  }
+  return pixels.map(
+    (p) =>
+      ({
+        ...p,
+        x: p.x + (point.x - min[0]),
+        y: p.y + (point.y - min[1]),
+      } as Pixel)
+  );
+};

@@ -43,3 +43,13 @@ export const allBidsState = atom({
   key: "all-bids",
   default: [] as Bid[],
 });
+
+export const centerState = atom({
+  key: "center",
+  default: false,
+});
+
+export const moveExhibitState = atom({
+  key: "move-exhibit",
+  default: false,
+});

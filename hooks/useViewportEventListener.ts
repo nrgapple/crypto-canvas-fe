@@ -7,15 +7,15 @@ import { viewport } from "../utils";
 export const useViewportEventListener = (
   event: string | symbol,
   callback: Function,
-  worldStateType: WorldStateType
+  active: boolean,
+  listen: any[]
 ) => {
-  const world = useRecoilValue(worldState);
   useEffect(() => {
-    if (world === worldStateType) {
+    if (active) {
       viewport.addListener(event, callback);
       return () => {
         if (viewport) viewport.removeListener(event, callback);
       };
     }
-  }, [worldStateType, callback, world]);
+  }, [active, callback, ...listen]);
 };

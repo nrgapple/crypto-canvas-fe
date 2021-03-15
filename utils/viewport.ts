@@ -1,10 +1,10 @@
-import { app, SIZE, viewport } from "./index";
+import { app, viewport } from "./index";
 import * as PIXI from "pixi.js";
 import hexRgb from "hex-rgb";
 import { Pixel } from "../interfaces";
 //@ts-ignore
 import avgColor from "@bencevans/color-array-average";
-import { getMaxMinPoints } from "./helpers";
+import { getMaxMinPoints, SIZE } from "./helpers";
 
 export const displayScreen = (el: Element) => {
   el.appendChild(app.view);

@@ -16,29 +16,35 @@ import {
   StatLabel,
   StatNumber,
 } from "@chakra-ui/react";
-import dynamic from "next/dynamic";
-import React, { useEffect } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import dynamic, { DynamicOptions } from "next/dynamic";
+import React, { Component, useEffect } from "react";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Layout from "../../components/Layout";
 import { usePixels } from "../../hooks/usePixels";
 import { useWeb3 } from "../../hooks/useWeb3";
 import {
+  centerState,
   currentColorState,
+  moveExhibitState,
   selectedPixelsState,
   worldState,
 } from "../../state";
-import { ChromePicker as Picker } from "react-color";
 import { WorldStateType } from "../../interfaces";
+import { ChromePickerProps } from "react-color";
 
 const World = dynamic(() => import("../../components/World"), {
   ssr: false,
 });
 
+const Picker = dynamic<ChromePickerProps>(
+  () => import("react-color").then((mod) => mod.ChromePicker),
+  { ssr: false }
+);
+
 const EditorPage = () => {
   const { loading, web3Contract } = useWeb3();
   const { checkout } = usePixels(web3Contract);
   const [currentColor, setCurrentColor] = useRecoilState(currentColorState);
-  const setWorld = useSetRecoilState(worldState);
   const [selectedPixels, setSelectedPixels] = useRecoilState(
     selectedPixelsState
   );
@@ -48,20 +54,27 @@ const EditorPage = () => {
     onClose: onClearClose,
     onToggle: onToggleClose,
   } = useDisclosure();
+  const [world, setWorld] = useRecoilState(worldState);
+  const setCenter = useSetRecoilState(centerState);
+  const [moveExhibit, setMoveExhibit] = useRecoilState(moveExhibitState);
 
   const onCheckout = async () => {
     try {
       await checkout(selectedPixels);
       setSelectedPixels([]);
-    } catch (e) {
-      console.error(e);
-    }
+    } catch (e) {}
   };
 
   const clearSelected = () => {
     setSelectedPixels([]);
     onToggleClose();
   };
+
+  const onCenter = () => {
+    setCenter(true);
+  };
+
+  const toggleMove = () => setMoveExhibit(!moveExhibit);
 
   useEffect(() => {
     setWorld(WorldStateType.create);
@@ -82,6 +95,12 @@ const EditorPage = () => {
           </Stat>
           <ButtonGroup justifyContent="center">
             <Button onClick={onClearOpen}>Clear</Button>
+            <Button onClick={() => toggleMove()}>
+              {moveExhibit ? "Moving" : "Move"}
+            </Button>
+            <Button onClick={() => onCenter()}>Recenter</Button>
+          </ButtonGroup>
+          <ButtonGroup justifyContent="center">
             <Button onClick={() => onCheckout()}>Check out</Button>
           </ButtonGroup>
         </Stack>

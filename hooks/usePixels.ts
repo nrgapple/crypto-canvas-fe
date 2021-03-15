@@ -53,7 +53,7 @@ export const usePixels = (web3Contract: Web3Contract) => {
       }) => {
         //const height = bounds.bottomRight.y - bounds.topLeft.y;
         let count = 0;
-        console.log("boudn", bounds);
+
         const newBounds = {
           topLeft: {
             x: parseInt(bounds.topLeft.x),
@@ -82,7 +82,7 @@ export const usePixels = (web3Contract: Web3Contract) => {
         }
       }
     );
-    console.log("pixels", newPixels);
+
     setPixels(newPixels);
   };
 
@@ -136,7 +136,6 @@ export const usePixels = (web3Contract: Web3Contract) => {
           rgbArray.push(rgb[2]);
         });
 
-        console.log({ selected, pixelsSorted, rgbArray });
         const bounds = {
           topLeft: {
             x: min[0],
@@ -144,7 +143,6 @@ export const usePixels = (web3Contract: Web3Contract) => {
           },
           bottomRight: { x: max[0], y: max[1] },
         } as Bounds;
-        console.log("boudns", bounds);
 
         const transaction = contract.methods.create(rgbArray, bounds);
 
