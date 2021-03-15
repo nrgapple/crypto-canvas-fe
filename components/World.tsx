@@ -82,8 +82,8 @@ const World = ({ you }: Props) => {
     const { max, min } = getMaxMinPoints(pixels);
     const midp = midpoint(max, min);
     const width = max[0] - min[0];
-    const height = max[1] - max[1];
-    viewport.fit(false, width, height);
+    const height = max[1] - min[1];
+    viewport.fit(true, width + width / 2, height + height / 2);
     viewport.moveCenter(new Point(midp[0], midp[1]));
   };
 
@@ -196,7 +196,7 @@ const World = ({ you }: Props) => {
   );
 
   useEffect(() => {
-    if (selectedExhibit !== undefined) {
+    if (selectedExhibit !== undefined && world === WorldStateType.edit) {
       console.log("here");
       const exhibitPoints = pixels.filter(
         (p) => selectedExhibit === p.exhibitId
@@ -207,7 +207,7 @@ const World = ({ you }: Props) => {
       console.log("there");
       updateSelectedExhibitLine([]);
     }
-  }, [selectedExhibit, pixels]);
+  }, [selectedExhibit, pixels, world]);
 
   useEffect(() => {
     const pos = app.renderer.plugins.interaction.mouse.global;
