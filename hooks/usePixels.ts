@@ -49,7 +49,7 @@ export const usePixels = (web3Contract: Web3Contract) => {
           bottomRight: { x: string; y: string };
         };
         owner: string;
-        exhibitId: number;
+        exhibitId: string;
       }) => {
         //const height = bounds.bottomRight.y - bounds.topLeft.y;
         let count = 0;
@@ -76,7 +76,7 @@ export const usePixels = (web3Contract: Web3Contract) => {
             y: newBounds.topLeft.y + Math.floor(count / width),
             hexColor: hex,
             owner,
-            exhibitId,
+            exhibitId: parseInt(exhibitId),
           } as Pixel);
           count++;
         }
