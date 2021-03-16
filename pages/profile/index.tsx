@@ -8,6 +8,7 @@ import { usePixels } from "../../hooks/usePixels";
 import { useWeb3 } from "../../hooks/useWeb3";
 import { Pixel } from "../../interfaces";
 import { allBidsState, pixelsState } from "../../state";
+import React from "react";
 
 const ProfilePage = () => {
   const { loading, web3Contract } = useWeb3();

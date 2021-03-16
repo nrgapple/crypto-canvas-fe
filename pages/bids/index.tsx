@@ -10,7 +10,7 @@ import { usePixels } from "../../hooks/usePixels";
 import { useWeb3 } from "../../hooks/useWeb3";
 import { Bid, Pixel } from "../../interfaces";
 import { allBidsState } from "../../state";
-import { getContractAllBids, getContractPixels } from "../services";
+import { getContractAllBids, getContractPixels } from "../../services";
 
 interface DataProps {
   allBids?: Bid[];

@@ -1,12 +1,12 @@
-import { config } from "../../app.config";
+import { config } from "../app.config";
 import Web3 from "web3";
 import { AbiItem } from "web3-utils";
-import PixelToken from "../../contracts/PixelToken.json";
+import PixelToken from "../contracts/PixelToken.json";
 import {
   checkEmptyAddress,
   contractExhibitsRespToPixels,
-} from "../../utils/helpers";
-import { AllBidsResponse, Bid } from "../../interfaces";
+} from "../utils/helpers";
+import { AllBidsResponse, Bid } from "../interfaces";
 
 export const getServerContract = () => {
   const provider = new Web3.providers.HttpProvider(config.infuraProviderUri);

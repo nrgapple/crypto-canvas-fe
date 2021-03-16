@@ -1,9 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import Web3 from "web3";
-import { config } from "../../../app.config";
-
 import { contractExhibitsRespToPixels } from "../../../utils/helpers";
-import { getServerContract } from "../../services";
+import { getServerContract } from "../../../services";
 
 export default async function handle(
   req: NextApiRequest,

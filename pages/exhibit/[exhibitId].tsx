@@ -32,7 +32,7 @@ import {
   getContractAllBids,
   getContractBidForExhibit,
   getContractPixels,
-} from "../services";
+} from "../../services";
 import { Bid, Pixel } from "../../interfaces";
 
 interface DataProps {
