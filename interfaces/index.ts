@@ -51,3 +51,9 @@ export interface ContractExhibitResp {
   owner: string;
   exhibitId: string;
 }
+
+export interface AllBidsResponse {
+  fromAddress: string;
+  amount: string;
+  exhibitId: string;
+}

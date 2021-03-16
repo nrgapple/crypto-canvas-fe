@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Bid, Web3Contract } from "../interfaces";
+import { AllBidsResponse, Bid, Web3Contract } from "../interfaces";
 import { Contract } from "web3-eth-contract";
 import { checkEmptyAddress } from "../utils/helpers";
 import { useRecoilState } from "recoil";
@@ -13,13 +13,12 @@ interface UseBidsReturn {
   acceptBid: () => Promise<void>;
 }
 
-interface AllBidsResponse {
-  fromAddress: string;
-  amount: string;
-  exhibitId: string;
-}
-
-export const useBids = (web3Contract: Web3Contract, exhibitId?: number) => {
+export const useBids = (
+  web3Contract: Web3Contract,
+  exhibitId?: number,
+  initAllBids?: Bid[],
+  initBid?: Bid
+) => {
   const [highestBid, setHighestBid] = useState<Bid | undefined>(undefined);
   const [loading, setLoading] = useState(false);
   const [allBids, setAllBids] = useRecoilState(allBidsState);
@@ -43,6 +42,20 @@ export const useBids = (web3Contract: Web3Contract, exhibitId?: number) => {
       getAllBids(contract);
     }
   }, [contract]);
+
+  useEffect(() => {
+    if (initAllBids && initAllBids.length > 0) {
+      console.log(initAllBids);
+      setAllBids(initAllBids);
+    }
+  }, [initAllBids]);
+
+  useEffect(() => {
+    if (initBid) {
+      console.log(initBid);
+      setHighestBid(initBid);
+    }
+  }, [initBid]);
 
   const getBids = async (contract: Contract, exhibitId: number) => {
     setLoading(true);
