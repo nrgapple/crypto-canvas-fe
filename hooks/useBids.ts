@@ -4,6 +4,7 @@ import { Contract } from "web3-eth-contract";
 import { checkEmptyAddress } from "../utils/helpers";
 import { useRecoilState } from "recoil";
 import { allBidsState } from "../state";
+import { useToast } from "@chakra-ui/toast";
 
 interface UseBidsReturn {
   loading: boolean;
@@ -22,6 +23,7 @@ export const useBids = (
   const [highestBid, setHighestBid] = useState<Bid | undefined>(undefined);
   const [loading, setLoading] = useState(false);
   const [allBids, setAllBids] = useRecoilState(allBidsState);
+  const toast = useToast();
 
   const { contract, web3, accounts } = useMemo(
     () =>
@@ -73,17 +75,30 @@ export const useBids = (
     () =>
       new Promise((resolve, reject) => {
         if (contract && accounts && web3) {
-          console.log("accounts", accounts);
           contract.methods
             .acceptBid(exhibitId)
             .send({ from: accounts[0] })
+            .once("transactionHash", (e: any) => {
+              toast({
+                title: "Transaction Created",
+                position: "top-right"
+              })
+            })
             .once("receipt", (e: any) => {
               console.log("receipt", e);
               update();
+              toast({
+                title: "Transaction Success",
+                position: "top-right"
+              })
               resolve(e as string);
             })
             .once("error", (e: any) => {
               console.error(e);
+              toast({
+                title: "Transaction Failed",
+                position: "top-right"
+              })
               reject(e);
             })
             .catch((e: any) => {
@@ -108,13 +123,26 @@ export const useBids = (
               from: accounts[0],
               value: web3.utils.toWei(amount.toString(), "ether"),
             })
+            .once("transactionHash", (e: any) => {
+              toast({
+                title: "Transaction Created",
+                position: "top-right"
+              })
+            })
             .once("receipt", (e: any) => {
-              console.log("receipt", e);
               update();
+              toast({
+                title: "Transaction Success",
+                position: "top-right"
+              })
               resolve(e as string);
             })
             .once("error", (e: any) => {
               console.error(e);
+              toast({
+                title: "Transaction Failed",
+                position: "top-right"
+              })
               reject(e);
             })
             .catch((e: any) => {

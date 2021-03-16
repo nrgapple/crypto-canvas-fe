@@ -15,6 +15,12 @@ const AcceptBidModal = ({
   onAcceptBid: () => void;
   onClose: () => void
 }) => {  
+
+  const handleAcceptBid = () => {
+    onAcceptBid();
+    onClose();
+  }
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalContent>
@@ -27,7 +33,7 @@ const AcceptBidModal = ({
       <ModalFooter>
           <ButtonGroup>
             <Button onClick={onClose}>Close</Button>
-            <Button onClick={onAcceptBid}>Accept</Button>
+            <Button onClick={handleAcceptBid}>Accept</Button>
           </ButtonGroup>
       </ModalFooter>
       </ModalContent>

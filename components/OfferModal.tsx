@@ -25,18 +25,21 @@ interface Props {
 }
 
 const OfferModal = ({ isOpen, onClose, onSubmit }: Props) => {
-  const [value, setValue] = useState<string | undefined>();
+  const [value, setValue] = useState<string>('');
   const [isChecked, setChecked] = useState<boolean>(false);
   const { web3Contract } = useWeb3();
 
   const handleClose = () => {
-    setValue(undefined);
+    setValue('');
     setChecked(false);
     onClose();
   };
 
   const handlePlaceOffer = () => {
     onSubmit(Number(value));
+    setValue("");
+    setChecked(false);
+    onClose();
   };
 
   return (
