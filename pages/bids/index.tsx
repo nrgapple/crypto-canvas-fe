@@ -23,8 +23,6 @@ const BidsPage = ({ allBids: initAllbids, pixels }: DataProps) => {
   usePixels(web3Contract, pixels);
   const [allBids] = useRecoilState(allBidsState);
 
-  console.log("allbids", allBids);
-
   return (
     <Layout title="Bids">
       {loading ? (

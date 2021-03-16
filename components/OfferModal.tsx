@@ -54,7 +54,6 @@ const OfferModal = ({ isOpen, onClose, onSubmit }: Props) => {
                 type="number"
                 placeholder="0.00"
                 onChange={(e) => {
-                  console.log(e.target.value);
                   setValue(
                     e.target.value[0] === "."
                       ? `0${e.target.value}`

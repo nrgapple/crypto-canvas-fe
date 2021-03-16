@@ -182,9 +182,6 @@ const World = ({ you }: Props) => {
           x: Math.floor(el.world.x),
           y: Math.floor(el.world.y),
         } as Coord);
-        console.log("selected", selectedPixels);
-        console.log("new", newPixels);
-
         setSelectedPixels(newPixels);
       } catch (e) {
         console.error(e);
@@ -197,14 +194,12 @@ const World = ({ you }: Props) => {
 
   useEffect(() => {
     if (selectedExhibit !== undefined && world === WorldStateType.edit) {
-      console.log("here");
       const exhibitPoints = pixels.filter(
         (p) => selectedExhibit === p.exhibitId
       );
       updateSelectedExhibitLine(exhibitPoints);
       recenter(exhibitPoints);
     } else {
-      console.log("there");
       updateSelectedExhibitLine([]);
     }
   }, [selectedExhibit, pixels, world]);
@@ -351,8 +346,6 @@ const World = ({ you }: Props) => {
       }
     }
   }, [world]);
-
-  console.log("world pixels", pixels);
 
   useEffect(() => {
     if (world === WorldStateType.create) {

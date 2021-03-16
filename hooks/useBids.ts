@@ -45,14 +45,12 @@ export const useBids = (
 
   useEffect(() => {
     if (initAllBids && initAllBids.length > 0) {
-      console.log(initAllBids);
       setAllBids(initAllBids);
     }
   }, [initAllBids]);
 
   useEffect(() => {
     if (initBid) {
-      console.log(initBid);
       setHighestBid(initBid);
     }
   }, [initBid]);
