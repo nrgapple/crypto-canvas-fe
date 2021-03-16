@@ -69,9 +69,9 @@ const Layout = ({
       />
       <meta property="twitter:image:width" content="1200" key="twitter-width" />
     </Head>
-    <Flex direction="column" h="100%" w="100%">
+    <Flex direction="column" h="100vh" w="100vw">
       <NavBar isEditor={isEditor} />
-      <Box w="100%" h="100%">
+      <Box w="100%" h="100%" className="app">
         {children}
       </Box>
     </Flex>
