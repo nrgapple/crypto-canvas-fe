@@ -24,7 +24,6 @@ export const getContractPixels = async () => {
   const { contract } = getServerContract();
   const exResp = await contract.methods.getPixels().call();
   const newPixels = contractExhibitsRespToPixels(exResp);
-  console.log(newPixels);
   return newPixels;
 };
 
