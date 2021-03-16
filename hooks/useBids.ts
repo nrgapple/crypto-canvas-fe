@@ -84,7 +84,7 @@ export const useBids = (web3Contract: Web3Contract, exhibitId?: number) => {
           reject(`There is no contact or web3`);
         }
       }),
-    [exhibitId]
+    [exhibitId, web3Contract]
   );
 
   const handleBid = useCallback(

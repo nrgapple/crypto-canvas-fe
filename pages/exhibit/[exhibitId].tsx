@@ -28,6 +28,7 @@ import { useBids } from "../../hooks/useBids";
 import BidHistoryList from "../../components/BidHistoryList";
 import OfferModal from "../../components/OfferModal";
 import Link from "next/link";
+import AcceptBidModal from "../../components/AcceptBidModal";
 
 interface DataProps {
   exhibitId?: number;
@@ -35,10 +36,11 @@ interface DataProps {
 
 const Exhibit = ({ exhibitId }: DataProps) => {
   const [isOfferModalOpen, setOfferModalOpen] = useState<boolean>(false);
+  const [isAcceptBidModalOpen, setAcceptBidModalOpen] = useState<boolean>(false);
   const { loading, web3Contract } = useWeb3();
   usePixels(web3Contract);
   const pixels = useRecoilValue(pixelsState);
-  const { highestBid, loading: loadingBids, placeBid } = useBids(
+  const { highestBid, loading: loadingBids, placeBid, acceptBid } = useBids(
     web3Contract,
     exhibitId
   );
@@ -98,7 +100,7 @@ const Exhibit = ({ exhibitId }: DataProps) => {
                   {isOwner ? (
                     <>
                       {highestBid && (
-                        <Button onClick={() => setOfferModalOpen(true)}>
+                        <Button onClick={() => setAcceptBidModalOpen(true)}>
                           Accept Bid
                         </Button>
                       )}
@@ -167,6 +169,12 @@ const Exhibit = ({ exhibitId }: DataProps) => {
             isOpen={isOfferModalOpen}
             onClose={() => setOfferModalOpen(false)}
             onSubmit={handleSubmitOffer}
+          />
+          <AcceptBidModal 
+            isOpen={isAcceptBidModalOpen}
+            highestBid={highestBid} 
+            onAcceptBid={acceptBid} 
+            onClose={() => setAcceptBidModalOpen(false)}
           />
         </Portal>
       </Stack>
