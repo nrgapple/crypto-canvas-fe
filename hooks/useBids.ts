@@ -97,7 +97,7 @@ export const useBids = (
           reject(`There is no contact or web3`);
         }
       }),
-    [exhibitId]
+    [exhibitId, web3Contract]
   );
 
   const handleBid = useCallback(
