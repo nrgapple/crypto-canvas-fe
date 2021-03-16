@@ -9,7 +9,11 @@ type Props = {
   isEditor?: boolean;
 };
 
-const Layout = ({ children, title = "Exhibit (XBT)", isEditor }: Props) => (
+const Layout = ({
+  children,
+  title = "Exhibit (XBT)",
+  isEditor = false,
+}: Props) => (
   <>
     <Head>
       <title>{title}</title>

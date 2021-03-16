@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilSnapshot, useRecoilState } from "recoil";
 import { Contract } from "web3-eth-contract";
 import { Pixel, Web3Contract } from "../interfaces";
 import { pixelsState } from "../state";
@@ -14,7 +14,7 @@ interface UsePixelsReturn {
   editPixels: (edited: Pixel[]) => Promise<void>;
 }
 
-export const usePixels = (web3Contract: Web3Contract) => {
+export const usePixels = (web3Contract: Web3Contract, initPixels?: Pixel[]) => {
   const [pixels, setPixels] = useRecoilState(pixelsState);
 
   const { contract, web3, accounts } = useMemo(
@@ -26,6 +26,7 @@ export const usePixels = (web3Contract: Web3Contract) => {
       } as Web3Contract),
     [web3Contract]
   );
+  console.log({ contract, web3, accounts });
 
   useEffect(() => {
     if (contract && !pixels.length) {
@@ -38,6 +39,12 @@ export const usePixels = (web3Contract: Web3Contract) => {
     const newPixels = contractExhibitsRespToPixels(exResp);
     setPixels(newPixels);
   };
+
+  useEffect(() => {
+    if (initPixels && initPixels.length > 0) {
+      setPixels(initPixels);
+    }
+  }, [initPixels]);
 
   const handleEdit = (edited: Pixel[]) =>
     new Promise((res, rej) => {

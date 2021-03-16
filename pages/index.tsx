@@ -1,25 +1,35 @@
 import { Box, Square } from "@chakra-ui/layout";
 import { Skeleton } from "@chakra-ui/skeleton";
+import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
+import React, { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Layout from "../components/Layout";
 import { usePixels } from "../hooks/usePixels";
 import { useWeb3 } from "../hooks/useWeb3";
-import { selectedExhibitState } from "../state";
+import { Pixel } from "../interfaces";
+import { pixelsState, selectedExhibitState } from "../state";
+import { getContractPixels } from "../services";
+
+interface DataProps {
+  pixels?: Pixel[];
+}
 
 const World = dynamic(() => import("../components/World"), {
   ssr: false,
 });
 
-const Home = () => {
+const Home = ({ pixels }: DataProps) => {
   const { loading, web3Contract } = useWeb3();
-  usePixels(web3Contract);
+  usePixels(web3Contract, pixels);
   const [selectedExhibit, setSelectedExhibit] = useRecoilState(
     selectedExhibitState
   );
   const router = useRouter();
+  const currpixels = useRecoilValue(pixelsState);
+
+  console.log("currkpixels", currpixels);
 
   useEffect(() => {
     if (selectedExhibit != undefined) {
@@ -29,7 +39,7 @@ const Home = () => {
   }, [selectedExhibit]);
 
   return (
-    <Layout>
+    <Layout title="Home">
       <Square w="100%" h="100%" padding="8px">
         {loading && !web3Contract !== undefined ? (
           <Skeleton />
@@ -44,3 +54,17 @@ const Home = () => {
 };
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps<DataProps> = async () => {
+  const pixels = await getContractPixels();
+  if (pixels && pixels.length > 0) {
+    return {
+      props: {
+        pixels,
+      } as DataProps,
+    };
+  }
+  return {
+    props: {},
+  };
+};

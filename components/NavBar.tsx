@@ -84,7 +84,7 @@ export default function WithSubnavigation({ isEditor }: Props) {
           >
             Profile
           </Link>
-          {isEditor && (
+          {!isEditor && (
             <Link
               display={{ base: "none", md: "inline-flex" }}
               fontSize={"sm"}

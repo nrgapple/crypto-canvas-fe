@@ -352,6 +352,8 @@ const World = ({ you }: Props) => {
     }
   }, [world]);
 
+  console.log("world pixels", pixels);
+
   useEffect(() => {
     if (world === WorldStateType.create) {
       setCurrPixels([...pixels, ...selectedPixels]);

@@ -8,11 +8,13 @@ import { config } from "../app.config";
 type UseWeb3Return = {
   loading: boolean;
   web3Contract: Web3Contract;
+  isMetaMask: boolean;
 };
 
 export const useWeb3 = () => {
   const [web3Contract, setWeb3Contract] = useState<Web3Contract>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [isMetaMask, setIsMetaMask] = useState<boolean>(false);
 
   useEffect(() => {
     init();
@@ -28,6 +30,7 @@ export const useWeb3 = () => {
     try {
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
+
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
 
@@ -35,12 +38,19 @@ export const useWeb3 = () => {
       const networkId = await web3.eth.net.getId();
       //@ts-ignore
       const deployedNetwork = PixelToken.networks[networkId];
-
       const instance = new web3.eth.Contract(
         PixelToken.abi as AbiItem[] | AbiItem,
         config.contractAddress ?? deployedNetwork.address
       );
 
+      //@ts-ignore
+      if (!web3.currentProvider?.isMetaMask) {
+        console.log("here man");
+        setIsMetaMask(false);
+        return;
+      }
+
+      setIsMetaMask(true);
       // TODO: what is this?
       // web3.eth
       //   .subscribe("logs", { address: instance.address }, (error, result) => {})
@@ -53,14 +63,11 @@ export const useWeb3 = () => {
       } as Web3Contract);
     } catch (error) {
       // Catch any errors for any of the above operations.
-      alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`
-      );
       console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
-  return { loading, web3Contract } as UseWeb3Return;
+  return { loading, web3Contract, isMetaMask } as UseWeb3Return;
 };

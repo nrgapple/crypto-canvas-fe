@@ -33,3 +33,15 @@ yarn install
 ```bash
 yarn run dev
 ```
+
+## Committing
+
+| Icon | Type          |
+| ---- | ------------- |
+| ✨   | Feature       |
+| 🔧   | Bug Fix       |
+| 🧹   | Clean up      |
+| 💅   | Style Changes |
+| ⚙️   | Config        |
+| 📝   | Contract      |
+| 💈   | Readme Update |

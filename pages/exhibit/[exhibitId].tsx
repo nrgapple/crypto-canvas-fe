@@ -28,21 +28,33 @@ import { useBids } from "../../hooks/useBids";
 import BidHistoryList from "../../components/BidHistoryList";
 import OfferModal from "../../components/OfferModal";
 import Link from "next/link";
+import {
+  getContractAllBids,
+  getContractBidForExhibit,
+  getContractPixels,
+} from "../../services";
+import { Bid, Pixel } from "../../interfaces";
 import AcceptBidModal from "../../components/AcceptBidModal";
 
 interface DataProps {
   exhibitId?: number;
+  pixels?: Pixel[];
+  bid?: Bid | null;
 }
 
-const Exhibit = ({ exhibitId }: DataProps) => {
+const Exhibit = ({ exhibitId, pixels: initPixels, bid }: DataProps) => {
   const [isOfferModalOpen, setOfferModalOpen] = useState<boolean>(false);
-  const [isAcceptBidModalOpen, setAcceptBidModalOpen] = useState<boolean>(false);
+  const [isAcceptBidModalOpen, setAcceptBidModalOpen] = useState<boolean>(
+    false
+  );
   const { loading, web3Contract } = useWeb3();
-  usePixels(web3Contract);
+  usePixels(web3Contract, initPixels);
   const pixels = useRecoilValue(pixelsState);
   const { highestBid, loading: loadingBids, placeBid, acceptBid } = useBids(
     web3Contract,
-    exhibitId
+    exhibitId,
+    undefined,
+    bid ?? undefined
   );
 
   const you = useMemo(() => web3Contract?.accounts[0], [web3Contract]);
@@ -69,16 +81,17 @@ const Exhibit = ({ exhibitId }: DataProps) => {
     <Layout title={`Exhibit #${exhibitId}`}>
       <Stack
         flexDirection={{ base: "column", md: "row" }}
-        alignItems={{ base: "stretch", md: "start" }}
+        alignItems={{ base: "start", md: "start" }}
         justifyContent="center"
-        justifyItems="stretch"
-        padding="8px"
+        justifyItems={{ base: "start", md: "start" }}
         overflowY="scroll"
+        w="100%"
+        h="100%"
       >
-        <VStack p="8px" flexBasis="600px">
+        <VStack p="8px" flexBasis={{ base: "300", md: "600px" }}>
           <Square
             w="100%"
-            h="500px"
+            h={{ base: "300px", md: "500px" }}
             borderRadius="5px"
             border="1px solid var(--border)"
             p="8px"
@@ -170,10 +183,10 @@ const Exhibit = ({ exhibitId }: DataProps) => {
             onClose={() => setOfferModalOpen(false)}
             onSubmit={handleSubmitOffer}
           />
-          <AcceptBidModal 
+          <AcceptBidModal
             isOpen={isAcceptBidModalOpen}
-            highestBid={highestBid} 
-            onAcceptBid={acceptBid} 
+            highestBid={highestBid}
+            onAcceptBid={acceptBid}
             onClose={() => setAcceptBidModalOpen(false)}
           />
         </Portal>
@@ -188,8 +201,13 @@ export const getServerSideProps: GetServerSideProps<DataProps> = async ({
   params,
 }) => {
   if (params && params.exhibitId) {
+    const exhibitId = parseInt(params.exhibitId as string);
+    const pixels = await getContractPixels();
+    const bid = await getContractBidForExhibit(exhibitId);
     return {
       props: {
+        bid: bid ?? null,
+        pixels,
         exhibitId: parseInt(params.exhibitId as string),
       } as DataProps,
     };
