@@ -9,7 +9,7 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const contract = getServerContract();
+  const { contract } = getServerContract();
   const exResp = await contract.methods.getPixels().call();
   const newPixels = contractExhibitsRespToPixels(exResp);
   console.log(newPixels);
