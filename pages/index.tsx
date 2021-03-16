@@ -39,7 +39,7 @@ const Home = ({ pixels }: DataProps) => {
   }, [selectedExhibit]);
 
   return (
-    <Layout>
+    <Layout title="Home">
       <Square w="100%" h="100%" padding="8px">
         {loading && !web3Contract !== undefined ? (
           <Skeleton />
