@@ -22,8 +22,6 @@ interface Props {
 }
 
 const ExhibitBox = ({ pixels, bid }: Props) => {
-  console.log("expixels", pixels);
-
   const isLoaded = useMemo(
     () => pixels.length > 0 && pixels[0]?.exhibitId !== undefined,
     [pixels]
