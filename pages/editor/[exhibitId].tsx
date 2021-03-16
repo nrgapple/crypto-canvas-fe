@@ -141,7 +141,7 @@ const EditorPage = ({ exhibitId }: DataProps) => {
   return (
     <Layout title="Editor" isEditor={true}>
       <Draggable grid={[25, 25]} bounds="parent" handle="#handle">
-        <Stack className="picker overlay">
+        <Stack className="picker overlay" justifyContent="center" w="250px">
           <HStack
             flexBasis="10px"
             justifyContent="flex-end"
@@ -159,11 +159,13 @@ const EditorPage = ({ exhibitId }: DataProps) => {
           </HStack>
           <Divider />
           <Collapse in={!isMin} animateOpacity>
-            <Picker
-              color={currentColor}
-              disableAlpha={true}
-              onChange={(color) => setCurrentColor(color.hex)}
-            />
+            <Center>
+              <Picker
+                color={currentColor}
+                disableAlpha={true}
+                onChange={(color) => setCurrentColor(color.hex)}
+              />
+            </Center>
             <Stack justifyContent="flex-end">
               <Stat mb={3} ml={8}>
                 <StatLabel>Pixels</StatLabel>
