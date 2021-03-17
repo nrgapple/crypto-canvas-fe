@@ -1,4 +1,4 @@
-import { Box, List, Square, Stack, VStack } from "@chakra-ui/layout";
+import { Box, Square, Stack, VStack } from "@chakra-ui/layout";
 import { GetServerSideProps } from "next";
 import React, { useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
@@ -157,7 +157,7 @@ const Exhibit = ({ exhibitId, pixels: initPixels, bid }: DataProps) => {
               </Skeleton>
             )}
           </Box>
-          <Accordion>
+          <Accordion position="relative" allowToggle={true}>
             <AccordionItem>
               <h2>
                 <AccordionButton>
@@ -167,12 +167,10 @@ const Exhibit = ({ exhibitId, pixels: initPixels, bid }: DataProps) => {
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
-              <AccordionPanel>
-                <List spacing={3}>
+              <AccordionPanel position="absolute" width="100%" overflowX="auto">
                   {exhibitId !== undefined && (
                     <BidHistoryList exhibitId={exhibitId} />
                   )}
-                </List>
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
