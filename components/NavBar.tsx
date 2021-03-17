@@ -81,6 +81,10 @@ export default function WithSubnavigation({ isEditor }: Props) {
             fontWeight={600}
             color={useColorModeValue("gray.600", "gray.200")}
             href={"/profile"}
+            _hover={{
+              textDecoration: "none",
+              color: useColorModeValue("gray.800", "white"),
+            }}
           >
             Profile
           </Link>
@@ -91,6 +95,10 @@ export default function WithSubnavigation({ isEditor }: Props) {
               fontWeight={600}
               color={useColorModeValue("gray.600", "gray.200")}
               href={"/editor"}
+              _hover={{
+                textDecoration: "none",
+                color: useColorModeValue("gray.800", "white"),
+              }}
             >
               Create
             </Link>
@@ -187,7 +195,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   );
 };
 
-const MobileNav = () => {
+const MobileNav = ({ isEditor }: { isEditor?: boolean }) => {
   return (
     <Stack
       bg={useColorModeValue("white", "gray.800")}
@@ -197,6 +205,8 @@ const MobileNav = () => {
       {NAV_ITEMS.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
       ))}
+      <MobileNavItem label="Profile" href="/profile" />
+      {!isEditor && <MobileNavItem label="Create" href="/editor" />}
     </Stack>
   );
 };
