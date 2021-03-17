@@ -82,7 +82,7 @@ const Exhibit = ({ exhibitId, pixels: initPixels, bid }: DataProps) => {
       <Stack
         flexDirection={{ base: "column", md: "row" }}
         alignItems={{ base: "start", md: "start" }}
-        justifyContent="center"
+        justifyContent={{ base: "start", md: "center" }}
         justifyItems={{ base: "start", md: "start" }}
         overflowY="scroll"
         w="100%"

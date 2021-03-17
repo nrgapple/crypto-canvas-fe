@@ -39,25 +39,29 @@ const ProfilePage = () => {
 
   const renderMyExibits = useMemo(
     () =>
-      myExibits.map(([key, value]) => (
-        <ExhibitBox
-          key={key}
-          pixels={value}
-          bid={allBids.find((b) => b.exhibitId === key)}
-        />
-      )),
-    [myExibits, allBids]
+      !done
+        ? Array.from(Array(5)).map((_, i) => (
+            <ExhibitBox pixels={[]} isLoaded={false} />
+          ))
+        : myExibits.map(([key, value]) => (
+            <ExhibitBox
+              key={key}
+              pixels={value}
+              bid={allBids.find((b) => b.exhibitId === key)}
+            />
+          )),
+    [myExibits, allBids, done]
   );
 
   return (
     <Layout title={web3Contract?.accounts[0] ?? "Profile"}>
-      {done && (
-        <VStack w="100%" h="100%" overflowY="scroll">
-          <Heading as="h1">My Exhibits</Heading>
-          <Divider />
-          <Wrap>{renderMyExibits}</Wrap>
-        </VStack>
-      )}
+      <VStack w="100%" h="100%" overflowY="scroll" p="8px">
+        <Heading as="h1">My Exhibits</Heading>
+        <Divider />
+        <Wrap justify="center" w="100%">
+          {renderMyExibits}
+        </Wrap>
+      </VStack>
     </Layout>
   );
 };

@@ -16,15 +16,9 @@ body {
   height: 100vh;
 }
 
-#__next {
+/* #__next {
   height: 100vh;
-}
-
-.app {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
+} */
 
 .chrome-picker {
   box-shadow: none !important;

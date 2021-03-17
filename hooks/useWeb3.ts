@@ -46,6 +46,7 @@ export const useWeb3 = () => {
       //@ts-ignore
       if (!web3.currentProvider?.isMetaMask) {
         setIsMetaMask(false);
+        setLoading(false);
         return;
       }
 

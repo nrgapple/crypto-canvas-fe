@@ -70,8 +70,11 @@ const Layout = ({
       <meta property="twitter:image:width" content="1200" key="twitter-width" />
     </Head>
     <Flex direction="column" h="100vh" w="100vw">
+      {/* <Box w="100%" h="50px" flexBasis="70px" flex={1}>
+        Hey
+      </Box> */}
       <NavBar isEditor={isEditor} />
-      <Box w="100%" h="100%" className="app">
+      <Box w="100%" h="100%" overflowY="hidden" className="app">
         {children}
       </Box>
     </Flex>
