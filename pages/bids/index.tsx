@@ -1,4 +1,4 @@
-import { Divider, Heading, VStack } from "@chakra-ui/layout";
+import { Divider, Flex, Heading, VStack } from "@chakra-ui/layout";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import React from "react";
@@ -11,6 +11,8 @@ import { useWeb3 } from "../../hooks/useWeb3";
 import { Bid, Pixel } from "../../interfaces";
 import { allBidsState } from "../../state";
 import { getContractAllBids, getContractPixels } from "../../services";
+import { Skeleton } from "@chakra-ui/skeleton";
+import { Box } from "@chakra-ui/react";
 
 interface DataProps {
   allBids?: Bid[];
@@ -25,15 +27,11 @@ const BidsPage = ({ allBids: initAllbids, pixels }: DataProps) => {
 
   return (
     <Layout title="Bids">
-      {loading ? (
-        <h1>Loading Bids</h1>
-      ) : (
-        <VStack w="100%" h="100%" overflowY="scroll">
-          <Heading as="h1">Bids</Heading>
-          <Divider />
-          <BidsList allBids={allBids} />
-        </VStack>
-      )}
+      <VStack w="100%" h="100%" p="8px" overflowY="scroll">
+        <Heading as="h1">Bids</Heading>
+        <Divider />
+        <BidsList allBids={allBids} isLoaded={!loading} />
+      </VStack>
     </Layout>
   );
 };
