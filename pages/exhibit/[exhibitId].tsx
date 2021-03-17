@@ -186,6 +186,7 @@ const Exhibit = ({ exhibitId, pixels: initPixels, bid }: DataProps) => {
           <AcceptBidModal
             isOpen={isAcceptBidModalOpen}
             highestBid={highestBid}
+            exhibitId={exhibitId!}
             onAcceptBid={acceptBid}
             onClose={() => setAcceptBidModalOpen(false)}
           />

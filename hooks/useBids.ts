@@ -81,15 +81,16 @@ export const useBids = (
             .once("transactionHash", (e: any) => {
               toast({
                 title: "Transaction Created",
-                position: "top-right"
+                position: "top-right",
+                isClosable: true
               })
             })
             .once("receipt", (e: any) => {
-              console.log("receipt", e);
               update();
               toast({
                 title: "Transaction Success",
-                position: "top-right"
+                position: "top-right",
+                isClosable: true
               })
               resolve(e as string);
             })

@@ -10,12 +10,13 @@ import { Input, InputGroup, InputLeftAddon } from "@chakra-ui/input";
 import {
   Modal,
   ModalBody,
+  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/modal";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useWeb3 } from "../hooks/useWeb3";
 
 interface Props {
@@ -35,7 +36,8 @@ const OfferModal = ({ isOpen, onClose, onSubmit }: Props) => {
     onClose();
   };
 
-  const handlePlaceOffer = () => {
+  const handlePlaceOffer = (e: FormEvent) => {
+    e.preventDefault();
     onSubmit(Number(value));
     setValue("");
     setChecked(false);
@@ -43,12 +45,14 @@ const OfferModal = ({ isOpen, onClose, onSubmit }: Props) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={handleClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Make Offer</ModalHeader>
+        <ModalCloseButton />
         <ModalBody>
-          <FormControl>
+          <form onSubmit={handlePlaceOffer}>
+          <FormControl id="price" isRequired>
             <FormLabel>Price</FormLabel>
             <InputGroup>
               <InputLeftAddon children="Ξ" />
@@ -72,7 +76,7 @@ const OfferModal = ({ isOpen, onClose, onSubmit }: Props) => {
             )}
             <FormErrorMessage>Too low</FormErrorMessage>
           </FormControl>
-          <FormControl>
+          <FormControl mt={4} isRequired>
             <FormLabel>{"Terms & Conditions"}</FormLabel>
             <Checkbox
               isChecked={isChecked}
@@ -81,13 +85,11 @@ const OfferModal = ({ isOpen, onClose, onSubmit }: Props) => {
               By clicking you agree to our terms
             </Checkbox>
           </FormControl>
-        </ModalBody>
-        <ModalFooter>
           <ButtonGroup>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handlePlaceOffer}>Submit</Button>
+            <Button disabled={value === '' || parseInt(value) < 0 || !isChecked} mt={4} mb={4} type="submit">Submit</Button>
           </ButtonGroup>
-        </ModalFooter>
+          </form>
+        </ModalBody>
       </ModalContent>
     </Modal>
   );

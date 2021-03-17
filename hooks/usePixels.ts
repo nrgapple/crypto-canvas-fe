@@ -1,5 +1,6 @@
+import { useToast } from "@chakra-ui/toast";
 import { useEffect, useMemo } from "react";
-import { useRecoilSnapshot, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { Contract } from "web3-eth-contract";
 import { Pixel, Web3Contract } from "../interfaces";
 import { pixelsState } from "../state";
@@ -16,6 +17,7 @@ interface UsePixelsReturn {
 
 export const usePixels = (web3Contract: Web3Contract, initPixels?: Pixel[]) => {
   const [pixels, setPixels] = useRecoilState(pixelsState);
+  const toast = useToast();
 
   const { contract, web3, accounts } = useMemo(
     () =>
@@ -60,11 +62,25 @@ export const usePixels = (web3Contract: Web3Contract, initPixels?: Pixel[]) => {
         .send({
           from: accounts[0],
         })
+        .once("transactionHash", (e: any) => {
+          toast({
+            title: "Transaction Created",
+            position: "top-right"
+          })
+        })
         .once("receipt", (e: any) => {
           update();
+          toast({
+            title: "Transaction Success",
+            position: "top-right"
+          })
           res(e as string);
         })
         .once("error", (e: any) => {
+          toast({
+            title: "Transaction Failed",
+            position: "top-right"
+          })
           rej(e);
         })
         .catch((e: any) => {
@@ -89,11 +105,27 @@ export const usePixels = (web3Contract: Web3Contract, initPixels?: Pixel[]) => {
             from: accounts[0],
             value: web3.utils.toWei(".01", "ether"),
           })
+          .once("transactionHash", (e: any) => {
+            toast({
+              title: "Transaction Created",
+              position: "top-right",
+              isClosable: true
+            })
+          })
           .once("receipt", (e: any) => {
             update();
+            toast({
+              title: "Transaction Success",
+              position: "top-right",
+              isClosable: true
+            })
             res(e as string);
           })
           .once("error", (e: any) => {
+            toast({
+              title: "Transaction Failed",
+              position: "top-right"
+            })
             rej(e);
           })
           .catch((e: any) => {

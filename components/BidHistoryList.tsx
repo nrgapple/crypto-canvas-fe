@@ -1,5 +1,5 @@
-import { List, ListItem } from "@chakra-ui/layout";
-import { useEffect, useState } from "react";
+import { Table, Tbody, Th, Thead, Tr, Td } from "@chakra-ui/table";
+import React, { useEffect, useState } from "react";
 import { useWeb3 } from "../hooks/useWeb3";
 import { Bid } from "../interfaces";
 import { ETH_SYMBOL } from "../utils/helpers";
@@ -26,13 +26,24 @@ const BidHistoryList = ({exhibitId}: Props) => {
     }, [web3Contract, exhibitId])
 
     return (
-        <List>
-        {highestBids && highestBids.map((bid, i) => (
-            <ListItem key={i}>
-                {`${ETH_SYMBOL}${bid.amount}`}
-            </ListItem>
-        ))}
-        </List>
+        <Table>
+            <Thead>
+                <Tr>
+                    <Th>Price</Th>
+                    <Th>From</Th>
+                    <Th>Status</Th>
+                </Tr>
+            </Thead>
+            <Tbody>
+            {highestBids && highestBids.map((bid, i) => (
+            <Tr key={i}>
+                <Td>{`${ETH_SYMBOL}${bid.amount}`}</Td>
+                <Td>{bid.from}</Td>
+                <Td>PENDING</Td>
+            </Tr>
+            ))}
+            </Tbody>
+        </Table>
     )
 }
 
