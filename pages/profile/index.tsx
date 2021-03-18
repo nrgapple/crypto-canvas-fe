@@ -5,7 +5,6 @@ import ExhibitBox from "../../components/ExhibitBox";
 import Layout from "../../components/Layout";
 import { useBids } from "../../hooks/useBids";
 import { usePixels } from "../../hooks/usePixels";
-import { useWeb3 } from "../../hooks/useWeb3";
 import { Pixel } from "../../interfaces";
 import { allBidsState, pixelsState, showConnectPageState } from "../../state";
 import React from "react";

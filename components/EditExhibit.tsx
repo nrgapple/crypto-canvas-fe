@@ -10,11 +10,11 @@ interface Props {
   web3Contract: Web3Contract;
 }
 
-const EditExhibit = ({ exhibitPixels, web3Contract }: Props) => {
+const EditExhibit = ({ exhibitPixels }: Props) => {
   const [currentColor, setCurrentColor] = useRecoilState(currentColorState);
   const [editedExhibit, setEditedExibit] = useRecoilState(editedExhibitState);
   const setWorld = useSetRecoilState(worldState);
-  const { editPixels } = usePixels(web3Contract);
+  const { editPixels } = usePixels();
 
   const handleEditSubmit = async () => {
     try {

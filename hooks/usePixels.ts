@@ -1,8 +1,7 @@
 import { useToast } from "@chakra-ui/toast";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { Contract } from "web3-eth-contract";
-import { Pixel, Web3Contract } from "../interfaces";
+import { Pixel } from "../interfaces";
 import { pixelsState } from "../state";
 import {
   contractExhibitsRespToPixels,

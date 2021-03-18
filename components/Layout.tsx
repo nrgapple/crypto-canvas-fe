@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import Head from "next/head";
 import NavBar from "./NavBar";
-import { Box, Center, Flex } from "@chakra-ui/layout";
+import { Box, Flex } from "@chakra-ui/layout";
 import { useRecoilValue } from "recoil";
 import { showConnectPageState } from "../state";
 import ConnectView from "./ConnectView";

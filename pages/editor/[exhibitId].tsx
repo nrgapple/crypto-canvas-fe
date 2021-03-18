@@ -1,11 +1,4 @@
-import {
-  Center,
-  Divider,
-  HStack,
-  Square,
-  Stack,
-  VStack,
-} from "@chakra-ui/layout";
+import { Center, Divider, HStack, Square, Stack } from "@chakra-ui/layout";
 import {
   Skeleton,
   Box,
@@ -23,15 +16,13 @@ import {
   StatLabel,
   StatNumber,
   IconButton,
-  ScaleFade,
   Collapse,
 } from "@chakra-ui/react";
-import dynamic, { DynamicOptions } from "next/dynamic";
-import React, { Component, useEffect, useMemo } from "react";
+import dynamic from "next/dynamic";
+import React, { useEffect, useMemo } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Layout from "../../components/Layout";
 import { usePixels } from "../../hooks/usePixels";
-import { useWeb3 } from "../../hooks/useWeb3";
 import {
   centerState,
   currentColorState,

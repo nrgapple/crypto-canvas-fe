@@ -1,13 +1,11 @@
 import { Box, Square } from "@chakra-ui/layout";
-import { Skeleton } from "@chakra-ui/skeleton";
 import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import React, { useEffect, useRef, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import React, { useEffect } from "react";
+import { useRecoilState } from "recoil";
 import Layout from "../components/Layout";
 import { usePixels } from "../hooks/usePixels";
-import { useWeb3 } from "../hooks/useWeb3";
 import { Pixel } from "../interfaces";
 import { selectedExhibitState } from "../state";
 import { getContractPixels } from "../services";

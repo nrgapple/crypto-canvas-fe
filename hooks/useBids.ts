@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { AllBidsResponse, Bid, Web3Contract } from "../interfaces";
+import { useCallback, useEffect, useState } from "react";
+import { AllBidsResponse, Bid } from "../interfaces";
 import { Contract } from "web3-eth-contract";
 import { checkEmptyAddress } from "../utils/helpers";
 import { useRecoilState } from "recoil";

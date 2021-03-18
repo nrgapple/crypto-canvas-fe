@@ -1,19 +1,14 @@
-import { Divider, Flex, Heading, VStack } from "@chakra-ui/layout";
+import { Divider, Heading, VStack } from "@chakra-ui/layout";
 import { GetServerSideProps } from "next";
-import Link from "next/link";
 import React from "react";
 import { useRecoilState } from "recoil";
 import BidsList from "../../components/BidsList";
 import Layout from "../../components/Layout";
 import { useBids } from "../../hooks/useBids";
 import { usePixels } from "../../hooks/usePixels";
-import { useWeb3 } from "../../hooks/useWeb3";
 import { Bid, Pixel } from "../../interfaces";
 import { allBidsState } from "../../state";
 import { getContractAllBids, getContractPixels } from "../../services";
-import { Skeleton } from "@chakra-ui/skeleton";
-import { Box } from "@chakra-ui/react";
-import { useContractAndAccount } from "../../hooks/useContractAndAccount";
 
 interface DataProps {
   allBids?: Bid[];
