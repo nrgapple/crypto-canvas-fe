@@ -5,7 +5,6 @@ import { useRecoilValue } from "recoil";
 import Layout from "../../components/Layout";
 import Viewer from "../../components/Viewer";
 import { usePixels } from "../../hooks/usePixels";
-import { useWeb3 } from "../../hooks/useWeb3";
 import { pixelsState } from "../../state";
 import {
   Text,
@@ -35,6 +34,7 @@ import {
 } from "../../services";
 import { Bid, Pixel } from "../../interfaces";
 import AcceptBidModal from "../../components/AcceptBidModal";
+import { useContractAndAccount } from "../../hooks/useContractAndAccount";
 
 interface DataProps {
   exhibitId?: number;
@@ -47,17 +47,16 @@ const Exhibit = ({ exhibitId, pixels: initPixels, bid }: DataProps) => {
   const [isAcceptBidModalOpen, setAcceptBidModalOpen] = useState<boolean>(
     false
   );
-  const { loading, web3Contract } = useWeb3();
-  usePixels(web3Contract, initPixels);
+  const { account, status } = useContractAndAccount(true);
+  usePixels(initPixels);
   const pixels = useRecoilValue(pixelsState);
   const { highestBid, loading: loadingBids, placeBid, acceptBid } = useBids(
-    web3Contract,
     exhibitId,
     undefined,
     bid ?? undefined
   );
 
-  const you = useMemo(() => web3Contract?.accounts[0], [web3Contract]);
+  const you = useMemo(() => account, [account]);
 
   const exhibitPixels = useMemo(() => {
     return pixels.filter((p) => p.exhibitId === exhibitId);
@@ -68,10 +67,7 @@ const Exhibit = ({ exhibitId, pixels: initPixels, bid }: DataProps) => {
     exhibitPixels,
   ]);
 
-  const done = useMemo(() => !loading && exhibitPixels.length > 0, [
-    loading,
-    exhibitPixels,
-  ]);
+  const done = useMemo(() => exhibitPixels.length > 0, [exhibitPixels]);
 
   const handleSubmitOffer = (value: number) => {
     placeBid(value);
@@ -168,9 +164,9 @@ const Exhibit = ({ exhibitId, pixels: initPixels, bid }: DataProps) => {
                 </AccordionButton>
               </h2>
               <AccordionPanel position="absolute" width="100%" overflowX="auto">
-                  {exhibitId !== undefined && (
-                    <BidHistoryList exhibitId={exhibitId} />
-                  )}
+                {exhibitId !== undefined && (
+                  <BidHistoryList exhibitId={exhibitId} />
+                )}
               </AccordionPanel>
             </AccordionItem>
           </Accordion>

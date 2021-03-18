@@ -11,6 +11,7 @@ import { useWeb3 } from "../hooks/useWeb3";
 import { Pixel } from "../interfaces";
 import { selectedExhibitState } from "../state";
 import { getContractPixels } from "../services";
+import { useContractAndAccount } from "../hooks/useContractAndAccount";
 
 interface DataProps {
   pixels?: Pixel[];
@@ -21,8 +22,8 @@ const World = dynamic(() => import("../components/World"), {
 });
 
 const Home = ({ pixels }: DataProps) => {
-  const { loading, web3Contract } = useWeb3();
-  usePixels(web3Contract, pixels);
+  const { account } = useContractAndAccount(true);
+  usePixels(pixels);
   const [selectedExhibit, setSelectedExhibit] = useRecoilState(
     selectedExhibitState
   );
@@ -38,13 +39,9 @@ const Home = ({ pixels }: DataProps) => {
   return (
     <Layout title="Home">
       <Square w="100%" h="100%" padding="8px">
-        {loading && !web3Contract !== undefined ? (
-          <Skeleton />
-        ) : (
-          <Box w="100%" h="100%" p="8px">
-            <World you={web3Contract?.accounts[0] ?? ""} />
-          </Box>
-        )}
+        <Box w="100%" h="100%" p="8px">
+          <World you={account ?? ""} />
+        </Box>
       </Square>
     </Layout>
   );

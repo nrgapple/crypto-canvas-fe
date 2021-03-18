@@ -1,33 +1,34 @@
 import { Divider, Heading, VStack, Wrap } from "@chakra-ui/layout";
-import { useMemo } from "react";
-import { useRecoilValue } from "recoil";
+import { useEffect, useMemo } from "react";
+import { useRecoilValue, useResetRecoilState } from "recoil";
 import ExhibitBox from "../../components/ExhibitBox";
 import Layout from "../../components/Layout";
 import { useBids } from "../../hooks/useBids";
 import { usePixels } from "../../hooks/usePixels";
 import { useWeb3 } from "../../hooks/useWeb3";
 import { Pixel } from "../../interfaces";
-import { allBidsState, pixelsState } from "../../state";
+import { allBidsState, pixelsState, showConnectPageState } from "../../state";
 import React from "react";
+import { Button } from "@chakra-ui/react";
+import {
+  useContractAndAccount,
+  useRequireLogin,
+} from "../../hooks/useContractAndAccount";
 
 const ProfilePage = () => {
-  const { loading, web3Contract } = useWeb3();
-  usePixels(web3Contract);
+  usePixels();
+  const appData = useContractAndAccount(true);
+  const { account, status, connect, web3, contract } = appData;
   const pixels = useRecoilValue(pixelsState);
-  useBids(web3Contract);
+  //useBids(web3Contract);
   const allBids = useRecoilValue(allBidsState);
+  useRequireLogin(status);
 
-  const done = useMemo(() => !loading && web3Contract !== undefined, [
-    loading,
-    web3Contract,
-  ]);
-
-  const you = useMemo(() => web3Contract?.accounts[0], [web3Contract]);
-
+  console.log("stuff", appData);
   const myExibits = useMemo(() => {
     const exibitMap = new Map<number, Pixel[]>();
     pixels
-      .filter((p) => p.owner === you)
+      .filter((p) => p.owner === account)
       .map((p) =>
         exibitMap.set(p.exhibitId!, [
           ...(exibitMap.has(p.exhibitId!) ? exibitMap.get(p.exhibitId!)! : []),
@@ -39,22 +40,18 @@ const ProfilePage = () => {
 
   const renderMyExibits = useMemo(
     () =>
-      !done
-        ? Array.from(Array(5)).map((_, i) => (
-            <ExhibitBox pixels={[]} isLoaded={false} />
-          ))
-        : myExibits.map(([key, value]) => (
-            <ExhibitBox
-              key={key}
-              pixels={value}
-              bid={allBids.find((b) => b.exhibitId === key)}
-            />
-          )),
-    [myExibits, allBids, done]
+      myExibits.map(([key, value]) => (
+        <ExhibitBox
+          key={key}
+          pixels={value}
+          bid={allBids.find((b) => b.exhibitId === key)}
+        />
+      )),
+    [myExibits, allBids]
   );
 
   return (
-    <Layout title={web3Contract?.accounts[0] ?? "Profile"}>
+    <Layout title={account ?? "Profile"}>
       <VStack w="100%" h="100%" overflowY="scroll" p="8px">
         <Heading as="h1">My Exhibits</Heading>
         <Divider />

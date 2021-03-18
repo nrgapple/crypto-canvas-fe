@@ -9,6 +9,8 @@
   --border: rgb(229, 232, 235);
   --shadow-island: 0 1px 5px rgba(0, 0, 0, 0.15);
   --shadow-island-hover: 0 1px 10px rgba(0, 0, 0, 0.15);
+  --connected: #00ff37;
+  --disconnected: #ff0000;
 }
 
 body {

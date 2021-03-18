@@ -12,12 +12,11 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/modal";
 import { FormEvent, useState } from "react";
-import { useWeb3 } from "../hooks/useWeb3";
+import { useContractAndAccount } from "../hooks/useContractAndAccount";
 
 interface Props {
   isOpen: boolean;
@@ -26,12 +25,12 @@ interface Props {
 }
 
 const OfferModal = ({ isOpen, onClose, onSubmit }: Props) => {
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string>("");
   const [isChecked, setChecked] = useState<boolean>(false);
-  const { web3Contract } = useWeb3();
+  const { web3 } = useContractAndAccount();
 
   const handleClose = () => {
-    setValue('');
+    setValue("");
     setChecked(false);
     onClose();
   };
@@ -52,42 +51,49 @@ const OfferModal = ({ isOpen, onClose, onSubmit }: Props) => {
         <ModalCloseButton />
         <ModalBody>
           <form onSubmit={handlePlaceOffer}>
-          <FormControl id="price" isRequired>
-            <FormLabel>Price</FormLabel>
-            <InputGroup>
-              <InputLeftAddon children="Ξ" />
-              <Input
-                value={value}
-                type="number"
-                placeholder="0.00"
-                onChange={(e) => {
-                  setValue(
-                    e.target.value[0] === "."
-                      ? `0${e.target.value}`
-                      : e.target.value
-                  );
-                }}
-              />
-            </InputGroup>
-            {value && (
-              <FormHelperText>
-                WETH {web3Contract.web3.utils.toWei(value, "ether")}
-              </FormHelperText>
-            )}
-            <FormErrorMessage>Too low</FormErrorMessage>
-          </FormControl>
-          <FormControl mt={4} isRequired>
-            <FormLabel>{"Terms & Conditions"}</FormLabel>
-            <Checkbox
-              isChecked={isChecked}
-              onChange={(e) => setChecked(e.target.checked)}
-            >
-              By clicking you agree to our terms
-            </Checkbox>
-          </FormControl>
-          <ButtonGroup>
-            <Button disabled={value === '' || parseInt(value) < 0 || !isChecked} mt={4} mb={4} type="submit">Submit</Button>
-          </ButtonGroup>
+            <FormControl id="price" isRequired>
+              <FormLabel>Price</FormLabel>
+              <InputGroup>
+                <InputLeftAddon children="Ξ" />
+                <Input
+                  value={value}
+                  type="number"
+                  placeholder="0.00"
+                  onChange={(e) => {
+                    setValue(
+                      e.target.value[0] === "."
+                        ? `0${e.target.value}`
+                        : e.target.value
+                    );
+                  }}
+                />
+              </InputGroup>
+              {value && (
+                <FormHelperText>
+                  WETH {web3!.utils.toWei(value, "ether")}
+                </FormHelperText>
+              )}
+              <FormErrorMessage>Too low</FormErrorMessage>
+            </FormControl>
+            <FormControl mt={4} isRequired>
+              <FormLabel>{"Terms & Conditions"}</FormLabel>
+              <Checkbox
+                isChecked={isChecked}
+                onChange={(e) => setChecked(e.target.checked)}
+              >
+                By clicking you agree to our terms
+              </Checkbox>
+            </FormControl>
+            <ButtonGroup>
+              <Button
+                disabled={value === "" || parseInt(value) < 0 || !isChecked}
+                mt={4}
+                mb={4}
+                type="submit"
+              >
+                Submit
+              </Button>
+            </ButtonGroup>
           </form>
         </ModalBody>
       </ModalContent>

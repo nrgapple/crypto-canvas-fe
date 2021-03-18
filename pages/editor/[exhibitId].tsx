@@ -47,6 +47,10 @@ import { ChromePickerProps } from "react-color";
 import { GetServerSideProps } from "next";
 import Draggable from "react-draggable";
 import { MinusIcon } from "@chakra-ui/icons";
+import {
+  useContractAndAccount,
+  useRequireLogin,
+} from "../../hooks/useContractAndAccount";
 
 const World = dynamic(() => import("../../components/World"), {
   ssr: false,
@@ -62,8 +66,8 @@ interface DataProps {
 }
 
 const EditorPage = ({ exhibitId }: DataProps) => {
-  const { loading, web3Contract } = useWeb3();
-  const { checkout, editPixels } = usePixels(web3Contract);
+  const { status, account } = useContractAndAccount(true);
+  const { checkout, editPixels } = usePixels();
   const [currentColor, setCurrentColor] = useRecoilState(currentColorState);
   const [selectedPixels, setSelectedPixels] = useRecoilState(
     selectedPixelsState
@@ -83,6 +87,7 @@ const EditorPage = ({ exhibitId }: DataProps) => {
   const { isOpen: isMin, onToggle: onToggleMin } = useDisclosure({
     defaultIsOpen: false,
   });
+  useRequireLogin(status);
 
   const onCheckout = async () => {
     try {
@@ -201,11 +206,11 @@ const EditorPage = ({ exhibitId }: DataProps) => {
         </Stack>
       </Draggable>
       <Square w="100%" h="100%" flex={1}>
-        {loading && !web3Contract !== undefined ? (
+        {(status !== "connected") !== undefined ? (
           <Skeleton />
         ) : (
           <Box h="100%" p="8px" w="100%">
-            <World you={web3Contract?.accounts[0] ?? ""} />
+            <World you={account ?? ""} />
           </Box>
         )}
       </Square>
