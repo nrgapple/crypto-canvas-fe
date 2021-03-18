@@ -206,7 +206,7 @@ const EditorPage = ({ exhibitId }: DataProps) => {
         </Stack>
       </Draggable>
       <Square w="100%" h="100%" flex={1}>
-        {(status !== "connected") !== undefined ? (
+        {status !== "connected" ? (
           <Skeleton />
         ) : (
           <Box h="100%" p="8px" w="100%">

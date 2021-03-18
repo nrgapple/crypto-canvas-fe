@@ -13,7 +13,9 @@ let contract: Contract | undefined = undefined;
 
 export const useContractAndAccount = (connectOnMount: boolean = false) => {
   const wallet = useWallet();
-  const { ethereum, connect, account } = useMemo(() => wallet, [wallet]);
+  const { ethereum, connect, account, status } = useMemo(() => wallet, [
+    wallet,
+  ]);
   const [wasSignedIn, setWasSignedIn] = useRecoilState(wasSignedInState);
 
   useEffect(() => {
@@ -32,8 +34,12 @@ export const useContractAndAccount = (connectOnMount: boolean = false) => {
         console.log("here");
 
         await connect("injected");
+        console.log("what status?", status);
+
         if (status === "connected") {
           setWasSignedIn(true);
+        } else if (status === "error" || status === "disconnected") {
+          setWasSignedIn(false);
         }
       }
     })();
@@ -54,6 +60,7 @@ export const useRequireLogin = (status: string) => {
     if (!hadError) {
       if (status === "error") {
         setShowConnectPage(true);
+        setHadError(true);
       }
     } else {
       if (status === "connected") {

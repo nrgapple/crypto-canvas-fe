@@ -1,15 +1,16 @@
 import { Circle } from "@chakra-ui/layout";
+import { useRecoilValue } from "recoil";
 import { useContractAndAccount } from "../hooks/useContractAndAccount";
+import { wasSignedInState } from "../state";
 
 const SigninButton = () => {
   const { connect, status } = useContractAndAccount();
-  console.log(status);
+  const wasSignedIn = useRecoilValue(wasSignedInState);
+  console.log(wasSignedIn);
   return (
     <Circle
       size="20px"
-      background={
-        status === "connected" ? "var(--connected)" : "var(--disconnected)"
-      }
+      background={wasSignedIn ? "var(--connected)" : "var(--disconnected)"}
       onClick={() => connect("injected")}
     ></Circle>
   );

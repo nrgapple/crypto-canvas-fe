@@ -13,6 +13,7 @@ import { allBidsState } from "../../state";
 import { getContractAllBids, getContractPixels } from "../../services";
 import { Skeleton } from "@chakra-ui/skeleton";
 import { Box } from "@chakra-ui/react";
+import { useContractAndAccount } from "../../hooks/useContractAndAccount";
 
 interface DataProps {
   allBids?: Bid[];
@@ -20,9 +21,8 @@ interface DataProps {
 }
 
 const BidsPage = ({ allBids: initAllbids, pixels }: DataProps) => {
-  const { loading, web3Contract } = useWeb3();
-  useBids(web3Contract, undefined, initAllbids);
-  usePixels(web3Contract, pixels);
+  useBids(undefined, initAllbids);
+  usePixels(pixels);
   const [allBids] = useRecoilState(allBidsState);
 
   return (
@@ -30,7 +30,7 @@ const BidsPage = ({ allBids: initAllbids, pixels }: DataProps) => {
       <VStack w="100%" h="100%" p="8px" overflowY="scroll">
         <Heading as="h1">Bids</Heading>
         <Divider />
-        <BidsList allBids={allBids} isLoaded={!loading} />
+        <BidsList allBids={allBids} isLoaded={true} />
       </VStack>
     </Layout>
   );
