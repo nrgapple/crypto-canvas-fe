@@ -6,7 +6,7 @@ import {
   checkEmptyAddress,
   contractExhibitsRespToPixels,
 } from "../utils/helpers";
-import { AllBidsResponse, Bid } from "../interfaces";
+import { AllBidsResponse, Bid, Dart } from "../interfaces";
 
 export const getServerContract = () => {
   const provider = new Web3.providers.HttpProvider(config.infuraProviderUri);
@@ -48,4 +48,8 @@ export const getContractBidForExhibit = async (exhibitId: number) => {
         amount: parseFloat(web3.utils.fromWei(b.amount)),
       } as Bid)
     : undefined;
+};
+
+export const getDartJpeg = async (Dart: Dart) => {
+  //https://www.npmjs.com/package/jpeg-js
 };

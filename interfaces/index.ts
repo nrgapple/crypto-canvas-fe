@@ -57,3 +57,27 @@ export interface AllBidsResponse {
   amount: string;
   exhibitId: string;
 }
+
+export interface DartResp {
+  dartId: string;
+  onwer: string;
+  rgbArray: string[];
+  dimensions: DimensionsResp;
+}
+
+export interface DimensionsResp {
+  width: string;
+  height: string;
+}
+
+export interface Dart {
+  dartId: number;
+  onwer: number;
+  rgbArray: number[];
+  dimensions: Dimensions;
+}
+
+export interface Dimensions {
+  width: number;
+  height: number;
+}
