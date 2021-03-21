@@ -281,8 +281,8 @@ const NAV_ITEMS: Array<NavItem> = [
     href: "/",
   },
   {
-    label: "Bids",
-    href: "/bids",
+    label: "Browse",
+    href: "/browse",
   },
   {
     label: "About",

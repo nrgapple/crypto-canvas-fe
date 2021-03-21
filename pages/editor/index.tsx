@@ -17,9 +17,12 @@ import {
   StatNumber,
   IconButton,
   Collapse,
+  Input,
+  InputGroup,
+  InputLeftAddon,
 } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Layout from "../../components/Layout";
 import { usePixels } from "../../hooks/usePixels";
@@ -69,6 +72,7 @@ const EditorPage = () => {
   const [world, setWorld] = useRecoilState(worldState);
   const setCenter = useSetRecoilState(centerState);
   const [moveExhibit, setMoveExhibit] = useRecoilState(moveExhibitState);
+  const [name, setName] = useState("");
   const { isOpen: isMin, onToggle: onToggleMin } = useDisclosure({
     defaultIsOpen: false,
   });
@@ -76,7 +80,7 @@ const EditorPage = () => {
 
   const onCheckout = async () => {
     try {
-      await create(selectedPixels);
+      await create(selectedPixels, name);
       setSelectedPixels([]);
     } catch (e) {}
   };
@@ -117,6 +121,14 @@ const EditorPage = () => {
           </HStack>
           <Divider />
           <Collapse in={!isMin} animateOpacity>
+            <InputGroup p="8px">
+              <InputLeftAddon children="Title" />
+              <Input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </InputGroup>
             <Center>
               <Picker
                 color={currentColor}
