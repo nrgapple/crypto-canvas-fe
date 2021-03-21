@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { Bid, Pixel, WorldStateType } from "../interfaces";
+import { Bid, Dart, Pixel, WorldStateType } from "../interfaces";
 import { localStorageEffect } from "./utils";
 import { Contract } from "web3-eth-contract/types";
 import Web3 from "web3";
@@ -65,4 +65,9 @@ export const wasSignedInState = atom({
   key: "was-signed-in",
   default: false,
   effects_UNSTABLE: [localStorageEffect("was_signed_in")],
+});
+
+export const dartsState = atom({
+  key: "darts",
+  default: [] as Dart[],
 });

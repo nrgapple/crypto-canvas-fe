@@ -8,45 +8,35 @@ import { usePixels } from "../../hooks/usePixels";
 import { Pixel } from "../../interfaces";
 import { allBidsState, pixelsState, showConnectPageState } from "../../state";
 import React from "react";
-import { Button } from "@chakra-ui/react";
 import {
   useContractAndAccount,
   useRequireLogin,
 } from "../../hooks/useContractAndAccount";
+import { useDarts } from "../../hooks/useDarts";
 
 const ProfilePage = () => {
   usePixels();
   const appData = useContractAndAccount(true);
   const { account, status, connect, web3, contract } = appData;
-  const pixels = useRecoilValue(pixelsState);
-  //useBids(web3Contract);
+  const { darts } = useDarts();
   const allBids = useRecoilValue(allBidsState);
   useRequireLogin(status);
 
-  console.log("stuff", appData);
-  const myExibits = useMemo(() => {
-    const exibitMap = new Map<number, Pixel[]>();
-    pixels
-      .filter((p) => p.owner === account)
-      .map((p) =>
-        exibitMap.set(p.exhibitId!, [
-          ...(exibitMap.has(p.exhibitId!) ? exibitMap.get(p.exhibitId!)! : []),
-          p,
-        ])
-      );
-    return Array.from(exibitMap);
-  }, [pixels]);
+  const myDarts = useMemo(() => {
+    return darts.filter((d) => d.owner == account);
+  }, [darts, account]);
 
-  const renderMyExibits = useMemo(
+  const renderMyDarts = useMemo(
     () =>
-      myExibits.map(([key, value]) => (
+      myDarts.map((dart) => (
         <ExhibitBox
-          key={key}
-          pixels={value}
-          bid={allBids.find((b) => b.exhibitId === key)}
+          key={dart.dartId}
+          image={dart.image}
+          dartId={dart.dartId}
+          bid={undefined}
         />
       )),
-    [myExibits, allBids]
+    [myDarts, allBids]
   );
 
   return (
@@ -55,7 +45,7 @@ const ProfilePage = () => {
         <Heading as="h1">My Exhibits</Heading>
         <Divider />
         <Wrap justify="center" w="100%">
-          {renderMyExibits}
+          {renderMyDarts}
         </Wrap>
       </VStack>
     </Layout>

@@ -21,12 +21,6 @@ export interface Bid {
   exhibitId?: number;
 }
 
-export interface Web3Contract {
-  contract: Contract;
-  accounts: string[];
-  web3: Web3;
-}
-
 export interface Bounds {
   topLeft: Coord;
   bottomRight: Coord;
@@ -58,10 +52,10 @@ export interface AllBidsResponse {
   exhibitId: string;
 }
 
-export interface DartResp {
+export interface DartRawResp {
   dartId: string;
-  onwer: string;
-  rgbArray: string[];
+  owner: string;
+  rgbaArray: string[];
   dimensions: DimensionsResp;
 }
 
@@ -70,14 +64,20 @@ export interface DimensionsResp {
   height: string;
 }
 
-export interface Dart {
+export interface DartRaw {
   dartId: number;
-  onwer: number;
-  rgbArray: number[];
+  owner: number;
+  rgbaArray: number[];
   dimensions: Dimensions;
 }
 
 export interface Dimensions {
   width: number;
   height: number;
+}
+
+export interface Dart {
+  dartId: number;
+  owner: string;
+  image: string;
 }

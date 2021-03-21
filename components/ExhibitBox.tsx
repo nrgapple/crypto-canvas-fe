@@ -17,22 +17,29 @@ import { Bid, Pixel } from "../interfaces";
 import Viewer from "./Viewer";
 
 interface Props {
-  pixels: Pixel[];
+  pixels?: Pixel[];
+  image?: string;
   bid?: Bid;
   isLoaded?: boolean;
+  dartId?: number;
 }
 
 const ExhibitBox = ({
   pixels,
   bid,
+  image,
+  dartId,
   isLoaded: isLoadedForced = true,
 }: Props) => {
   const isLoaded = useMemo(
     () =>
-      pixels.length > 0 && pixels[0]?.exhibitId !== undefined && isLoadedForced,
+      !pixels ||
+      (pixels.length > 0 &&
+        pixels[0]?.exhibitId !== undefined &&
+        isLoadedForced),
     [pixels, isLoadedForced]
   );
-  console.log("lf", isLoadedForced);
+
   return (
     <LinkBox
       as="article"
@@ -59,12 +66,16 @@ const ExhibitBox = ({
         </VStack>
         <HStack w="100%" alignItems="center" justifyContent="space-between">
           <LinkOverlay
-            href={isLoaded ? `/exhibit/${pixels[0]?.exhibitId}` : ""}
+            href={
+              isLoaded
+                ? `/exhibit/${pixels ? pixels[0]?.exhibitId : dartId}`
+                : ""
+            }
             p="8px"
           >
             <Skeleton isLoaded={isLoaded}>
               <Heading as="h5" size="md">
-                Exhibit #{pixels[0]?.exhibitId}
+                Exhibit #{pixels ? pixels[0]?.exhibitId : dartId}
               </Heading>
             </Skeleton>
           </LinkOverlay>

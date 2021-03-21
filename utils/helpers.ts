@@ -5,6 +5,8 @@ import {
   ContractExhibitResp,
   ContractPixelData,
   Coord,
+  DartRaw,
+  Dimensions,
   Pixel,
 } from "../interfaces";
 
@@ -113,6 +115,31 @@ export const pointsToContractData = (pixels: Pixel[]) => {
   } as ContractPixelData;
 };
 
+export const pointsToDartRaw = (pixels: Pixel[]) => {
+  const { max, min } = getMaxMinPoints(pixels);
+  const pixelsSorted = [...pixels].sort((a, b) =>
+    a.y === b.y ? a.x - b.x : a.y - b.y
+  );
+  const rgbaArray: number[] = [];
+  pixelsSorted.forEach((p) => {
+    const rgba = hexRgb(p.hexColor, { format: "array" });
+    rgbaArray.push(rgba[0]);
+    rgbaArray.push(rgba[1]);
+    rgbaArray.push(rgba[2]);
+    rgbaArray.push(rgba[3]);
+  });
+
+  const dimensions = {
+    height: max[1] - min[1],
+    width: max[0] - min[0],
+  } as Dimensions;
+
+  return {
+    rgbaArray,
+    dimensions,
+  } as DartRaw;
+};
+
 export const contractExhibitsRespToPixels = (exRes: ContractExhibitResp[]) => {
   const newPixels: Pixel[] = [];
   exRes.forEach(
@@ -161,4 +188,22 @@ export const contractExhibitsRespToPixels = (exRes: ContractExhibitResp[]) => {
     }
   );
   return newPixels;
+};
+
+export const increaseResolution = (
+  data: string[],
+  resolution: number
+): number[] => {
+  let expandedData: number[] = [];
+  for (let p = 0; p < data.length; p + 4) {
+    for (let t = 0; t < resolution; t++) {
+      expandedData.push(
+        parseInt(data[p]),
+        parseInt(data[p + 1]),
+        parseInt(data[p + 2]),
+        parseInt(data[p + 3])
+      );
+    }
+  }
+  return expandedData;
 };
