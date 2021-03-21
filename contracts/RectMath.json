@@ -1,0 +1,669 @@
+{
+  "contractName": "RectMath",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.7.4+commit.3f05b770\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/adamgeiger/git/DAPP/contracts/utils/RectMath.sol\":\"RectMath\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/adamgeiger/git/DAPP/contracts/utils/CustomStructs.sol\":{\"keccak256\":\"0x3f3dc9576861b282483f4f7fe26152f123517e40fe90edc91f5c5c0fef9216bf\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://121bf87f011f88eadc4576947fccc76cd631b1a4463250b9f14a72c6a6e8ccdf\",\"dweb:/ipfs/Qmcnd2ERRei1MLe5J4RzR15KdF3gFbt19dD9d71rS4CJE9\"]},\"/Users/adamgeiger/git/DAPP/contracts/utils/RectMath.sol\":{\"keccak256\":\"0xfe2c2279ebe95c24c3bce1bb5bd694e7d07cb2c138c1452a3e6792c1d4793d17\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9a65e1493466803392f4db56af96c3f276bcd9149b0e7624125d1f985b264c0c\",\"dweb:/ipfs/QmWtJPHHrszHwivXGvjVvY8NMkREyq667oYxz3YfKsNnW8\"]}},\"version\":1}",
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220d92dfd5db130d5194670d27e942c0d30d7bdad90c727579215a87b7082071b0864736f6c63430007040033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220d92dfd5db130d5194670d27e942c0d30d7bdad90c727579215a87b7082071b0864736f6c63430007040033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "110:206:4:-:0;;;;;;;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "110:206:4:-:0;;;;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity 0.7.4;\n\nimport { CustomStructs } from \"./CustomStructs.sol\";\n\nlibrary RectMath {\n   function validLength(uint256 length, CustomStructs.Dimensions memory _dimensions) internal pure returns(bool) {\n       return length == (_dimensions.height * _dimensions.width);\n   }\n}",
+  "sourcePath": "/Users/adamgeiger/git/DAPP/contracts/utils/RectMath.sol",
+  "ast": {
+    "absolutePath": "/Users/adamgeiger/git/DAPP/contracts/utils/RectMath.sol",
+    "exportedSymbols": {
+      "CustomStructs": [
+        375
+      ],
+      "RectMath": [
+        399
+      ]
+    },
+    "id": 400,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 377,
+        "literals": [
+          "solidity",
+          "0.7",
+          ".4"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:22:4"
+      },
+      {
+        "absolutePath": "/Users/adamgeiger/git/DAPP/contracts/utils/CustomStructs.sol",
+        "file": "./CustomStructs.sol",
+        "id": 379,
+        "nodeType": "ImportDirective",
+        "scope": 400,
+        "sourceUnit": 376,
+        "src": "56:52:4",
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 378,
+              "name": "CustomStructs",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "src": "65:13:4",
+              "typeDescriptions": {}
+            }
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "fullyImplemented": true,
+        "id": 399,
+        "linearizedBaseContracts": [
+          399
+        ],
+        "name": "RectMath",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 397,
+              "nodeType": "Block",
+              "src": "242:72:4",
+              "statements": [
+                {
+                  "expression": {
+                    "commonType": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    },
+                    "id": 395,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "id": 388,
+                      "name": "length",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 381,
+                      "src": "258:6:4",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "==",
+                    "rightExpression": {
+                      "components": [
+                        {
+                          "commonType": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          },
+                          "id": 393,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftExpression": {
+                            "expression": {
+                              "id": 389,
+                              "name": "_dimensions",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 383,
+                              "src": "269:11:4",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_Dimensions_$364_memory_ptr",
+                                "typeString": "struct CustomStructs.Dimensions memory"
+                              }
+                            },
+                            "id": 390,
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "height",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 361,
+                            "src": "269:18:4",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "nodeType": "BinaryOperation",
+                          "operator": "*",
+                          "rightExpression": {
+                            "expression": {
+                              "id": 391,
+                              "name": "_dimensions",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 383,
+                              "src": "290:11:4",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_Dimensions_$364_memory_ptr",
+                                "typeString": "struct CustomStructs.Dimensions memory"
+                              }
+                            },
+                            "id": 392,
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "width",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 363,
+                            "src": "290:17:4",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "src": "269:38:4",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        }
+                      ],
+                      "id": 394,
+                      "isConstant": false,
+                      "isInlineArray": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "TupleExpression",
+                      "src": "268:40:4",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "258:50:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "functionReturnParameters": 387,
+                  "id": 396,
+                  "nodeType": "Return",
+                  "src": "251:57:4"
+                }
+              ]
+            },
+            "id": 398,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "validLength",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 384,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 381,
+                  "mutability": "mutable",
+                  "name": "length",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 398,
+                  "src": "153:14:4",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 380,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "153:7:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 383,
+                  "mutability": "mutable",
+                  "name": "_dimensions",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 398,
+                  "src": "169:43:4",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Dimensions_$364_memory_ptr",
+                    "typeString": "struct CustomStructs.Dimensions"
+                  },
+                  "typeName": {
+                    "id": 382,
+                    "name": "CustomStructs.Dimensions",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 364,
+                    "src": "169:24:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Dimensions_$364_storage_ptr",
+                      "typeString": "struct CustomStructs.Dimensions"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "152:61:4"
+            },
+            "returnParameters": {
+              "id": 387,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 386,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 398,
+                  "src": "236:4:4",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 385,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "236:4:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "235:6:4"
+            },
+            "scope": 399,
+            "src": "132:182:4",
+            "stateMutability": "pure",
+            "virtual": false,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 400,
+        "src": "110:206:4"
+      }
+    ],
+    "src": "32:284:4"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/Users/adamgeiger/git/DAPP/contracts/utils/RectMath.sol",
+      "exportedSymbols": {
+        "CustomStructs": [
+          375
+        ],
+        "RectMath": [
+          399
+        ]
+      },
+      "license": "MIT"
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "0.7",
+            ".4"
+          ]
+        },
+        "id": 377,
+        "name": "PragmaDirective",
+        "src": "32:22:4"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 376,
+          "absolutePath": "/Users/adamgeiger/git/DAPP/contracts/utils/CustomStructs.sol",
+          "file": "./CustomStructs.sol",
+          "scope": 400,
+          "symbolAliases": [
+            {
+              "foreign": {
+                "attributes": {
+                  "overloadedDeclarations": [
+                    null
+                  ],
+                  "value": "CustomStructs"
+                },
+                "id": 378,
+                "name": "Identifier",
+                "src": "65:13:4"
+              }
+            }
+          ],
+          "unitAlias": ""
+        },
+        "id": 379,
+        "name": "ImportDirective",
+        "src": "56:52:4"
+      },
+      {
+        "attributes": {
+          "abstract": false,
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "library",
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            399
+          ],
+          "name": "RectMath",
+          "scope": 400
+        },
+        "children": [
+          {
+            "attributes": {
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "validLength",
+              "scope": 399,
+              "stateMutability": "pure",
+              "virtual": false,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "length",
+                      "scope": 398,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 380,
+                        "name": "ElementaryTypeName",
+                        "src": "153:7:4"
+                      }
+                    ],
+                    "id": 381,
+                    "name": "VariableDeclaration",
+                    "src": "153:14:4"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_dimensions",
+                      "scope": 398,
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "type": "struct CustomStructs.Dimensions",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "CustomStructs.Dimensions",
+                          "referencedDeclaration": 364,
+                          "type": "struct CustomStructs.Dimensions"
+                        },
+                        "id": 382,
+                        "name": "UserDefinedTypeName",
+                        "src": "169:24:4"
+                      }
+                    ],
+                    "id": 383,
+                    "name": "VariableDeclaration",
+                    "src": "169:43:4"
+                  }
+                ],
+                "id": 384,
+                "name": "ParameterList",
+                "src": "152:61:4"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "",
+                      "scope": 398,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 385,
+                        "name": "ElementaryTypeName",
+                        "src": "236:4:4"
+                      }
+                    ],
+                    "id": 386,
+                    "name": "VariableDeclaration",
+                    "src": "236:4:4"
+                  }
+                ],
+                "id": 387,
+                "name": "ParameterList",
+                "src": "235:6:4"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 387
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "commonType": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          },
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "==",
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 381,
+                              "type": "uint256",
+                              "value": "length"
+                            },
+                            "id": 388,
+                            "name": "Identifier",
+                            "src": "258:6:4"
+                          },
+                          {
+                            "attributes": {
+                              "isConstant": false,
+                              "isInlineArray": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "type": "uint256"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "commonType": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  },
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "operator": "*",
+                                  "type": "uint256"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "isConstant": false,
+                                      "isLValue": true,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "member_name": "height",
+                                      "referencedDeclaration": 361,
+                                      "type": "uint256"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 383,
+                                          "type": "struct CustomStructs.Dimensions memory",
+                                          "value": "_dimensions"
+                                        },
+                                        "id": 389,
+                                        "name": "Identifier",
+                                        "src": "269:11:4"
+                                      }
+                                    ],
+                                    "id": 390,
+                                    "name": "MemberAccess",
+                                    "src": "269:18:4"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "isConstant": false,
+                                      "isLValue": true,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "member_name": "width",
+                                      "referencedDeclaration": 363,
+                                      "type": "uint256"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 383,
+                                          "type": "struct CustomStructs.Dimensions memory",
+                                          "value": "_dimensions"
+                                        },
+                                        "id": 391,
+                                        "name": "Identifier",
+                                        "src": "290:11:4"
+                                      }
+                                    ],
+                                    "id": 392,
+                                    "name": "MemberAccess",
+                                    "src": "290:17:4"
+                                  }
+                                ],
+                                "id": 393,
+                                "name": "BinaryOperation",
+                                "src": "269:38:4"
+                              }
+                            ],
+                            "id": 394,
+                            "name": "TupleExpression",
+                            "src": "268:40:4"
+                          }
+                        ],
+                        "id": 395,
+                        "name": "BinaryOperation",
+                        "src": "258:50:4"
+                      }
+                    ],
+                    "id": 396,
+                    "name": "Return",
+                    "src": "251:57:4"
+                  }
+                ],
+                "id": 397,
+                "name": "Block",
+                "src": "242:72:4"
+              }
+            ],
+            "id": 398,
+            "name": "FunctionDefinition",
+            "src": "132:182:4"
+          }
+        ],
+        "id": 399,
+        "name": "ContractDefinition",
+        "src": "110:206:4"
+      }
+    ],
+    "id": 400,
+    "name": "SourceUnit",
+    "src": "32:284:4"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.7.4+commit.3f05b770.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.3",
+  "updatedAt": "2021-03-21T18:30:35.930Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

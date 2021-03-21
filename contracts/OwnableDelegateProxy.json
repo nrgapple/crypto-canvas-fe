@@ -1,0 +1,123 @@
+{
+  "contractName": "OwnableDelegateProxy",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.7.4+commit.3f05b770\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/adamgeiger/git/DAPP/contracts/OwnableDelegateProxy.sol\":\"OwnableDelegateProxy\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/adamgeiger/git/DAPP/contracts/OwnableDelegateProxy.sol\":{\"keccak256\":\"0x65b885f3991d861386d0906ac031d5f8df26b3083a2d1d3aca5bae4128fcc021\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://90270b8e7c6e49188198b24c6f8280dafc775fb666be3ff67e31f7e3b51883de\",\"dweb:/ipfs/QmcASoCVowjwJqTry3rmJGZVmzf3HEk9PkbnTi4NhAwGf7\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220aad90a533c3d85c343c9b2756d0358a6177db90b72cb76fef041dfc543afc49a64736f6c63430007040033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220aad90a533c3d85c343c9b2756d0358a6177db90b72cb76fef041dfc543afc49a64736f6c63430007040033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "56:32:1:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "56:32:1:-:0;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity 0.7.4;\n\ncontract OwnableDelegateProxy {}\n",
+  "sourcePath": "/Users/adamgeiger/git/DAPP/contracts/OwnableDelegateProxy.sol",
+  "ast": {
+    "absolutePath": "/Users/adamgeiger/git/DAPP/contracts/OwnableDelegateProxy.sol",
+    "exportedSymbols": {
+      "OwnableDelegateProxy": [
+        348
+      ]
+    },
+    "id": 349,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 347,
+        "literals": [
+          "solidity",
+          "0.7",
+          ".4"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:22:1"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 348,
+        "linearizedBaseContracts": [
+          348
+        ],
+        "name": "OwnableDelegateProxy",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 349,
+        "src": "56:32:1"
+      }
+    ],
+    "src": "32:57:1"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/Users/adamgeiger/git/DAPP/contracts/OwnableDelegateProxy.sol",
+      "exportedSymbols": {
+        "OwnableDelegateProxy": [
+          348
+        ]
+      },
+      "license": "MIT"
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "0.7",
+            ".4"
+          ]
+        },
+        "id": 347,
+        "name": "PragmaDirective",
+        "src": "32:22:1"
+      },
+      {
+        "attributes": {
+          "abstract": false,
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            348
+          ],
+          "name": "OwnableDelegateProxy",
+          "nodes": [
+            null
+          ],
+          "scope": 349
+        },
+        "id": 348,
+        "name": "ContractDefinition",
+        "src": "56:32:1"
+      }
+    ],
+    "id": 349,
+    "name": "SourceUnit",
+    "src": "32:57:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.7.4+commit.3f05b770.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.3",
+  "updatedAt": "2021-03-21T18:30:35.915Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
