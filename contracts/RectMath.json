@@ -1,56 +1,56 @@
 {
   "contractName": "RectMath",
   "abi": [],
-  "metadata": "{\"compiler\":{\"version\":\"0.7.4+commit.3f05b770\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/adamgeiger/git/DAPP/contracts/utils/RectMath.sol\":\"RectMath\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/adamgeiger/git/DAPP/contracts/utils/CustomStructs.sol\":{\"keccak256\":\"0x3f3dc9576861b282483f4f7fe26152f123517e40fe90edc91f5c5c0fef9216bf\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://121bf87f011f88eadc4576947fccc76cd631b1a4463250b9f14a72c6a6e8ccdf\",\"dweb:/ipfs/Qmcnd2ERRei1MLe5J4RzR15KdF3gFbt19dD9d71rS4CJE9\"]},\"/Users/adamgeiger/git/DAPP/contracts/utils/RectMath.sol\":{\"keccak256\":\"0xfe2c2279ebe95c24c3bce1bb5bd694e7d07cb2c138c1452a3e6792c1d4793d17\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9a65e1493466803392f4db56af96c3f276bcd9149b0e7624125d1f985b264c0c\",\"dweb:/ipfs/QmWtJPHHrszHwivXGvjVvY8NMkREyq667oYxz3YfKsNnW8\"]}},\"version\":1}",
-  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220d92dfd5db130d5194670d27e942c0d30d7bdad90c727579215a87b7082071b0864736f6c63430007040033",
-  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220d92dfd5db130d5194670d27e942c0d30d7bdad90c727579215a87b7082071b0864736f6c63430007040033",
+  "metadata": "{\"compiler\":{\"version\":\"0.7.4+commit.3f05b770\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/matthewruddy/Desktop/Projects/DAPP/contracts/utils/RectMath.sol\":\"RectMath\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/matthewruddy/Desktop/Projects/DAPP/contracts/utils/CustomStructs.sol\":{\"keccak256\":\"0x1a45ed65a386b32f766650fe05727ea31241635e640fb3c2e0d78eed2b3d4827\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e17d2bad99cfe340153093a0dcced85a3a28dbf80eac660a4714f1f9127ca247\",\"dweb:/ipfs/QmU77cYLGachLvfMatmW14UAY6mabiV4usuS7Q3WX6b8zw\"]},\"/Users/matthewruddy/Desktop/Projects/DAPP/contracts/utils/RectMath.sol\":{\"keccak256\":\"0xfe2c2279ebe95c24c3bce1bb5bd694e7d07cb2c138c1452a3e6792c1d4793d17\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9a65e1493466803392f4db56af96c3f276bcd9149b0e7624125d1f985b264c0c\",\"dweb:/ipfs/QmWtJPHHrszHwivXGvjVvY8NMkREyq667oYxz3YfKsNnW8\"]}},\"version\":1}",
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212206a2bf16e5ee45b76c00a7777aec1b6a127b7e8b762e4fdb06b8184f0ed731c2264736f6c63430007040033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212206a2bf16e5ee45b76c00a7777aec1b6a127b7e8b762e4fdb06b8184f0ed731c2264736f6c63430007040033",
   "immutableReferences": {},
   "generatedSources": [],
   "deployedGeneratedSources": [],
-  "sourceMap": "110:206:4:-:0;;;;;;;;;;;;;;;;;;;;;;;;;",
-  "deployedSourceMap": "110:206:4:-:0;;;;;;;;",
+  "sourceMap": "110:206:2:-:0;;;;;;;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "110:206:2:-:0;;;;;;;;",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity 0.7.4;\n\nimport { CustomStructs } from \"./CustomStructs.sol\";\n\nlibrary RectMath {\n   function validLength(uint256 length, CustomStructs.Dimensions memory _dimensions) internal pure returns(bool) {\n       return length == (_dimensions.height * _dimensions.width);\n   }\n}",
-  "sourcePath": "/Users/adamgeiger/git/DAPP/contracts/utils/RectMath.sol",
+  "sourcePath": "/Users/matthewruddy/Desktop/Projects/DAPP/contracts/utils/RectMath.sol",
   "ast": {
-    "absolutePath": "/Users/adamgeiger/git/DAPP/contracts/utils/RectMath.sol",
+    "absolutePath": "/Users/matthewruddy/Desktop/Projects/DAPP/contracts/utils/RectMath.sol",
     "exportedSymbols": {
       "CustomStructs": [
-        375
+        382
       ],
       "RectMath": [
-        399
+        406
       ]
     },
-    "id": 400,
+    "id": 407,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 377,
+        "id": 384,
         "literals": [
           "solidity",
           "0.7",
           ".4"
         ],
         "nodeType": "PragmaDirective",
-        "src": "32:22:4"
+        "src": "32:22:2"
       },
       {
-        "absolutePath": "/Users/adamgeiger/git/DAPP/contracts/utils/CustomStructs.sol",
+        "absolutePath": "/Users/matthewruddy/Desktop/Projects/DAPP/contracts/utils/CustomStructs.sol",
         "file": "./CustomStructs.sol",
-        "id": 379,
+        "id": 386,
         "nodeType": "ImportDirective",
-        "scope": 400,
-        "sourceUnit": 376,
-        "src": "56:52:4",
+        "scope": 407,
+        "sourceUnit": 383,
+        "src": "56:52:2",
         "symbolAliases": [
           {
             "foreign": {
-              "id": 378,
+              "id": 385,
               "name": "CustomStructs",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "src": "65:13:4",
+              "src": "65:13:2",
               "typeDescriptions": {}
             }
           }
@@ -63,18 +63,18 @@
         "contractDependencies": [],
         "contractKind": "library",
         "fullyImplemented": true,
-        "id": 399,
+        "id": 406,
         "linearizedBaseContracts": [
-          399
+          406
         ],
         "name": "RectMath",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 397,
+              "id": 404,
               "nodeType": "Block",
-              "src": "242:72:4",
+              "src": "242:72:2",
               "statements": [
                 {
                   "expression": {
@@ -82,18 +82,18 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
-                    "id": 395,
+                    "id": 402,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
-                      "id": 388,
+                      "id": 395,
                       "name": "length",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 381,
-                      "src": "258:6:4",
+                      "referencedDeclaration": 388,
+                      "src": "258:6:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -108,33 +108,33 @@
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           },
-                          "id": 393,
+                          "id": 400,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "leftExpression": {
                             "expression": {
-                              "id": 389,
+                              "id": 396,
                               "name": "_dimensions",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 383,
-                              "src": "269:11:4",
+                              "referencedDeclaration": 390,
+                              "src": "269:11:2",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Dimensions_$364_memory_ptr",
+                                "typeIdentifier": "t_struct$_Dimensions_$361_memory_ptr",
                                 "typeString": "struct CustomStructs.Dimensions memory"
                               }
                             },
-                            "id": 390,
+                            "id": 397,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "height",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 361,
-                            "src": "269:18:4",
+                            "referencedDeclaration": 358,
+                            "src": "269:18:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -144,82 +144,82 @@
                           "operator": "*",
                           "rightExpression": {
                             "expression": {
-                              "id": 391,
+                              "id": 398,
                               "name": "_dimensions",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 383,
-                              "src": "290:11:4",
+                              "referencedDeclaration": 390,
+                              "src": "290:11:2",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Dimensions_$364_memory_ptr",
+                                "typeIdentifier": "t_struct$_Dimensions_$361_memory_ptr",
                                 "typeString": "struct CustomStructs.Dimensions memory"
                               }
                             },
-                            "id": 392,
+                            "id": 399,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "width",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 363,
-                            "src": "290:17:4",
+                            "referencedDeclaration": 360,
+                            "src": "290:17:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
                             }
                           },
-                          "src": "269:38:4",
+                          "src": "269:38:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           }
                         }
                       ],
-                      "id": 394,
+                      "id": 401,
                       "isConstant": false,
                       "isInlineArray": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
                       "nodeType": "TupleExpression",
-                      "src": "268:40:4",
+                      "src": "268:40:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "258:50:4",
+                    "src": "258:50:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 387,
-                  "id": 396,
+                  "functionReturnParameters": 394,
+                  "id": 403,
                   "nodeType": "Return",
-                  "src": "251:57:4"
+                  "src": "251:57:2"
                 }
               ]
             },
-            "id": 398,
+            "id": 405,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "validLength",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 384,
+              "id": 391,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 381,
+                  "id": 388,
                   "mutability": "mutable",
                   "name": "length",
                   "nodeType": "VariableDeclaration",
-                  "scope": 398,
-                  "src": "153:14:4",
+                  "scope": 405,
+                  "src": "153:14:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -227,10 +227,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 380,
+                    "id": 387,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "153:7:4",
+                    "src": "153:7:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -240,46 +240,46 @@
                 },
                 {
                   "constant": false,
-                  "id": 383,
+                  "id": 390,
                   "mutability": "mutable",
                   "name": "_dimensions",
                   "nodeType": "VariableDeclaration",
-                  "scope": 398,
-                  "src": "169:43:4",
+                  "scope": 405,
+                  "src": "169:43:2",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Dimensions_$364_memory_ptr",
+                    "typeIdentifier": "t_struct$_Dimensions_$361_memory_ptr",
                     "typeString": "struct CustomStructs.Dimensions"
                   },
                   "typeName": {
-                    "id": 382,
+                    "id": 389,
                     "name": "CustomStructs.Dimensions",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 364,
-                    "src": "169:24:4",
+                    "referencedDeclaration": 361,
+                    "src": "169:24:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Dimensions_$364_storage_ptr",
+                      "typeIdentifier": "t_struct$_Dimensions_$361_storage_ptr",
                       "typeString": "struct CustomStructs.Dimensions"
                     }
                   },
                   "visibility": "internal"
                 }
               ],
-              "src": "152:61:4"
+              "src": "152:61:2"
             },
             "returnParameters": {
-              "id": 387,
+              "id": 394,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 386,
+                  "id": 393,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 398,
-                  "src": "236:4:4",
+                  "scope": 405,
+                  "src": "236:4:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -287,10 +287,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 385,
+                    "id": 392,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "236:4:4",
+                    "src": "236:4:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -299,30 +299,30 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "235:6:4"
+              "src": "235:6:2"
             },
-            "scope": 399,
-            "src": "132:182:4",
+            "scope": 406,
+            "src": "132:182:2",
             "stateMutability": "pure",
             "virtual": false,
             "visibility": "internal"
           }
         ],
-        "scope": 400,
-        "src": "110:206:4"
+        "scope": 407,
+        "src": "110:206:2"
       }
     ],
-    "src": "32:284:4"
+    "src": "32:284:2"
   },
   "legacyAST": {
     "attributes": {
-      "absolutePath": "/Users/adamgeiger/git/DAPP/contracts/utils/RectMath.sol",
+      "absolutePath": "/Users/matthewruddy/Desktop/Projects/DAPP/contracts/utils/RectMath.sol",
       "exportedSymbols": {
         "CustomStructs": [
-          375
+          382
         ],
         "RectMath": [
-          399
+          406
         ]
       },
       "license": "MIT"
@@ -336,16 +336,16 @@
             ".4"
           ]
         },
-        "id": 377,
+        "id": 384,
         "name": "PragmaDirective",
-        "src": "32:22:4"
+        "src": "32:22:2"
       },
       {
         "attributes": {
-          "SourceUnit": 376,
-          "absolutePath": "/Users/adamgeiger/git/DAPP/contracts/utils/CustomStructs.sol",
+          "SourceUnit": 383,
+          "absolutePath": "/Users/matthewruddy/Desktop/Projects/DAPP/contracts/utils/CustomStructs.sol",
           "file": "./CustomStructs.sol",
-          "scope": 400,
+          "scope": 407,
           "symbolAliases": [
             {
               "foreign": {
@@ -355,17 +355,17 @@
                   ],
                   "value": "CustomStructs"
                 },
-                "id": 378,
+                "id": 385,
                 "name": "Identifier",
-                "src": "65:13:4"
+                "src": "65:13:2"
               }
             }
           ],
           "unitAlias": ""
         },
-        "id": 379,
+        "id": 386,
         "name": "ImportDirective",
-        "src": "56:52:4"
+        "src": "56:52:2"
       },
       {
         "attributes": {
@@ -379,10 +379,10 @@
           "contractKind": "library",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            399
+            406
           ],
           "name": "RectMath",
-          "scope": 400
+          "scope": 407
         },
         "children": [
           {
@@ -394,7 +394,7 @@
                 null
               ],
               "name": "validLength",
-              "scope": 399,
+              "scope": 406,
               "stateMutability": "pure",
               "virtual": false,
               "visibility": "internal"
@@ -407,7 +407,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "length",
-                      "scope": 398,
+                      "scope": 405,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -419,21 +419,21 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 380,
+                        "id": 387,
                         "name": "ElementaryTypeName",
-                        "src": "153:7:4"
+                        "src": "153:7:2"
                       }
                     ],
-                    "id": 381,
+                    "id": 388,
                     "name": "VariableDeclaration",
-                    "src": "153:14:4"
+                    "src": "153:14:2"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_dimensions",
-                      "scope": 398,
+                      "scope": 405,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "struct CustomStructs.Dimensions",
@@ -443,22 +443,22 @@
                       {
                         "attributes": {
                           "name": "CustomStructs.Dimensions",
-                          "referencedDeclaration": 364,
+                          "referencedDeclaration": 361,
                           "type": "struct CustomStructs.Dimensions"
                         },
-                        "id": 382,
+                        "id": 389,
                         "name": "UserDefinedTypeName",
-                        "src": "169:24:4"
+                        "src": "169:24:2"
                       }
                     ],
-                    "id": 383,
+                    "id": 390,
                     "name": "VariableDeclaration",
-                    "src": "169:43:4"
+                    "src": "169:43:2"
                   }
                 ],
-                "id": 384,
+                "id": 391,
                 "name": "ParameterList",
-                "src": "152:61:4"
+                "src": "152:61:2"
               },
               {
                 "children": [
@@ -467,7 +467,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "",
-                      "scope": 398,
+                      "scope": 405,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -479,25 +479,25 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 385,
+                        "id": 392,
                         "name": "ElementaryTypeName",
-                        "src": "236:4:4"
+                        "src": "236:4:2"
                       }
                     ],
-                    "id": 386,
+                    "id": 393,
                     "name": "VariableDeclaration",
-                    "src": "236:4:4"
+                    "src": "236:4:2"
                   }
                 ],
-                "id": 387,
+                "id": 394,
                 "name": "ParameterList",
-                "src": "235:6:4"
+                "src": "235:6:2"
               },
               {
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 387
+                      "functionReturnParameters": 394
                     },
                     "children": [
                       {
@@ -519,13 +519,13 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 381,
+                              "referencedDeclaration": 388,
                               "type": "uint256",
                               "value": "length"
                             },
-                            "id": 388,
+                            "id": 395,
                             "name": "Identifier",
-                            "src": "258:6:4"
+                            "src": "258:6:2"
                           },
                           {
                             "attributes": {
@@ -558,7 +558,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "height",
-                                      "referencedDeclaration": 361,
+                                      "referencedDeclaration": 358,
                                       "type": "uint256"
                                     },
                                     "children": [
@@ -567,18 +567,18 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 383,
+                                          "referencedDeclaration": 390,
                                           "type": "struct CustomStructs.Dimensions memory",
                                           "value": "_dimensions"
                                         },
-                                        "id": 389,
+                                        "id": 396,
                                         "name": "Identifier",
-                                        "src": "269:11:4"
+                                        "src": "269:11:2"
                                       }
                                     ],
-                                    "id": 390,
+                                    "id": 397,
                                     "name": "MemberAccess",
-                                    "src": "269:18:4"
+                                    "src": "269:18:2"
                                   },
                                   {
                                     "attributes": {
@@ -587,7 +587,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "width",
-                                      "referencedDeclaration": 363,
+                                      "referencedDeclaration": 360,
                                       "type": "uint256"
                                     },
                                     "children": [
@@ -596,66 +596,66 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 383,
+                                          "referencedDeclaration": 390,
                                           "type": "struct CustomStructs.Dimensions memory",
                                           "value": "_dimensions"
                                         },
-                                        "id": 391,
+                                        "id": 398,
                                         "name": "Identifier",
-                                        "src": "290:11:4"
+                                        "src": "290:11:2"
                                       }
                                     ],
-                                    "id": 392,
+                                    "id": 399,
                                     "name": "MemberAccess",
-                                    "src": "290:17:4"
+                                    "src": "290:17:2"
                                   }
                                 ],
-                                "id": 393,
+                                "id": 400,
                                 "name": "BinaryOperation",
-                                "src": "269:38:4"
+                                "src": "269:38:2"
                               }
                             ],
-                            "id": 394,
+                            "id": 401,
                             "name": "TupleExpression",
-                            "src": "268:40:4"
+                            "src": "268:40:2"
                           }
                         ],
-                        "id": 395,
+                        "id": 402,
                         "name": "BinaryOperation",
-                        "src": "258:50:4"
+                        "src": "258:50:2"
                       }
                     ],
-                    "id": 396,
+                    "id": 403,
                     "name": "Return",
-                    "src": "251:57:4"
+                    "src": "251:57:2"
                   }
                 ],
-                "id": 397,
+                "id": 404,
                 "name": "Block",
-                "src": "242:72:4"
+                "src": "242:72:2"
               }
             ],
-            "id": 398,
+            "id": 405,
             "name": "FunctionDefinition",
-            "src": "132:182:4"
+            "src": "132:182:2"
           }
         ],
-        "id": 399,
+        "id": 406,
         "name": "ContractDefinition",
-        "src": "110:206:4"
+        "src": "110:206:2"
       }
     ],
-    "id": 400,
+    "id": 407,
     "name": "SourceUnit",
-    "src": "32:284:4"
+    "src": "32:284:2"
   },
   "compiler": {
     "name": "solc",
     "version": "0.7.4+commit.3f05b770.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.3.3",
-  "updatedAt": "2021-03-21T18:30:35.930Z",
+  "schemaVersion": "3.3.4",
+  "updatedAt": "2021-03-21T19:14:28.559Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
