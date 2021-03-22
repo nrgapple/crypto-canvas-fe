@@ -25,7 +25,7 @@ const DartPage = ({ dart }: DataProps) => {
   return (
     <Layout
       title={`${dart?.name}`}
-      image={dart ? `api/darts/image/${dart.dartId}` : ""}
+      image={dart ? `https://cryptocanvas.vercel.app/api/darts/image/${dart.dartId}` : ""}
     >
       <Stack
         flexDirection={{ base: "column", md: "row" }}
