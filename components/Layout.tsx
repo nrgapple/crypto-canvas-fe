@@ -12,6 +12,7 @@ type Props = {
   description?: string;
   isEditor?: boolean;
   url?: string;
+  image?: string;
 };
 
 const Layout = ({
@@ -20,6 +21,7 @@ const Layout = ({
   description = "100% Decentralized NFTs built in a finite canvas",
   isEditor = false,
   url = "https://cryptocanvas.vercel.app",
+  image = "",
 }: Props) => {
   const showConnectPage = useRecoilValue(showConnectPageState);
   return (
@@ -40,11 +42,7 @@ const Layout = ({
           content={description}
           key="og-description"
         />
-        {/* <meta
-        property="og:image"
-        content={image ?? defaultImage}
-        key="og-image"
-      /> */}
+        <meta property="og:image" content={image} key="og-image" />
         <meta property="og:url" content={url} key="og-url" />
         <meta
           name="title"
@@ -61,11 +59,11 @@ const Layout = ({
           content={description}
           key="twitter-description"
         />
-        {/* <meta
-        property="twitter:image:src"
-        content={image ?? defaultImage}
-        key="twitter-image"
-      /> */}
+        <meta
+          property="twitter:image:src"
+          content={image}
+          key="twitter-image"
+        />
         <meta property="twitter:site" content={url} key="twitter-site" />
         <meta
           property="twitter:image:height"
@@ -79,9 +77,6 @@ const Layout = ({
         />
       </Head>
       <Flex direction="column" h="100vh" w="100vw">
-        {/* <Box w="100%" h="50px" flexBasis="70px" flex={1}>
-        Hey
-      </Box> */}
         <NavBar isEditor={isEditor} />
         {showConnectPage ? (
           <ConnectView />

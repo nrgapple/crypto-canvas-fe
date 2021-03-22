@@ -23,7 +23,7 @@ const DartPage = ({ dart }: DataProps) => {
   const isOwner = useMemo(() => you === dart?.owner, [you, dart]);
 
   return (
-    <Layout title={`Exhibit #${dart?.name}`}>
+    <Layout title={`${dart?.name}`} image={dart?.image}>
       <Stack
         flexDirection={{ base: "column", md: "row" }}
         alignItems={{ base: "start", md: "start" }}
