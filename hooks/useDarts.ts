@@ -18,7 +18,7 @@ export const useDarts = (initDarts?: Dart[]) => {
   const [darts, setDarts] = useRecoilState(dartsState);
 
   const handleCreate = useCallback(
-    async (pixels: Pixel[], name: string) =>
+    (pixels: Pixel[], name: string) =>
       new Promise((res, rej) => {
         if (!account) {
           rej(`You are not signed in`);
@@ -30,9 +30,14 @@ export const useDarts = (initDarts?: Dart[]) => {
         }
         const { dimensions, rgbaArray } = pointsToDartRaw(pixels);
 
-        const transaction = contract.methods.create(rgbaArray, dimensions);
+        const transaction = contract.methods.createDart(
+          rgbaArray,
+          dimensions,
+          web3.utils.fromAscii(name)
+        );
 
         //const estimatedGas = transaction.
+        console.log({ rgbaArray, dimensions });
         transaction
           .send({
             from: account,
@@ -61,6 +66,7 @@ export const useDarts = (initDarts?: Dart[]) => {
             rej(e);
           })
           .catch((e: any) => {
+            console.log(e);
             rej(e);
           });
       }),

@@ -67,9 +67,7 @@ const ExhibitBox = ({
         <HStack w="100%" alignItems="center" justifyContent="space-between">
           <LinkOverlay
             href={
-              isLoaded
-                ? `/exhibit/${pixels ? pixels[0]?.exhibitId : dartId}`
-                : ""
+              isLoaded ? `/dart/${pixels ? pixels[0]?.exhibitId : dartId}` : ""
             }
             p="8px"
           >

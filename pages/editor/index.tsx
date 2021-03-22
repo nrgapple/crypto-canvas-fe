@@ -22,23 +22,18 @@ import {
   InputLeftAddon,
 } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
-import React, { useEffect, useMemo, useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import React, { useEffect, useState } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import Layout from "../../components/Layout";
-import { usePixels } from "../../hooks/usePixels";
 import {
   centerState,
   currentColorState,
-  editedExhibitState,
   moveExhibitState,
-  pixelsState,
-  selectedExhibitState,
   selectedPixelsState,
   worldState,
 } from "../../state";
 import { WorldStateType } from "../../interfaces";
 import { ChromePickerProps } from "react-color";
-import { GetServerSideProps } from "next";
 import Draggable from "react-draggable";
 import { MinusIcon } from "@chakra-ui/icons";
 import {
@@ -81,8 +76,11 @@ const EditorPage = () => {
   const onCheckout = async () => {
     try {
       await create(selectedPixels, name);
+
       setSelectedPixels([]);
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const clearSelected = () => {

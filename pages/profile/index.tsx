@@ -1,12 +1,9 @@
 import { Divider, Heading, VStack, Wrap } from "@chakra-ui/layout";
-import { useEffect, useMemo } from "react";
-import { useRecoilValue, useResetRecoilState } from "recoil";
+import { useMemo } from "react";
+import { useRecoilValue } from "recoil";
 import ExhibitBox from "../../components/ExhibitBox";
 import Layout from "../../components/Layout";
-import { useBids } from "../../hooks/useBids";
-import { usePixels } from "../../hooks/usePixels";
-import { Pixel } from "../../interfaces";
-import { allBidsState, pixelsState, showConnectPageState } from "../../state";
+import { allBidsState } from "../../state";
 import React from "react";
 import {
   useContractAndAccount,
@@ -15,7 +12,6 @@ import {
 import { useDarts } from "../../hooks/useDarts";
 
 const ProfilePage = () => {
-  usePixels();
   const appData = useContractAndAccount(true);
   const { account, status, connect, web3, contract } = appData;
   const { darts } = useDarts();

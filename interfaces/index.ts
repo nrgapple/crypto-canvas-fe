@@ -53,6 +53,7 @@ export interface AllBidsResponse {
 }
 
 export interface DartRawResp {
+  name: string;
   dartId: string;
   owner: string;
   rgbaArray: string[];
@@ -65,6 +66,7 @@ export interface DimensionsResp {
 }
 
 export interface DartRaw {
+  name: string;
   dartId: number;
   owner: number;
   rgbaArray: number[];
@@ -77,6 +79,7 @@ export interface Dimensions {
 }
 
 export interface Dart {
+  name: string;
   dartId: number;
   owner: string;
   image: string;

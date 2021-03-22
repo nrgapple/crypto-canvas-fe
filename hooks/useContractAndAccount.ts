@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import PixelToken from "../contracts/PixelToken.json";
+import PixelToken from "../contracts/DARToken.json";
 import { AbiItem } from "web3-utils";
 import { useWallet } from "use-wallet";
 import Web3 from "web3";
@@ -27,6 +27,8 @@ export const useContractAndAccount = (connectOnMount: boolean = false) => {
       ) as Contract;
     }
   }, [ethereum, contract]);
+
+  console.log({ contract, account });
 
   useEffect(() => {
     (async () => {

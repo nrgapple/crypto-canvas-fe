@@ -1,80 +1,29 @@
-import { Box, Square, Stack, VStack } from "@chakra-ui/layout";
+import { Square, Stack, VStack } from "@chakra-ui/layout";
 import { GetServerSideProps } from "next";
 import React, { useMemo, useState } from "react";
-import { useRecoilValue } from "recoil";
 import Layout from "../../components/Layout";
 import Viewer from "../../components/Viewer";
-import { usePixels } from "../../hooks/usePixels";
-import { pixelsState } from "../../state";
-import {
-  Text,
-  Heading,
-  Skeleton,
-  Accordion,
-  Stat,
-  StatLabel,
-  StatNumber,
-  StatHelpText,
-  AccordionItem,
-  AccordionButton,
-  AccordionIcon,
-  AccordionPanel,
-  Button,
-  ButtonGroup,
-  Portal,
-} from "@chakra-ui/react";
-import { useBids } from "../../hooks/useBids";
-import BidHistoryList from "../../components/BidHistoryList";
-import OfferModal from "../../components/OfferModal";
-import Link from "next/link";
-import {
-  getContractAllBids,
-  getContractBidForExhibit,
-  getContractPixels,
-} from "../../services";
-import { Bid, Pixel } from "../../interfaces";
-import AcceptBidModal from "../../components/AcceptBidModal";
+import { Text } from "@chakra-ui/react";
+import { getDart } from "../../services";
+import { Dart } from "../../interfaces";
 import { useContractAndAccount } from "../../hooks/useContractAndAccount";
 
 interface DataProps {
-  exhibitId?: number;
-  pixels?: Pixel[];
-  bid?: Bid | null;
+  dart?: Dart;
 }
 
-const Exhibit = ({ exhibitId, pixels: initPixels, bid }: DataProps) => {
+const DartPage = ({ dart }: DataProps) => {
   const [isOfferModalOpen, setOfferModalOpen] = useState<boolean>(false);
   const [isAcceptBidModalOpen, setAcceptBidModalOpen] = useState<boolean>(
     false
   );
   const { account, status } = useContractAndAccount(true);
-  usePixels(initPixels);
-  const pixels = useRecoilValue(pixelsState);
-  const { highestBid, loading: loadingBids, placeBid, acceptBid } = useBids(
-    exhibitId,
-    undefined,
-    bid ?? undefined
-  );
-
   const you = useMemo(() => account, [account]);
 
-  const exhibitPixels = useMemo(() => {
-    return pixels.filter((p) => p.exhibitId === exhibitId);
-  }, [pixels]);
-
-  const isOwner = useMemo(() => you === exhibitPixels[0]?.owner, [
-    you,
-    exhibitPixels,
-  ]);
-
-  const done = useMemo(() => exhibitPixels.length > 0, [exhibitPixels]);
-
-  const handleSubmitOffer = (value: number) => {
-    placeBid(value);
-  };
+  const isOwner = useMemo(() => you === dart?.owner, [you, dart]);
 
   return (
-    <Layout title={`Exhibit #${exhibitId}`}>
+    <Layout title={`Exhibit #${dart?.name}`}>
       <Stack
         flexDirection={{ base: "column", md: "row" }}
         alignItems={{ base: "start", md: "start" }}
@@ -92,7 +41,7 @@ const Exhibit = ({ exhibitId, pixels: initPixels, bid }: DataProps) => {
             border="1px solid var(--border)"
             p="8px"
           >
-            <Viewer pixels={exhibitPixels} />
+            <Viewer image={dart?.image} />
           </Square>
         </VStack>
         <VStack
@@ -101,7 +50,7 @@ const Exhibit = ({ exhibitId, pixels: initPixels, bid }: DataProps) => {
           alignItems="stretch"
           justifyContent="start"
         >
-          {done ? (
+          {/* {done ? (
             <Heading as="h2">
               <Box>Exhibit #{exhibitId}</Box>
               <Box>
@@ -127,16 +76,11 @@ const Exhibit = ({ exhibitId, pixels: initPixels, bid }: DataProps) => {
             </Heading>
           ) : (
             <Skeleton />
-          )}
-          {done ? (
-            <Text fontSize="sm">
-              Owned By {exhibitPixels[0].owner}{" "}
-              {isOwner && <strong>(you)</strong>}
-            </Text>
-          ) : (
-            <Skeleton />
-          )}
-          <Box borderRadius="5px" border="1px solid var(--border)" p="8px">
+          )} */}
+          <Text fontSize="sm">
+            Owned By {dart?.owner} {isOwner && <strong>(you)</strong>}
+          </Text>
+          {/* <Box borderRadius="5px" border="1px solid var(--border)" p="8px">
             {!loadingBids ? (
               <Stat>
                 <StatLabel>Current Price</StatLabel>
@@ -152,8 +96,8 @@ const Exhibit = ({ exhibitId, pixels: initPixels, bid }: DataProps) => {
                 </Stat>
               </Skeleton>
             )}
-          </Box>
-          <Accordion position="relative" allowToggle={true}>
+          </Box> */}
+          {/* <Accordion position="relative" allowToggle={true}>
             <AccordionItem>
               <h2>
                 <AccordionButton>
@@ -169,9 +113,9 @@ const Exhibit = ({ exhibitId, pixels: initPixels, bid }: DataProps) => {
                 )}
               </AccordionPanel>
             </AccordionItem>
-          </Accordion>
+          </Accordion> */}
         </VStack>
-        <Portal>
+        {/* <Portal>
           <OfferModal
             isOpen={isOfferModalOpen}
             onClose={() => setOfferModalOpen(false)}
@@ -184,26 +128,23 @@ const Exhibit = ({ exhibitId, pixels: initPixels, bid }: DataProps) => {
             onAcceptBid={acceptBid}
             onClose={() => setAcceptBidModalOpen(false)}
           />
-        </Portal>
+        </Portal> */}
       </Stack>
     </Layout>
   );
 };
 
-export default Exhibit;
+export default DartPage;
 
 export const getServerSideProps: GetServerSideProps<DataProps> = async ({
   params,
 }) => {
-  if (params && params.exhibitId) {
-    const exhibitId = parseInt(params.exhibitId as string);
-    const pixels = await getContractPixels();
-    const bid = await getContractBidForExhibit(exhibitId);
+  if (params && params.dartId) {
+    const dartId = parseInt(params.dartId as string);
+    const dart = await getDart(dartId);
     return {
       props: {
-        bid: bid ?? null,
-        pixels,
-        exhibitId: parseInt(params.exhibitId as string),
+        dart,
       } as DataProps,
     };
   }

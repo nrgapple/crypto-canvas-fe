@@ -130,8 +130,8 @@ export const pointsToDartRaw = (pixels: Pixel[]) => {
   });
 
   const dimensions = {
-    height: max[1] - min[1],
-    width: max[0] - min[0],
+    height: max[1] - min[1] + 1,
+    width: max[0] - min[0] + 1,
   } as Dimensions;
 
   return {
@@ -195,15 +195,16 @@ export const increaseResolution = (
   resolution: number
 ): number[] => {
   let expandedData: number[] = [];
-  for (let p = 0; p < data.length; p + 4) {
+  for (let p = 0; p < data.length; p += 4) {
     for (let t = 0; t < resolution; t++) {
       expandedData.push(
         parseInt(data[p]),
         parseInt(data[p + 1]),
         parseInt(data[p + 2]),
-        parseInt(data[p + 3])
+        255
       );
     }
   }
+
   return expandedData;
 };

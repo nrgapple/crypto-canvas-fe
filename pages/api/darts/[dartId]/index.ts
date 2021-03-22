@@ -9,6 +9,8 @@ export default async function handle(
   try {
     const dartIdNumber = parseInt(dartId as string);
     const metaData = await getDart(dartIdNumber);
+    console.log("meta", metaData);
+
     res.status(200).send(JSON.stringify(metaData));
     return;
   } catch (e) {
