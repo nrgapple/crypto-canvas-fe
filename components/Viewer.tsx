@@ -14,7 +14,6 @@ interface Props {
 const Viewer = ({ disableLightBox = false, image }: Props): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
   const [isImageOpen, setImageOpen] = useState<boolean>(false);
-
   return (
     <>
       {isLoading ? (

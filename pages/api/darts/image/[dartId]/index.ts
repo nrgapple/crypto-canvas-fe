@@ -15,12 +15,13 @@ export default async function handle(
   const { dartId } = req.query;
   try {
     const dartIdNumber = parseInt(dartId as string);
-    const image = await getDartImage(dartIdNumber, 10);
+    const image = await getDartImage(dartIdNumber, 100);
     res
       .writeHead(200, {
         "Content-Type": "image/png",
       })
       .write(image);
+    res.end();
     return;
   } catch (e) {
     res.status(400).send(e);

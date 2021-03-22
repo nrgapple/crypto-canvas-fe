@@ -16,7 +16,7 @@ const DartSection = ({ darts, title, isLoaded = true }: Props) => {
         ? darts.map((dart) => (
             <DartBox
               key={dart.dartId}
-              image={dart.image}
+              image={`api/darts/image/${dart.dartId}`}
               dartId={dart.dartId}
               name={dart.name}
               bid={undefined}

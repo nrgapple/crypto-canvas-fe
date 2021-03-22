@@ -82,5 +82,4 @@ export interface Dart {
   name: string;
   dartId: number;
   owner: string;
-  image: string;
 }

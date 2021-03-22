@@ -25,7 +25,11 @@ const DartPage = ({ dart }: DataProps) => {
   return (
     <Layout
       title={`${dart?.name}`}
-      image={dart ? `https://cryptocanvas.vercel.app/api/darts/image/${dart.dartId}` : ""}
+      image={
+        dart
+          ? `https://cryptocanvas.vercel.app/api/darts/image/${dart.dartId}`
+          : ""
+      }
     >
       <Stack
         flexDirection={{ base: "column", md: "row" }}
@@ -44,7 +48,7 @@ const DartPage = ({ dart }: DataProps) => {
             border="1px solid var(--border)"
             p="8px"
           >
-            <Viewer image={dart?.image ?? ""} />
+            <Viewer image={dart ? `/api/darts/image/${dart.dartId}` : ""} />
           </Square>
         </VStack>
         <VStack

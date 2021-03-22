@@ -96,7 +96,6 @@ export const toUri = (buffer: Buffer) => {
 
 export const getDartMetaData = async (dartRaw: DartRawResp, web3: Web3) => {
   return {
-    image: toUri(await getDartPng(dartRaw.rgbaArray, dartRaw.dimensions, 100)),
     owner: dartRaw.owner,
     dartId: parseInt(dartRaw.dartId),
     name: checkEmptyAddress(dartRaw.name)

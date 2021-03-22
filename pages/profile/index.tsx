@@ -15,7 +15,6 @@ const ProfilePage = () => {
   const appData = useContractAndAccount(true);
   const { account, status, connect, web3, contract } = appData;
   const { darts } = useDarts();
-  const allBids = useRecoilValue(allBidsState);
   useRequireLogin(status);
 
   const myDarts = useMemo(() => {
@@ -27,13 +26,13 @@ const ProfilePage = () => {
       myDarts.map((dart) => (
         <DartBox
           key={dart.dartId}
-          image={dart.image}
+          image={`/api/darts/image/${dart.dartId}`}
           dartId={dart.dartId}
           name={dart.name}
           bid={undefined}
         />
       )),
-    [myDarts, allBids]
+    [myDarts]
   );
 
   return (
