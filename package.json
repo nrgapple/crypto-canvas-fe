@@ -25,6 +25,7 @@
     "jpeg-js": "^0.4.3",
     "metamask-logo": "^2.5.0",
     "next": "latest",
+    "nextjs-cors": "^1.0.4",
     "pixi-viewport": "^4.20.1",
     "pixi.js": "^5.3.8",
     "pngjs": "^6.0.0",

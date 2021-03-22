@@ -1,4 +1,4 @@
-import { Square, Stack, VStack } from "@chakra-ui/layout";
+import { Square, Stack, VStack, Image } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import React, { useMemo, useState } from "react";
 import Layout from "../../components/Layout";
@@ -23,7 +23,10 @@ const DartPage = ({ dart }: DataProps) => {
   const isOwner = useMemo(() => you === dart?.owner, [you, dart]);
 
   return (
-    <Layout title={`${dart?.name}`} image={dart?.image}>
+    <Layout
+      title={`${dart?.name}`}
+      image={dart ? `api/darts/image/${dart.dartId}` : ""}
+    >
       <Stack
         flexDirection={{ base: "column", md: "row" }}
         alignItems={{ base: "start", md: "start" }}

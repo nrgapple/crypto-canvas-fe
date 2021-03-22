@@ -85,14 +85,18 @@ export const getDartPng = async (
       position: "right top",
     })
     .toBuffer();
+  return resized;
+};
+
+export const toUri = (buffer: Buffer) => {
   const parser = new DataURIParser();
-  const dartDataUri = parser.format(".png", resized);
+  const dartDataUri = parser.format(".png", buffer);
   return dartDataUri.content;
 };
 
 export const getDartMetaData = async (dartRaw: DartRawResp, web3: Web3) => {
   return {
-    image: await getDartPng(dartRaw.rgbaArray, dartRaw.dimensions, 100),
+    image: toUri(await getDartPng(dartRaw.rgbaArray, dartRaw.dimensions, 100)),
     owner: dartRaw.owner,
     dartId: parseInt(dartRaw.dartId),
     name: checkEmptyAddress(dartRaw.name)
@@ -118,10 +122,7 @@ export const getDart = async (dartId: number) => {
   return await getDartMetaData(dartResp, web3);
 };
 
-export const getDartImage = async (
-  dartId: number,
-  resolution: number
-): Promise<string | undefined> => {
+export const getDartImage = async (dartId: number, resolution: number) => {
   const { contract } = getServerContract();
   const dartResp = (await contract.methods
     .getDart(dartId)
