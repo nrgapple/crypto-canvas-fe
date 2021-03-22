@@ -3,7 +3,6 @@ import {
   Flex,
   Text,
   IconButton,
-  Button,
   Stack,
   Collapse,
   Icon,
@@ -14,6 +13,7 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  Square,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -21,6 +21,7 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
+import SigninButton from "./SigninButton";
 
 interface Props {
   isEditor?: boolean;
@@ -103,6 +104,9 @@ export default function WithSubnavigation({ isEditor }: Props) {
               Create
             </Link>
           )}
+          <Square>
+            <SigninButton />
+          </Square>
         </Stack>
       </Flex>
 
@@ -277,8 +281,8 @@ const NAV_ITEMS: Array<NavItem> = [
     href: "/",
   },
   {
-    label: "Bids",
-    href: "/bids",
+    label: "Browse",
+    href: "/browse",
   },
   {
     label: "About",

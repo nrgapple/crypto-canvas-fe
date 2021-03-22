@@ -7,26 +7,14 @@ import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 
 interface Props {
-  pixels: Pixel[];
   disableLightBox?: boolean;
+  image: string;
 }
 
-const Viewer = ({ pixels, disableLightBox = false }: Props): JSX.Element => {
+const Viewer = ({ disableLightBox = false, image }: Props): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
   const [isImageOpen, setImageOpen] = useState<boolean>(false);
-  const [imageUri, setImageUri] = useState<string>("");
-  const getImage = async () => {
-    setIsLoading(true);
-    const newImageUri = (await createImageFromPixels(pixels)) as string;
-    setImageUri(newImageUri!);
-    setIsLoading(false);
-  };
 
-  useEffect(() => {
-    if (pixels.length > 0) {
-      getImage();
-    }
-  }, [pixels]);
   return (
     <>
       {isLoading ? (
@@ -34,7 +22,7 @@ const Viewer = ({ pixels, disableLightBox = false }: Props): JSX.Element => {
       ) : (
         <Image
           onClick={() => !disableLightBox && setImageOpen(true)}
-          src={imageUri}
+          src={image}
           objectFit="contain"
           maxH="100%"
           width="auto"
@@ -42,7 +30,7 @@ const Viewer = ({ pixels, disableLightBox = false }: Props): JSX.Element => {
       )}
       {isImageOpen && (
         <Lightbox
-          mainSrc={imageUri}
+          mainSrc={image}
           onCloseRequest={() => setImageOpen(false)}
           enableZoom={false}
         />
