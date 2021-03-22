@@ -1,7 +1,7 @@
 import { Divider, Heading, VStack, Wrap } from "@chakra-ui/layout";
 import { useMemo } from "react";
 import { useRecoilValue } from "recoil";
-import ExhibitBox from "../../components/ExhibitBox";
+import DartBox from "../../components/ExhibitBox";
 import Layout from "../../components/Layout";
 import { allBidsState } from "../../state";
 import React from "react";
@@ -25,10 +25,11 @@ const ProfilePage = () => {
   const renderMyDarts = useMemo(
     () =>
       myDarts.map((dart) => (
-        <ExhibitBox
+        <DartBox
           key={dart.dartId}
           image={dart.image}
           dartId={dart.dartId}
+          name={dart.name}
           bid={undefined}
         />
       )),

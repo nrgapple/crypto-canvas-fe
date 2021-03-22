@@ -41,7 +41,7 @@ const DartPage = ({ dart }: DataProps) => {
             border="1px solid var(--border)"
             p="8px"
           >
-            <Viewer image={dart?.image} />
+            <Viewer image={dart?.image ?? ""} />
           </Square>
         </VStack>
         <VStack

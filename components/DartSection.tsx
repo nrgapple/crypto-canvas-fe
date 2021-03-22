@@ -1,7 +1,7 @@
 import { VStack, Heading, Divider, HStack } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import { Dart } from "../interfaces";
-import ExhibitBox from "./ExhibitBox";
+import DartBox from "./ExhibitBox";
 
 interface Props {
   darts: Dart[];
@@ -14,15 +14,16 @@ const DartSection = ({ darts, title, isLoaded = true }: Props) => {
     () =>
       isLoaded
         ? darts.map((dart) => (
-            <ExhibitBox
+            <DartBox
               key={dart.dartId}
               image={dart.image}
               dartId={dart.dartId}
+              name={dart.name}
               bid={undefined}
             />
           ))
         : Array.from(Array(5)).map((_, i) => (
-            <ExhibitBox key={i} isLoaded={true} />
+            <DartBox key={i} isLoaded={true} image="" dartId={-1} />
           )),
     [darts]
   );

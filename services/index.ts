@@ -90,28 +90,32 @@ export const getDartPng = async (
   return dartDataUri.content;
 };
 
-export const getDartMetaData = async (dartRaw: DartRawResp) => {
+export const getDartMetaData = async (dartRaw: DartRawResp, web3: Web3) => {
   return {
     image: await getDartPng(dartRaw.rgbaArray, dartRaw.dimensions, 100),
     owner: dartRaw.owner,
     dartId: parseInt(dartRaw.dartId),
-    name: dartRaw.name,
+    name: checkEmptyAddress(dartRaw.name)
+      ? "No Name"
+      : web3.utils.toAscii(dartRaw.name),
   } as Dart;
 };
 
 export const getAllDarts = async (): Promise<Dart[]> => {
-  const { contract } = getServerContract();
+  const { contract, web3 } = getServerContract();
   const dartResp = (await contract.methods.getDarts().call()) as DartRawResp[];
-  return await Promise.all(dartResp.map(async (d) => await getDartMetaData(d)));
+  return await Promise.all(
+    dartResp.map(async (d) => await getDartMetaData(d, web3))
+  );
 };
 
 export const getDart = async (dartId: number) => {
-  const { contract } = getServerContract();
+  const { contract, web3 } = getServerContract();
   const dartResp = (await contract.methods
     .getDart(dartId)
     .call()) as DartRawResp;
   console.log(dartResp);
-  return await getDartMetaData(dartResp);
+  return await getDartMetaData(dartResp, web3);
 };
 
 export const getDartImage = async (

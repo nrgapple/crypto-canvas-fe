@@ -17,29 +17,14 @@ import { Bid, Pixel } from "../interfaces";
 import Viewer from "./Viewer";
 
 interface Props {
-  pixels?: Pixel[];
-  image?: string;
+  image: string;
+  dartId: number;
+  name?: string;
   bid?: Bid;
   isLoaded?: boolean;
-  dartId?: number;
 }
 
-const ExhibitBox = ({
-  pixels,
-  bid,
-  image,
-  dartId,
-  isLoaded: isLoadedForced = true,
-}: Props) => {
-  const isLoaded = useMemo(
-    () =>
-      !pixels ||
-      (pixels.length > 0 &&
-        pixels[0]?.exhibitId !== undefined &&
-        isLoadedForced),
-    [pixels, isLoadedForced]
-  );
-
+const DartBox = ({ bid, image, dartId, name = "", isLoaded = true }: Props) => {
   return (
     <LinkBox
       as="article"
@@ -55,25 +40,20 @@ const ExhibitBox = ({
           height={{ base: "200px", md: "200px" }}
           justifyContent="center"
         >
-          isLoaded ? <Viewer pixels={pixels} /> :
+          isLoaded ? <Viewer image={image ?? ""} /> :
           <Skeleton
             isLoaded={isLoaded}
             w={isLoaded ? "" : "100%"}
             h={isLoaded ? "" : "100%"}
           >
-            <Viewer pixels={[]} />
+            <Viewer image="" />
           </Skeleton>
         </VStack>
         <HStack w="100%" alignItems="center" justifyContent="space-between">
-          <LinkOverlay
-            href={
-              isLoaded ? `/dart/${pixels ? pixels[0]?.exhibitId : dartId}` : ""
-            }
-            p="8px"
-          >
+          <LinkOverlay href={isLoaded ? `/dart/${dartId}` : ""} p="8px">
             <Skeleton isLoaded={isLoaded}>
               <Heading as="h5" size="md">
-                Exhibit #{pixels ? pixels[0]?.exhibitId : dartId}
+                {name}
               </Heading>
             </Skeleton>
           </LinkOverlay>
@@ -91,4 +71,4 @@ const ExhibitBox = ({
   );
 };
 
-export default ExhibitBox;
+export default DartBox;
