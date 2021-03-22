@@ -16,9 +16,11 @@ export default async function handle(
   try {
     const dartIdNumber = parseInt(dartId as string);
     const image = await getDartImage(dartIdNumber, 10);
-    res.status(200).send(image);
-    console.log("here");
-
+    res
+      .writeHead(200, {
+        "Content-Type": "image/png",
+      })
+      .write(image);
     return;
   } catch (e) {
     res.status(400).send(e);
