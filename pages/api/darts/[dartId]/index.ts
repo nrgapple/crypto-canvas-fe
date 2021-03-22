@@ -8,10 +8,8 @@ export default async function handle(
   const { dartId } = req.query;
   try {
     const dartIdNumber = parseInt(dartId as string);
-    const metaData = await getDart(dartIdNumber);
-    console.log("meta", metaData);
-
-    res.status(200).send(JSON.stringify(metaData));
+    const data = await getDart(dartIdNumber);
+    res.status(200).send(JSON.stringify(data));
     return;
   } catch (e) {
     res.status(400).send(e);

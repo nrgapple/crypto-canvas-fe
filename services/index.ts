@@ -94,7 +94,7 @@ export const toUri = (buffer: Buffer) => {
   return dartDataUri.content;
 };
 
-export const getDartMetaData = async (dartRaw: DartRawResp, web3: Web3) => {
+export const getDartData = async (dartRaw: DartRawResp, web3: Web3) => {
   return {
     owner: dartRaw.owner,
     dartId: parseInt(dartRaw.dartId),
@@ -108,7 +108,7 @@ export const getAllDarts = async (): Promise<Dart[]> => {
   const { contract, web3 } = getServerContract();
   const dartResp = (await contract.methods.getDarts().call()) as DartRawResp[];
   return await Promise.all(
-    dartResp.map(async (d) => await getDartMetaData(d, web3))
+    dartResp.map(async (d) => await getDartData(d, web3))
   );
 };
 
@@ -118,7 +118,7 @@ export const getDart = async (dartId: number) => {
     .getDart(dartId)
     .call()) as DartRawResp;
   console.log(dartResp);
-  return await getDartMetaData(dartResp, web3);
+  return await getDartData(dartResp, web3);
 };
 
 export const getDartImage = async (dartId: number, resolution: number) => {
@@ -127,4 +127,17 @@ export const getDartImage = async (dartId: number, resolution: number) => {
     .getDart(dartId)
     .call()) as DartRawResp;
   return await getDartPng(dartResp.rgbaArray, dartResp.dimensions, resolution);
+};
+
+export const getDartMetaData = async (dartId: number) => {
+  const { contract, web3 } = getServerContract();
+  const dartResp = (await contract.methods
+    .getDart(dartId)
+    .call()) as DartRawResp;
+  return {
+    name: checkEmptyAddress(dartResp.name)
+      ? "No Name"
+      : web3.utils.toAscii(dartResp.name),
+    image: `${config.baseUri}darts/image/${dartResp.dartId}`,
+  };
 };
