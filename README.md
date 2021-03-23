@@ -2,7 +2,7 @@
 
 Truly decentralized NFT Art. All metadata lives on the chain.
 
-![image](https://user-images.githubusercontent.com/10817537/110252116-cfc7fa00-7f51-11eb-886a-f1377f2ca82d.png)
+![image](https://user-images.githubusercontent.com/10817537/112189005-ee78f280-8bd9-11eb-91ba-57bef2b6ee6b.png)
 
 ## Development
 
