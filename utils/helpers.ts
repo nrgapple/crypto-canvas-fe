@@ -1,4 +1,5 @@
 import hexRgb from "hex-rgb";
+import { PNG } from "pngjs";
 import rgbHex from "rgb-hex";
 import {
   Bounds,
@@ -7,6 +8,7 @@ import {
   Coord,
   DartRaw,
   Dimensions,
+  ImageParts,
   Pixel,
 } from "../interfaces";
 
@@ -208,3 +210,19 @@ export const increaseResolution = (
 
   return expandedData;
 };
+
+export const pngToDartRaw = async (
+  arrayBuffer: ArrayBuffer
+): Promise<ImageParts> =>
+  new Promise((res, rej) => {
+    new PNG({ filterType: 4 }).parse(Buffer.from(arrayBuffer), (err, data) => {
+      if (err) rej(err);
+      res({
+        rgbaArray: [...data.data],
+        dimensions: {
+          height: data.height,
+          width: data.width,
+        },
+      } as ImageParts);
+    });
+  });

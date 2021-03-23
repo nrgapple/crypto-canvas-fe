@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/toast";
 import { useCallback, useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { Dart, Pixel } from "../interfaces";
+import { Dart, Dimensions, Pixel } from "../interfaces";
 import { dartsState } from "../state";
 import { pointsToDartRaw } from "../utils/helpers";
 import { useContractAndAccount } from "./useContractAndAccount";
@@ -9,6 +9,11 @@ import { useContractAndAccount } from "./useContractAndAccount";
 interface UseDartsReturn {
   fetchAllDarts: () => Promise<void>;
   create: (selectedPixels: Pixel[], name: string) => Promise<void>;
+  createRaw: (
+    rgbaArray: Uint8Array,
+    dimensions: Dimensions,
+    name: string
+  ) => Promise<void>;
   darts: Dart[];
 }
 
@@ -17,9 +22,10 @@ export const useDarts = (initDarts?: Dart[]) => {
   const toast = useToast();
   const [darts, setDarts] = useRecoilState(dartsState);
 
-  const handleCreate = useCallback(
-    (pixels: Pixel[], name: string) =>
+  const handleCreateRaw = useCallback(
+    (rgbaArray: Uint8Array, dimensions: Dimensions, name: string) =>
       new Promise((res, rej) => {
+        console.log({ rgbaArray });
         if (!account) {
           rej(`You are not signed in`);
           return;
@@ -28,16 +34,12 @@ export const useDarts = (initDarts?: Dart[]) => {
           rej(`There is no contact or web3`);
           return;
         }
-        const { dimensions, rgbaArray } = pointsToDartRaw(pixels);
-
         const transaction = contract.methods.createDart(
-          rgbaArray,
+          [...rgbaArray],
           dimensions,
           web3.utils.fromAscii(name)
         );
 
-        //const estimatedGas = transaction.
-        console.log({ rgbaArray, dimensions });
         transaction
           .send({
             from: account,
@@ -70,7 +72,16 @@ export const useDarts = (initDarts?: Dart[]) => {
             rej(e);
           });
       }),
-    [account, web3, contract]
+    [contract, account, web3]
+  );
+
+  const handleCreate = useCallback(
+    async (pixels: Pixel[], name: string) => {
+      const { dimensions, rgbaArray } = pointsToDartRaw(pixels);
+
+      await handleCreateRaw(new Uint8Array(rgbaArray), dimensions, name);
+    },
+    [handleCreateRaw]
   );
 
   const fetchAllDarts = useCallback(async () => {
@@ -89,5 +100,10 @@ export const useDarts = (initDarts?: Dart[]) => {
     }
   }, [initDarts]);
 
-  return { create: handleCreate, fetchAllDarts, darts } as UseDartsReturn;
+  return {
+    create: handleCreate,
+    fetchAllDarts,
+    darts,
+    createRaw: handleCreateRaw,
+  } as UseDartsReturn;
 };

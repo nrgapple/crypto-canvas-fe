@@ -5,7 +5,7 @@ enum WalletId {
 }
 
 export const config = {
-  contractAddress: "0x89dC4BeF0fa502bC0Fb0CAD2B05a42d2a33fd556",
+  contractAddress: "0x4EeeFE3A82E7e706E4c4304ED368A4a3b3249E78",
   infuraProviderUri:
     "https://rinkeby.infura.io/v3/566baaea6f1246d8b5e3762f833bc321",
   chainId: WalletId.rin.valueOf(),

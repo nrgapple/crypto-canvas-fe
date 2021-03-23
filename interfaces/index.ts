@@ -83,3 +83,8 @@ export interface Dart {
   dartId: number;
   owner: string;
 }
+
+export interface ImageParts {
+  rgbaArray: number[];
+  dimensions: Dimensions;
+}

@@ -106,7 +106,9 @@ export const getDartData = async (dartRaw: DartRawResp, web3: Web3) => {
 
 export const getAllDarts = async (): Promise<Dart[]> => {
   const { contract, web3 } = getServerContract();
-  const dartResp = (await contract.methods.getDarts().call()) as DartRawResp[];
+  const dartResp = (await contract.methods
+    .getDartsMeta()
+    .call()) as DartRawResp[];
   return await Promise.all(
     dartResp.map(async (d) => await getDartData(d, web3))
   );
@@ -115,7 +117,7 @@ export const getAllDarts = async (): Promise<Dart[]> => {
 export const getDart = async (dartId: number) => {
   const { contract, web3 } = getServerContract();
   const dartResp = (await contract.methods
-    .getDart(dartId)
+    .getDartMeta(dartId)
     .call()) as DartRawResp;
   console.log(dartResp);
   return await getDartData(dartResp, web3);
@@ -124,15 +126,16 @@ export const getDart = async (dartId: number) => {
 export const getDartImage = async (dartId: number, resolution: number) => {
   const { contract } = getServerContract();
   const dartResp = (await contract.methods
-    .getDart(dartId)
+    .getDartContent(dartId)
     .call()) as DartRawResp;
-  return await getDartPng(dartResp.rgbaArray, dartResp.dimensions, resolution);
+  return Buffer.from(dartResp.rgbaArray.map((x) => parseInt(x)));
+  await getDartPng(dartResp.rgbaArray, dartResp.dimensions, resolution);
 };
 
 export const getDartMetaData = async (dartId: number) => {
   const { contract, web3 } = getServerContract();
   const dartResp = (await contract.methods
-    .getDart(dartId)
+    .getDartMeta(dartId)
     .call()) as DartRawResp;
   return {
     name: checkEmptyAddress(dartResp.name)

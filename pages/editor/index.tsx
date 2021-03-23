@@ -41,6 +41,7 @@ import {
   useRequireLogin,
 } from "../../hooks/useContractAndAccount";
 import { useDarts } from "../../hooks/useDarts";
+import FileUpload from "../../components/UploadImage";
 
 const World = dynamic(() => import("../../components/World"), {
   ssr: false,
@@ -69,6 +70,14 @@ const EditorPage = () => {
   const [moveExhibit, setMoveExhibit] = useRecoilState(moveExhibitState);
   const [name, setName] = useState("");
   const { isOpen: isMin, onToggle: onToggleMin } = useDisclosure({
+    defaultIsOpen: false,
+  });
+  const {
+    isOpen: isUpload,
+    onToggle: onToggleUpload,
+    onOpen: onUploadOpen,
+    onClose: onUploadClose,
+  } = useDisclosure({
     defaultIsOpen: false,
   });
   useRequireLogin(status);
@@ -147,6 +156,7 @@ const EditorPage = () => {
                     <Button onClick={() => toggleMove()}>
                       {moveExhibit ? "Moving" : "Move"}
                     </Button>
+                    <Button onClick={onUploadOpen}>Upoad</Button>
                   </>
                 )}
                 <Button onClick={() => onCenter()}>Recenter</Button>
@@ -179,6 +189,15 @@ const EditorPage = () => {
               </Button>
               <Button onClick={() => clearSelected()}>Clear</Button>
             </ModalFooter>
+          </ModalContent>
+        </Modal>
+        <Modal isOpen={isUpload} onClose={onToggleUpload}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Upload Image</ModalHeader>
+            <ModalBody>
+              <FileUpload />
+            </ModalBody>
           </ModalContent>
         </Modal>
       </Portal>
