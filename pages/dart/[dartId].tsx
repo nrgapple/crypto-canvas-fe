@@ -1,4 +1,4 @@
-import { Square, Stack, VStack, Image } from "@chakra-ui/react";
+import { Square, Stack, VStack, Image, Heading, Box } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import React, { useMemo, useState } from "react";
 import Layout from "../../components/Layout";
@@ -57,10 +57,9 @@ const DartPage = ({ dart }: DataProps) => {
           alignItems="stretch"
           justifyContent="start"
         >
-          {/* {done ? (
-            <Heading as="h2">
-              <Box>Exhibit #{exhibitId}</Box>
-              <Box>
+          <Heading as="h2">
+            <Box>{dart?.name ?? "No Name"}</Box>
+            {/* <Box>
                 <ButtonGroup>
                   {isOwner ? (
                     <>
@@ -79,11 +78,8 @@ const DartPage = ({ dart }: DataProps) => {
                     </Button>
                   )}
                 </ButtonGroup>
-              </Box>
-            </Heading>
-          ) : (
-            <Skeleton />
-          )} */}
+              </Box> */}
+          </Heading>
           <Text fontSize="sm">
             Owned By {dart?.owner} {isOwner && <strong>(you)</strong>}
           </Text>

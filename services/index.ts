@@ -100,7 +100,7 @@ export const getDartData = async (dartRaw: DartRawResp, web3: Web3) => {
     dartId: parseInt(dartRaw.dartId),
     name: checkEmptyAddress(dartRaw.name)
       ? "No Name"
-      : web3.utils.toAscii(dartRaw.name),
+      : web3.utils.toUtf8(dartRaw.name),
   } as Dart;
 };
 
@@ -140,7 +140,7 @@ export const getDartMetaData = async (dartId: number) => {
   return {
     name: checkEmptyAddress(dartResp.name)
       ? "No Name"
-      : web3.utils.toAscii(dartResp.name),
+      : web3.utils.toUtf8(dartResp.name),
     image: `${config.baseUri}darts/image/${dartResp.dartId}`,
   };
 };

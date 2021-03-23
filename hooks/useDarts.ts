@@ -57,6 +57,7 @@ export const useDarts = (initDarts?: Dart[]) => {
               title: "Transaction Success",
               position: "top-right",
               isClosable: true,
+              status: "success",
             });
             res(e as string);
           })
@@ -64,6 +65,7 @@ export const useDarts = (initDarts?: Dart[]) => {
             toast({
               title: "Transaction Failed",
               position: "top-right",
+              status: "error",
             });
             rej(e);
           })

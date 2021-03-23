@@ -8,6 +8,8 @@ import {
   InputGroup,
   InputLeftAddon,
   Input,
+  useToast,
+  Center,
 } from "@chakra-ui/react";
 import React, { useMemo, useState } from "react";
 import { useDropArea } from "react-use";
@@ -15,15 +17,28 @@ import { useDarts } from "../hooks/useDarts";
 import { ImageParts } from "../interfaces";
 import { pngToDartRaw } from "../utils/helpers";
 
+const MAX_FILE_SIZE = 2000;
+
 const FileUpload = () => {
   const [file, setFile] = useState<File | undefined>(undefined);
   const [parts, setParts] = useState<ImageParts | undefined>(undefined);
   const [name, setName] = useState<string>("");
   const [buffer, setBuffer] = useState<ArrayBuffer>();
   const { createRaw } = useDarts();
+  const toast = useToast();
 
   const onFiles = async (files: File[]) => {
     const mainFile = files[0];
+    if (mainFile.size > MAX_FILE_SIZE) {
+      toast({
+        title: "File too large",
+        description: `Files must be less than ${MAX_FILE_SIZE / 1000}kb`,
+        position: "top-right",
+        isClosable: true,
+        status: "error",
+      });
+      return;
+    }
     try {
       const buffer = await mainFile.arrayBuffer();
       const parts = await pngToDartRaw(buffer);
@@ -55,7 +70,7 @@ const FileUpload = () => {
 
   return (
     <VStack>
-      <InputGroup p="8px">
+      <InputGroup>
         <InputLeftAddon children="Title" />
         <Input
           type="text"
@@ -63,19 +78,26 @@ const FileUpload = () => {
           onChange={(e) => setName(e.target.value)}
         />
       </InputGroup>
-      <Box {...bond}>
+      <Center
+        {...bond}
+        w="100%"
+        border="1px solid var(--chakra-colors-gray-200)"
+        borderRadius="var(--chakra-radii-md)"
+        p="8px"
+        h="300px"
+      >
         {file ? (
-          <HStack border="1px solid var(--border)" p="16px">
+          <HStack p="16px">
             <Text>{file.name}</Text>
             <Button onClick={onRemove}>Remove</Button>
             <Button onClick={onUpload}>Upload</Button>
           </HStack>
         ) : (
-          <Heading border="1px solid var(--border)" p="16px">
-            Drop png file here...
-          </Heading>
+          <Center w="100%" h="100%">
+            <Heading>Drop png file here...</Heading>
+          </Center>
         )}
-      </Box>
+      </Center>
     </VStack>
   );
 };
