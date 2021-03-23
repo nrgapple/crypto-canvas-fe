@@ -63,7 +63,7 @@ export default function WithSubnavigation({ isEditor }: Props) {
             fontFamily={"heading"}
             color={useColorModeValue("gray.800", "white")}
           >
-            Crypto Canvas
+            De-ART
           </Text>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
