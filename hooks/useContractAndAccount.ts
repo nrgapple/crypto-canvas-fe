@@ -28,7 +28,7 @@ export const useContractAndAccount = (connectOnMount: boolean = false) => {
     }
   }, [ethereum, contract]);
 
-  console.log({ contract, account });
+  console.log({ contract, account, status });
 
   useEffect(() => {
     (async () => {
@@ -37,19 +37,20 @@ export const useContractAndAccount = (connectOnMount: boolean = false) => {
 
         await connect("injected");
         console.log("what status?", status);
-
-        if (status === "connected") {
-          setWasSignedIn(true);
-        } else if (status === "error" || status === "disconnected") {
-          setWasSignedIn(false);
-        }
       }
     })();
   }, [connectOnMount, account, wasSignedIn]);
 
   useEffect(() => {
+    console.log("set it back!");
     setWasSignedIn(account !== undefined);
   }, [account]);
+
+  useEffect(() => {
+    if (status === "connected") {
+      setWasSignedIn(true);
+    }
+  }, [status]);
 
   return { ...wallet, contract, web3 } as const;
 };

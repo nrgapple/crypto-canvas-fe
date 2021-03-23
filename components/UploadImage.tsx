@@ -10,12 +10,15 @@ import {
   Input,
   useToast,
   Center,
+  Image,
 } from "@chakra-ui/react";
 import React, { useMemo, useState } from "react";
 import { useDropArea } from "react-use";
 import { useDarts } from "../hooks/useDarts";
 import { ImageParts } from "../interfaces";
-import { pngToDartRaw } from "../utils/helpers";
+import { pngToDartRaw, reader } from "../utils/helpers";
+import { useAsync } from "react-use";
+import Viewer from "./Viewer";
 
 const MAX_FILE_SIZE = 2000;
 
@@ -53,6 +56,14 @@ const FileUpload = () => {
     onFiles,
   });
 
+  const image = useAsync(async () => {
+    if (file) {
+      return await reader(file);
+    } else {
+      return "";
+    }
+  }, [file]);
+
   const onRemove = () => {
     setFile(undefined);
     setParts(undefined);
@@ -87,11 +98,21 @@ const FileUpload = () => {
         h="300px"
       >
         {file ? (
-          <HStack p="16px">
-            <Text>{file.name}</Text>
-            <Button onClick={onRemove}>Remove</Button>
-            <Button onClick={onUpload}>Upload</Button>
-          </HStack>
+          <VStack>
+            <VStack
+              p="8px"
+              w="100%"
+              height={{ base: "200px", md: "200px" }}
+              justifyContent="center"
+            >
+              <Image src={image.value} h="100%" />
+            </VStack>
+            <HStack p="16px">
+              <Text>{file.name}</Text>
+              <Button onClick={onRemove}>Remove</Button>
+              <Button onClick={onUpload}>Upload</Button>
+            </HStack>
+          </VStack>
         ) : (
           <Center w="100%" h="100%">
             <Heading>Drop png file here...</Heading>

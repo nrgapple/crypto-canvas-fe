@@ -226,3 +226,16 @@ export const pngToDartRaw = async (
       } as ImageParts);
     });
   });
+
+/**
+ * Turns a file into a data uri
+ * @param file The file to read.
+ * @returns A data uri from the file.
+ */
+export const reader = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.onload = () => resolve(fileReader.result as string);
+    fileReader.readAsDataURL(file);
+  });
+};
