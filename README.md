@@ -1,6 +1,6 @@
-# Crypto Canvas Front End
+# D-ART (Decentralized Art) Front End
 
-Crypto canvas is a r/place like community canvas that uses the eutherium chain to make all pixels on a canvas purchasable.
+Truly decentralized NFT Art. All metadata lives on the chain.
 
 ![image](https://user-images.githubusercontent.com/10817537/110252116-cfc7fa00-7f51-11eb-886a-f1377f2ca82d.png)
 
