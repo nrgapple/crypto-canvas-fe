@@ -18,7 +18,7 @@ const Home = () => {
   return (
     <Layout title="Home">
       <VStack p="8px" overflowY="scroll" w="100%" h="100%">
-        <VStack p="32px">
+        <VStack p={{ base: "8px", md: "32px" }}>
           <Heading as="h1" size="3xl">
             The First Fully Decentralized NFT
           </Heading>
@@ -40,8 +40,8 @@ const Home = () => {
           </Center>
         </VStack>
         <Divider />
-        <Wrap justify="center" p="16px">
-          <VStack w="500px">
+        <Wrap justify="center" p={{ base: "0px", md: "16px" }}>
+          <VStack maxW="500px">
             <Heading as="h4" size="lg">
               Other NFTs
             </Heading>
@@ -51,7 +51,7 @@ const Home = () => {
               w="100%"
             />
           </VStack>
-          <VStack w="500px">
+          <VStack maxW="500px">
             <Heading as="h4" size="lg">
               De-Art
             </Heading>
@@ -63,11 +63,11 @@ const Home = () => {
           </VStack>
         </Wrap>
         <Divider />
-        <Wrap justify="center" p="16px">
-          <Center w="500px">
+        <Wrap justify="center" p={{ base: "0px", md: "16px" }}>
+          <Center maxW="500px">
             <VStack>
               <Heading as="h4" size="lg" p="16px">
-                What will you do when your NFT Provider shuts down?
+                What Will you do when your NFT Provider Shuts Down?
               </Heading>
               <Text>
                 If the site you own your NFT on goes down you loose everything.
@@ -76,7 +76,7 @@ const Home = () => {
               </Text>
             </VStack>
           </Center>
-          <VStack w="500px">
+          <VStack maxW="500px">
             <Image
               fallback={<Skeleton w="100%" h="100%" />}
               src="/images/theirs-server-down.png"
@@ -85,11 +85,11 @@ const Home = () => {
           </VStack>
         </Wrap>
         <Divider />
-        <Wrap justify="center" p="16px">
-          <Center w="500px">
+        <Wrap justify="center" p={{ base: "0px", md: "16px" }}>
+          <Center maxW="500px">
             <VStack>
               <Heading as="h4" size="lg" p="16px">
-                Your Art Exists everywhere
+                Your Art Exists Everywhere
               </Heading>
               <Text>
                 With De-Art your image will exist forever on the blockchain
@@ -97,7 +97,7 @@ const Home = () => {
               </Text>
             </VStack>
           </Center>
-          <VStack w="500px">
+          <VStack maxW="500px">
             <Image
               src="/images/ours-everywhere.png"
               fallback={<Skeleton w="100%" h="100%" />}
@@ -106,7 +106,7 @@ const Home = () => {
           </VStack>
         </Wrap>
         <Divider />
-        <VStack p="16px">
+        <VStack p={{ base: "0px", md: "16px" }}>
           <Heading as="h3" size="lg">
             Buy and Create <strong>Indestructible</strong> Assets
           </Heading>
