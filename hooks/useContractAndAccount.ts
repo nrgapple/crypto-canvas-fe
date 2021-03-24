@@ -25,24 +25,19 @@ export const useContractAndAccount = (connectOnMount: boolean = false) => {
         PixelToken.abi as AbiItem[] | AbiItem,
         config.contractAddress
       ) as Contract;
+      console.log(contract.methods.tokenURI(3).call())
     }
   }, [ethereum, contract]);
-
-  console.log({ contract, account, status });
 
   useEffect(() => {
     (async () => {
       if (connectOnMount && !account && wasSignedIn) {
-        console.log("here");
-
         await connect("injected");
-        console.log("what status?", status);
       }
     })();
   }, [connectOnMount, account, wasSignedIn]);
 
   useEffect(() => {
-    console.log("set it back!");
     setWasSignedIn(account !== undefined);
   }, [account]);
 

@@ -17,7 +17,7 @@ const DartPage = ({ dart }: DataProps) => {
   const [isAcceptBidModalOpen, setAcceptBidModalOpen] = useState<boolean>(
     false
   );
-  const { account, status } = useContractAndAccount(true);
+  const { account } = useContractAndAccount(true);
   const you = useMemo(() => account, [account]);
 
   const isOwner = useMemo(() => you === dart?.owner, [you, dart]);

@@ -4,16 +4,11 @@ import { AbiItem } from "web3-utils";
 import PixelToken from "../contracts/DARToken.json";
 import {
   checkEmptyAddress,
-  contractExhibitsRespToPixels,
   increaseResolution,
 } from "../utils/helpers";
 import {
-  AllBidsResponse,
-  Bid,
   Dart,
-  DartRaw,
   DartRawResp,
-  Dimensions,
   DimensionsResp,
 } from "../interfaces";
 import jpeg from "jpeg-js";
@@ -141,6 +136,6 @@ export const getDartMetaData = async (dartId: number) => {
     name: checkEmptyAddress(dartResp.name)
       ? "No Name"
       : web3.utils.toUtf8(dartResp.name),
-    image: `${config.baseUri}darts/image/${dartResp.dartId}`,
+    image: `${config.baseUri}api/darts/image/${dartResp.dartId}`,
   };
 };
