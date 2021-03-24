@@ -11,18 +11,22 @@ import {
   useToast,
   Center,
   Image,
+  Spinner,
 } from "@chakra-ui/react";
 import React, { useMemo, useState } from "react";
 import { useDropArea } from "react-use";
 import { useDarts } from "../hooks/useDarts";
 import { ImageParts } from "../interfaces";
-import { pngToDartRaw, reader } from "../utils/helpers";
+import { displayUserId, pngToDartRaw, reader } from "../utils/helpers";
 import { useAsync } from "react-use";
 import Viewer from "./Viewer";
+import { useContractAndAccount } from "../hooks/useContractAndAccount";
+import DisplayUser from "./DisplayUser";
 
 const MAX_FILE_SIZE = 2000;
 
 const FileUpload = () => {
+  const { connect, status, account } = useContractAndAccount();
   const [file, setFile] = useState<File | undefined>(undefined);
   const [parts, setParts] = useState<ImageParts | undefined>(undefined);
   const [name, setName] = useState<string>("");
@@ -95,7 +99,6 @@ const FileUpload = () => {
         border="1px solid var(--chakra-colors-gray-200)"
         borderRadius="var(--chakra-radii-md)"
         p="8px"
-        h="300px"
       >
         {file ? (
           <VStack>
@@ -107,14 +110,29 @@ const FileUpload = () => {
             >
               <Image src={image.value} h="100%" />
             </VStack>
-            <HStack p="16px">
-              <Text>{file.name}</Text>
-              <Button onClick={onRemove}>Remove</Button>
-              <Button onClick={onUpload}>Upload</Button>
-            </HStack>
+            <VStack>
+              {status === "connected" && account ? (
+                <Text>
+                  Connected to <DisplayUser id={account} />
+                </Text>
+              ) : status === "connecting" ? (
+                <Spinner />
+              ) : (
+                <Button onClick={() => connect("injected")}>
+                  Connect to Your Wallet
+                </Button>
+              )}
+              <HStack p="16px">
+                <Text>{file.name}</Text>
+                <Button onClick={onRemove}>Remove</Button>
+                {status === "connected" && (
+                  <Button onClick={onUpload}>Upload</Button>
+                )}
+              </HStack>
+            </VStack>
           </VStack>
         ) : (
-          <Center w="100%" h="100%">
+          <Center w="100%" h="100%" p="20vh">
             <Heading>Drop png file here...</Heading>
           </Center>
         )}

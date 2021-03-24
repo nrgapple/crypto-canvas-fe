@@ -10,4 +10,5 @@ export const config = {
     "https://rinkeby.infura.io/v3/566baaea6f1246d8b5e3762f833bc321",
   chainId: WalletId.rin.valueOf(),
   baseUri: "https://cryptocanvas.vercel.app/",
+  openSeaBaseUri: "https://testnets.opensea.io/",
 };

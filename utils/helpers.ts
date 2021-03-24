@@ -239,3 +239,6 @@ export const reader = (file: File): Promise<string> => {
     fileReader.readAsDataURL(file);
   });
 };
+
+export const displayUserId = (longId: string) =>
+  longId.replace(/0x/, "").slice(0, 6);

@@ -95,7 +95,7 @@ export default function WithSubnavigation({ isEditor }: Props) {
               fontSize={"sm"}
               fontWeight={600}
               color={useColorModeValue("gray.600", "gray.200")}
-              href={"/editor"}
+              href={"/upload"}
               _hover={{
                 textDecoration: "none",
                 color: useColorModeValue("gray.800", "white"),
@@ -104,9 +104,6 @@ export default function WithSubnavigation({ isEditor }: Props) {
               Create
             </Link>
           )}
-          <Square>
-            <SigninButton />
-          </Square>
         </Stack>
       </Flex>
 
@@ -210,7 +207,7 @@ const MobileNav = ({ isEditor }: { isEditor?: boolean }) => {
         <MobileNavItem key={navItem.label} {...navItem} />
       ))}
       <MobileNavItem label="Profile" href="/profile" />
-      {!isEditor && <MobileNavItem label="Create" href="/editor" />}
+      {!isEditor && <MobileNavItem label="Create" href="/upload" />}
     </Stack>
   );
 };

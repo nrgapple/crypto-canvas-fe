@@ -1,35 +1,32 @@
-import { Square, Stack, VStack, Image, Heading, Box } from "@chakra-ui/react";
+import {
+  Square,
+  Stack,
+  VStack,
+  Image,
+  Heading,
+  Box,
+  HStack,
+  Button,
+  Link,
+} from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
-import React, { useMemo, useState } from "react";
 import Layout from "../../components/Layout";
 import Viewer from "../../components/Viewer";
 import { Text } from "@chakra-ui/react";
 import { getDart } from "../../services";
 import { Dart } from "../../interfaces";
-import { useContractAndAccount } from "../../hooks/useContractAndAccount";
+import { config } from "../../app.config";
+import DisplayUser from "../../components/DisplayUser";
 
 interface DataProps {
   dart?: Dart;
 }
 
 const DartPage = ({ dart }: DataProps) => {
-  const [isOfferModalOpen, setOfferModalOpen] = useState<boolean>(false);
-  const [isAcceptBidModalOpen, setAcceptBidModalOpen] = useState<boolean>(
-    false
-  );
-  const { account } = useContractAndAccount(true);
-  const you = useMemo(() => account, [account]);
-
-  const isOwner = useMemo(() => you === dart?.owner, [you, dart]);
-
   return (
     <Layout
       title={`${dart?.name}`}
-      image={
-        dart
-          ? `https://cryptocanvas.vercel.app/api/darts/image/${dart.dartId}`
-          : ""
-      }
+      image={dart ? `${config.baseUri}api/darts/image/${dart.dartId}` : ""}
     >
       <Stack
         flexDirection={{ base: "column", md: "row" }}
@@ -57,81 +54,19 @@ const DartPage = ({ dart }: DataProps) => {
           alignItems="stretch"
           justifyContent="start"
         >
+          <Link
+            href={`${config.openSeaBaseUri}assets/${config.contractAddress}/${dart?.dartId}`}
+          >
+            View on OpenSea
+          </Link>
           <Heading as="h2">
             <Box>{dart?.name ?? "No Name"}</Box>
-            {/* <Box>
-                <ButtonGroup>
-                  {isOwner ? (
-                    <>
-                      {highestBid && (
-                        <Button onClick={() => setAcceptBidModalOpen(true)}>
-                          Accept Bid
-                        </Button>
-                      )}
-                      <Link href={`/editor/${exhibitId}`}>
-                        <Button>Edit</Button>
-                      </Link>
-                    </>
-                  ) : (
-                    <Button onClick={() => setOfferModalOpen(true)}>
-                      Make Offer
-                    </Button>
-                  )}
-                </ButtonGroup>
-              </Box> */}
           </Heading>
-          <Text fontSize="sm">
-            Owned By {dart?.owner} {isOwner && <strong>(you)</strong>}
-          </Text>
-          {/* <Box borderRadius="5px" border="1px solid var(--border)" p="8px">
-            {!loadingBids ? (
-              <Stat>
-                <StatLabel>Current Price</StatLabel>
-                <StatNumber>Ξ{highestBid ? highestBid.amount : 0}</StatNumber>
-                {highestBid && <StatHelpText>{highestBid.from}</StatHelpText>}
-              </Stat>
-            ) : (
-              <Skeleton>
-                <Stat>
-                  <StatLabel>Current Price</StatLabel>
-                  <StatNumber>0000000</StatNumber>
-                  <StatHelpText>0000000</StatHelpText>
-                </Stat>
-              </Skeleton>
-            )}
-          </Box> */}
-          {/* <Accordion position="relative" allowToggle={true}>
-            <AccordionItem>
-              <h2>
-                <AccordionButton>
-                  <Box flex="1" textAlign="left">
-                    Price History
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel position="absolute" width="100%" overflowX="auto">
-                {exhibitId !== undefined && (
-                  <BidHistoryList exhibitId={exhibitId} />
-                )}
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion> */}
+          <HStack alignItems="center">
+            <Text fontSize="sm">Owned By</Text>
+            <DisplayUser id={dart!.owner} />{" "}
+          </HStack>
         </VStack>
-        {/* <Portal>
-          <OfferModal
-            isOpen={isOfferModalOpen}
-            onClose={() => setOfferModalOpen(false)}
-            onSubmit={handleSubmitOffer}
-          />
-          <AcceptBidModal
-            isOpen={isAcceptBidModalOpen}
-            highestBid={highestBid}
-            exhibitId={exhibitId!}
-            onAcceptBid={acceptBid}
-            onClose={() => setAcceptBidModalOpen(false)}
-          />
-        </Portal> */}
       </Stack>
     </Layout>
   );
