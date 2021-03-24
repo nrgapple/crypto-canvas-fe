@@ -11,4 +11,5 @@ export const config = {
   chainId: WalletId.rin.valueOf(),
   baseUri: "https://cryptocanvas.vercel.app/",
   openSeaBaseUri: "https://testnets.opensea.io/",
+  tokenName: "decentralizedart-v3",
 };

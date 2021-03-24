@@ -1,5 +1,17 @@
-import { Wrap, Heading, VStack, Image, Center, Text } from "@chakra-ui/react";
+import {
+  Wrap,
+  Heading,
+  VStack,
+  Image,
+  Center,
+  Text,
+  Skeleton,
+  Link,
+  Button,
+  Divider,
+} from "@chakra-ui/react";
 import React from "react";
+import { config } from "../app.config";
 import Layout from "../components/Layout";
 
 const Home = () => {
@@ -13,21 +25,44 @@ const Home = () => {
           <Heading as="h3" size="lg">
             Everything is stored in the Euthieum Blockchain
           </Heading>
+          <Center>
+            <Wrap justify="center" p="16px">
+              <Link _hover={undefined} href="/upload">
+                <Button>Create</Button>
+              </Link>
+              <Link
+                _hover={undefined}
+                href={`${config.openSeaBaseUri}collection/${config.tokenName}`}
+              >
+                <Button>Buy</Button>
+              </Link>
+            </Wrap>
+          </Center>
         </VStack>
+        <Divider />
         <Wrap justify="center" p="16px">
           <VStack w="500px">
             <Heading as="h4" size="lg">
               Other NFTs
             </Heading>
-            <Image src="/images/theirs-pic.png" w="100%" />
+            <Image
+              fallback={<Skeleton w="100%" h="100%" />}
+              src="/images/theirs-pic.png"
+              w="100%"
+            />
           </VStack>
           <VStack w="500px">
             <Heading as="h4" size="lg">
               De-Art
             </Heading>
-            <Image src="/images/ours-pic.png" w="100%" />
+            <Image
+              fallback={<Skeleton w="100%" h="100%" />}
+              src="/images/ours-pic.png"
+              w="100%"
+            />
           </VStack>
         </Wrap>
+        <Divider />
         <Wrap justify="center" p="16px">
           <Center w="500px">
             <VStack>
@@ -42,10 +77,14 @@ const Home = () => {
             </VStack>
           </Center>
           <VStack w="500px">
-            <Image src="/images/server-down.png" w="100%" />
+            <Image
+              fallback={<Skeleton w="100%" h="100%" />}
+              src="/images/theirs-server-down.png"
+              w="100%"
+            />
           </VStack>
         </Wrap>
-
+        <Divider />
         <Wrap justify="center" p="16px">
           <Center w="500px">
             <VStack>
@@ -59,9 +98,35 @@ const Home = () => {
             </VStack>
           </Center>
           <VStack w="500px">
-            <Image src="/images/ours-everywhere.png" w="100%" />
+            <Image
+              src="/images/ours-everywhere.png"
+              fallback={<Skeleton w="100%" h="100%" />}
+              w="100%"
+            />
           </VStack>
         </Wrap>
+        <Divider />
+        <VStack p="16px">
+          <Heading as="h3" size="lg">
+            Buy and Create <strong>Indestructible</strong> Assets
+          </Heading>
+          <Center p="16px">
+            <Wrap justify="center" p="16px">
+              <Link _hover={undefined} href="/about">
+                <Button>Learn More</Button>
+              </Link>
+              <Link _hover={undefined} href="/upload">
+                <Button>Create</Button>
+              </Link>
+              <Link
+                _hover={undefined}
+                href={`${config.openSeaBaseUri}collection/${config.tokenName}`}
+              >
+                <Button>Buy</Button>
+              </Link>
+            </Wrap>
+          </Center>
+        </VStack>
       </VStack>
     </Layout>
   );
