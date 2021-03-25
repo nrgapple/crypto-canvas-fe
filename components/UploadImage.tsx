@@ -4,31 +4,23 @@ import {
   Heading,
   HStack,
   Button,
-  InputGroup,
-  InputLeftAddon,
   Input,
-  useToast,
   Center,
   Image,
   Spinner,
   Stat,
   StatLabel,
   StatNumber,
-  Wrap,
   StatGroup,
   Divider,
   FormControl,
   FormLabel,
   FormErrorMessage,
 } from "@chakra-ui/react";
-import React, { useEffect, useMemo, useState } from "react";
-import { useDropArea, useAsync } from "react-use";
+import React from "react";
 import { useDarts } from "../hooks/useDarts";
-import { ImageParts } from "../interfaces";
 import { useContractAndAccount } from "../hooks/useContractAndAccount";
 import DisplayUser from "./DisplayUser";
-import bufferToDataUrl from "buffer-to-data-url";
-import useFilePicker from "../hooks/useFilePicker";
 import { useUpload } from "../hooks/useUpload";
 import { useInputItem } from "../hooks/useInputItem";
 
