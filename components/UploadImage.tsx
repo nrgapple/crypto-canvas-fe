@@ -11,15 +11,18 @@ import {
   Center,
   Image,
   Spinner,
+  Stat,
+  StatLabel,
+  StatNumber,
 } from "@chakra-ui/react";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDropArea, useAsync } from "react-use";
 import { useDarts } from "../hooks/useDarts";
 import { ImageParts } from "../interfaces";
 import { useContractAndAccount } from "../hooks/useContractAndAccount";
 import DisplayUser from "./DisplayUser";
 import bufferToDataUrl from "buffer-to-data-url";
-import { streamToBuffer } from "@jorgeferrero/stream-to-buffer";
+import useFilePicker from "../hooks/useFilePicker";
 
 const MAX_FILE_SIZE = 3000;
 
@@ -27,17 +30,19 @@ const FileUpload = () => {
   const { connect, status, account } = useContractAndAccount();
   const [parts, setParts] = useState<ImageParts | undefined>(undefined);
   const [name, setName] = useState<string>("");
-  //const { createRaw } = useDarts();
+  const { createRaw } = useDarts();
   const toast = useToast();
   const [loading, setLoading] = useState(false);
+  const [selectorFiles, openFileSelector] = useFilePicker({
+    multiple: false,
+    accept: [".png", ".jpeg", "webp"],
+  });
 
   const onFiles = async (files: File[]) => {
     setLoading(true);
     try {
       const mainFile = files[0];
       const mainBuffer = await mainFile.arrayBuffer();
-      //const data = JSON.stringify({ buffer: new Uint8Array(buffer) });
-      //console.log("array", data);
       const data = new FormData();
       data.append("file", mainFile);
       const resp = await fetch(`/api/util/webp`, {
@@ -56,16 +61,16 @@ const FileUpload = () => {
         after: parts.buffer.length,
       });
 
-      // if (parts.buffer.length > MAX_FILE_SIZE) {
-      //   toast({
-      //     title: "File too large",
-      //     description: `Files must be less than ${MAX_FILE_SIZE / 1000}kb`,
-      //     position: "top-right",
-      //     isClosable: true,
-      //     status: "error",
-      //   });
-      //   return;
-      // }
+      if (parts.buffer.length > MAX_FILE_SIZE) {
+        toast({
+          title: "File too large",
+          description: `Files must be less than ${MAX_FILE_SIZE / 1000}kb`,
+          position: "top-right",
+          isClosable: true,
+          status: "error",
+        });
+        throw Error("File too large");
+      }
       setParts(parts);
     } catch (e) {
       console.log(e);
@@ -77,6 +82,12 @@ const FileUpload = () => {
   const [bond, state] = useDropArea({
     onFiles,
   });
+
+  useEffect(() => {
+    if (selectorFiles?.length > 0) {
+      onFiles(selectorFiles);
+    }
+  }, [selectorFiles]);
 
   const imageFromBuffer = useAsync(async () => {
     if (!parts?.buffer) return undefined;
@@ -92,7 +103,7 @@ const FileUpload = () => {
     if (parts?.buffer) {
       const array = new Uint8Array(parts.buffer);
       console.log({ array });
-      //createRaw(array, parts?.dimensions, name);
+      createRaw(array, { height: 0, width: 0 }, name);
     }
   };
 
@@ -129,6 +140,12 @@ const FileUpload = () => {
                 <Image src={imageFromBuffer.value ?? ""} h="100%" />
               </VStack>
               <VStack>
+                <Stat>
+                  <StatLabel>Size</StatLabel>
+                  <StatNumber>{parts.buffer.length / 1000} KB</StatNumber>
+                </Stat>
+              </VStack>
+              <VStack>
                 {status === "connected" && account ? (
                   <Text>
                     Connected to <DisplayUser id={account} />
@@ -151,7 +168,10 @@ const FileUpload = () => {
             </VStack>
           ) : (
             <Center w="100%" h="100%" p="20vh">
-              <Heading>Drop png file here...</Heading>
+              <VStack>
+                <Heading>Drop png file here...</Heading>
+                <Button onClick={openFileSelector}>Browse Files</Button>
+              </VStack>
             </Center>
           )}
         </Center>

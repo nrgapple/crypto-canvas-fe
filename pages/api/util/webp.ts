@@ -44,25 +44,3 @@ export const config = {
 };
 
 export default handler;
-
-// export default async function handle(
-//   req: NextApiRequest,
-//   res: NextApiResponse
-// ) {
-//   console.log("req", req.body);
-
-//   if (req.method === "POST" && req.body) {
-//     const arrayBuffer = req.body.buffer as ArrayBuffer;
-//     const webpParts = await convertBufferToWebp(Buffer.from(arrayBuffer));
-//     res
-//       .writeHead(200, {
-//         "Content-Type": "image/webp",
-//       })
-//       .write(webpParts);
-//     res.end();
-//     return;
-//   }
-//   console.log(req.body);
-//   res.status(404).end();
-//   return;
-// }

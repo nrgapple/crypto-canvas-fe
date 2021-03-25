@@ -23,6 +23,7 @@
     "buffer-to-data-url": "^1.0.0",
     "datauri": "^3.0.0",
     "ethers": "^5.0.31",
+    "file-selector": "^0.2.4",
     "framer-motion": "^3.10.3",
     "hex-rgb": "^4.2.0",
     "jpeg-js": "^0.4.3",
