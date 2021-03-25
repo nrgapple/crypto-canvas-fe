@@ -49,7 +49,7 @@ const FileUpload = () => {
   } = useUpload(MAX_FILE_SIZE);
 
   const onUpload = () => {
-    if (parts?.buffer) {
+    if (parts?.buffer && name) {
       const array = new Uint8Array(parts.buffer);
       console.log({ array });
       createRaw(array, { height: 0, width: 0 }, name);
