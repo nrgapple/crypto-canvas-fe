@@ -1,7 +1,7 @@
 import { Divider, Heading, VStack, Wrap } from "@chakra-ui/layout";
 import { useMemo } from "react";
 import { useRecoilValue } from "recoil";
-import DartBox from "../../components/ExhibitBox";
+import DartBox from "../../components/DartBox";
 import Layout from "../../components/Layout";
 import { allBidsState } from "../../state";
 import React from "react";

@@ -1,6 +1,7 @@
-import { VStack, Heading, Divider } from "@chakra-ui/react";
+import { Image, VStack } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
-import React from "react";
+import React, { useState } from "react";
+import DartDetails from "../../components/DartDetails";
 import DartSection from "../../components/DartSection";
 import Layout from "../../components/Layout";
 import { useDarts } from "../../hooks/useDarts";
@@ -13,13 +14,14 @@ interface DataProps {
 
 const BrowsePage = ({ darts: initDarts }: DataProps) => {
   const { darts } = useDarts(initDarts);
+  const [selectedDart, setSelectedDart] = useState<Dart | undefined>();
 
   return (
     <Layout title="Bids">
-      <VStack w="100%" h="100%" p="8px" overflowY="scroll">
-        <Heading as="h1">Browse</Heading>
-        <DartSection darts={darts} title={"All"} />
-      </VStack>
+      <VStack w="100%" h="100%" p="8px">
+        {selectedDart && <DartDetails dart={selectedDart} />}
+        <DartSection darts={darts} setDart={setSelectedDart} />
+      </VStack>  
     </Layout>
   );
 };

@@ -20,10 +20,10 @@ const Home = () => {
       <VStack p="8px" overflowY="scroll" w="100%" h="100%">
         <VStack p={{ base: "8px", md: "32px" }}>
           <Heading as="h1" size="3xl">
-            The First Fully Decentralized NFT
+            First Truly Decentralized NFT
           </Heading>
           <Heading as="h3" size="lg">
-            Everything is stored in the Euthieum Blockchain
+            Everything is stored directly in the Ethereum Blockchain
           </Heading>
           <Center>
             <Wrap justify="center" p="16px">
@@ -43,7 +43,7 @@ const Home = () => {
         <Wrap justify="center" p={{ base: "0px", md: "16px" }}>
           <VStack maxW="500px">
             <Heading as="h4" size="lg">
-              Other NFTs
+              Every Other NFT
             </Heading>
             <Image
               fallback={<Skeleton w="100%" h="100%" />}
@@ -108,7 +108,7 @@ const Home = () => {
         <Divider />
         <VStack p={{ base: "0px", md: "16px" }}>
           <Heading as="h3" size="lg">
-            Buy and Create <strong>Indestructible</strong> Assets
+            Create your <strong>Indestructible</strong> Digital Assets
           </Heading>
           <Center p="16px">
             <Wrap justify="center" p="16px">
