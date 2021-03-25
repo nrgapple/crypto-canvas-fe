@@ -18,10 +18,12 @@ const BrowsePage = ({ darts: initDarts }: DataProps) => {
 
   return (
     <Layout title="Bids">
-      <VStack w="100%" h="100%" p="8px">
-        {selectedDart && <DartDetails dart={selectedDart} />}
-        <DartSection darts={darts} setDart={setSelectedDart} />
-      </VStack>  
+        <VStack h="100%" w="100%" p="8px">
+          <VStack>
+            {selectedDart && <DartDetails dart={selectedDart} />}
+          </VStack>
+          <DartSection darts={darts} setDart={setSelectedDart} />
+        </VStack> 
     </Layout>
   );
 };

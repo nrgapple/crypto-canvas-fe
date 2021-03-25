@@ -15,7 +15,7 @@ const DartDetails = ({dart}: Props) => {
                 <DisplayUser id={dart.owner} />
                 <div>{dart.name}</div>
             </HStack>
-            <HStack>
+            <HStack p="8px"w="100%" height="200px">
                 <Viewer image={`api/darts/image/${dart.dartId}`} disableLightBox={false} />
             </HStack>
             <VStack w="sm" alignItems="flex-start">

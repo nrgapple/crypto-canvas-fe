@@ -30,12 +30,6 @@ const Home = () => {
               <Link _hover={undefined} href="/upload">
                 <Button>Create</Button>
               </Link>
-              <Link
-                _hover={undefined}
-                href={`${config.openSeaBaseUri}collection/${config.tokenName}`}
-              >
-                <Button>Buy</Button>
-              </Link>
             </Wrap>
           </Center>
         </VStack>
