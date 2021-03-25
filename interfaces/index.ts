@@ -84,4 +84,5 @@ export interface Dart {
 export interface ImageParts {
   buffer: Buffer;
   name?: string;
+  dimensions: Dimensions;
 }

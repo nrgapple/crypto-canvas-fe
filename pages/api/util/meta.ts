@@ -3,6 +3,7 @@ import { convertBufferToWebp } from "../../../services";
 import nextConnect from "next-connect";
 import multer from "multer";
 import { promises as fs } from "fs";
+import { imageMeta, resizeImage } from "../../../utils/node-helpers";
 
 type NowRequestWithFile = NextApiRequest & {
   file: Express.Multer.File;
@@ -22,10 +23,9 @@ handler.post(async (req: NowRequestWithFile, res: NextApiResponse) => {
   if (req.method === "POST" && req.file) {
     try {
       const data = await fs.readFile(req.file.path);
-      const webpParts = await convertBufferToWebp(data);
-      console.log("webpParts", webpParts);
+      const meta = await imageMeta(data);
 
-      res.send(webpParts);
+      res.send(JSON.stringify(meta));
     } catch (e) {
       console.log(e);
     }

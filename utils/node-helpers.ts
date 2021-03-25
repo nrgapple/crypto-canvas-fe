@@ -23,3 +23,8 @@ export const resizeImage = async (buffer: Buffer, size: number = 500) => {
   }
   return buffer;
 };
+
+export const imageMeta = async (buffer: Buffer) => {
+  const image = sharp(buffer);
+  return await image.metadata();
+};
