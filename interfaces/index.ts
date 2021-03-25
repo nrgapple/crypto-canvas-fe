@@ -1,6 +1,3 @@
-import Web3 from "web3";
-import { Contract } from "web3-eth-contract";
-
 export enum WorldStateType {
   edit,
   create,
@@ -85,6 +82,7 @@ export interface Dart {
 }
 
 export interface ImageParts {
-  rgbaArray: number[];
+  buffer: Buffer;
+  name?: string;
   dimensions: Dimensions;
 }

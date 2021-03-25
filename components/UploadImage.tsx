@@ -1,142 +1,160 @@
 import {
   Text,
   VStack,
-  Box,
   Heading,
   HStack,
   Button,
-  InputGroup,
-  InputLeftAddon,
   Input,
-  useToast,
   Center,
   Image,
   Spinner,
+  Stat,
+  StatLabel,
+  StatNumber,
+  StatGroup,
+  Divider,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
 } from "@chakra-ui/react";
-import React, { useMemo, useState } from "react";
-import { useDropArea } from "react-use";
+import React from "react";
 import { useDarts } from "../hooks/useDarts";
-import { ImageParts } from "../interfaces";
-import { displayUserId, pngToDartRaw, reader } from "../utils/helpers";
-import { useAsync } from "react-use";
-import Viewer from "./Viewer";
 import { useContractAndAccount } from "../hooks/useContractAndAccount";
 import DisplayUser from "./DisplayUser";
+import { useUpload } from "../hooks/useUpload";
+import { useInputItem } from "../hooks/useInputItem";
 
-const MAX_FILE_SIZE = 2000;
+const MAX_FILE_SIZE = 3000;
 
 const FileUpload = () => {
   const { connect, status, account } = useContractAndAccount();
-  const [file, setFile] = useState<File | undefined>(undefined);
-  const [parts, setParts] = useState<ImageParts | undefined>(undefined);
-  const [name, setName] = useState<string>("");
-  const [buffer, setBuffer] = useState<ArrayBuffer>();
+  const [name, setName, titleError, setTitleError] = useInputItem<string>("");
   const { createRaw } = useDarts();
-  const toast = useToast();
-
-  const onFiles = async (files: File[]) => {
-    const mainFile = files[0];
-    if (mainFile.size > MAX_FILE_SIZE) {
-      toast({
-        title: "File too large",
-        description: `Files must be less than ${MAX_FILE_SIZE / 1000}kb`,
-        position: "top-right",
-        isClosable: true,
-        status: "error",
-      });
-      return;
-    }
-    try {
-      const buffer = await mainFile.arrayBuffer();
-      const parts = await pngToDartRaw(buffer);
-      setParts(parts);
-      setFile(mainFile);
-      setBuffer(buffer);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-  const [bond, state] = useDropArea({
-    onFiles,
-  });
-
-  const image = useAsync(async () => {
-    if (file) {
-      return await reader(file);
-    } else {
-      return "";
-    }
-  }, [file]);
-
-  const onRemove = () => {
-    setFile(undefined);
-    setParts(undefined);
-  };
+  const {
+    parts,
+    loading,
+    bondDropArea,
+    expandedImage,
+    convertedImage,
+    remove,
+    openFileSelector,
+  } = useUpload(MAX_FILE_SIZE);
 
   const onUpload = () => {
-    if (parts && buffer) {
-      const array = new Uint8Array(buffer);
+    if (parts?.buffer && name) {
+      const array = new Uint8Array(parts.buffer);
       console.log({ array });
-      createRaw(array, parts?.dimensions, name);
+      createRaw(array, { height: 0, width: 0 }, name);
     }
   };
-
-  console.log({ parts });
 
   return (
     <VStack>
-      <InputGroup>
-        <InputLeftAddon children="Title" />
+      <FormControl isRequired>
+        <FormLabel>Title</FormLabel>
         <Input
           type="text"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            console.log(newValue);
+
+            setName(newValue);
+            setTitleError(newValue !== "" ? "" : "Title is required");
+          }}
+          isRequired
         />
-      </InputGroup>
-      <Center
-        {...bond}
-        w="100%"
-        border="1px solid var(--chakra-colors-gray-200)"
-        borderRadius="var(--chakra-radii-md)"
-        p="8px"
-      >
-        {file ? (
-          <VStack>
-            <VStack
-              p="8px"
-              w="100%"
-              height={{ base: "200px", md: "200px" }}
-              justifyContent="center"
-            >
-              <Image src={image.value} h="100%" />
-            </VStack>
+        <FormErrorMessage>{titleError}</FormErrorMessage>
+      </FormControl>
+      {loading ? (
+        <Center>
+          <Spinner />
+        </Center>
+      ) : (
+        <Center
+          {...bondDropArea}
+          w="100%"
+          border="1px solid var(--chakra-colors-gray-200)"
+          borderRadius="var(--chakra-radii-md)"
+          p="8px"
+        >
+          {parts ? (
             <VStack>
-              {status === "connected" && account ? (
-                <Text>
-                  Connected to <DisplayUser id={account} />
-                </Text>
-              ) : status === "connecting" ? (
-                <Spinner />
-              ) : (
-                <Button onClick={() => connect("injected")}>
-                  Connect to Your Wallet
-                </Button>
-              )}
-              <HStack p="16px">
-                <Text>{file.name}</Text>
-                <Button onClick={onRemove}>Remove</Button>
-                {status === "connected" && (
-                  <Button onClick={onUpload}>Upload</Button>
+              <VStack>
+                <VStack p="8px">
+                  <Heading as="h3" size="md">
+                    Actual image converted to webp
+                  </Heading>
+                  <Image src={convertedImage ?? ""} p="16px" />
+                  <StatGroup
+                    w="100%"
+                    justifyContent="center"
+                    textAlign="center"
+                  >
+                    <Stat>
+                      <StatLabel>Width</StatLabel>
+                      <StatNumber>{parts.dimensions.width}</StatNumber>
+                    </Stat>
+                    <Stat>
+                      <StatLabel>Height</StatLabel>
+                      <StatNumber>{parts.dimensions.height}</StatNumber>
+                    </Stat>
+                  </StatGroup>
+                </VStack>
+                <Divider />
+                <VStack w="100%">
+                  <Heading as="h3" size="md">
+                    Preview
+                  </Heading>
+                  <VStack
+                    p="8px"
+                    w="100%"
+                    height={{ base: "200px", md: "200px" }}
+                    justifyContent="center"
+                  >
+                    <Image src={expandedImage ?? ""} h="100%" />
+                  </VStack>
+                </VStack>
+              </VStack>
+              <Divider />
+              <VStack>
+                <Stat>
+                  <StatLabel>Size</StatLabel>
+                  <StatNumber>{parts.buffer.length / 1000} KB</StatNumber>
+                </Stat>
+              </VStack>
+              <VStack>
+                {status === "connected" && account ? (
+                  <HStack>
+                    <Text>Connected to</Text>
+                    <DisplayUser id={account} />
+                  </HStack>
+                ) : status === "connecting" ? (
+                  <Spinner />
+                ) : (
+                  <Button onClick={() => connect("injected")}>
+                    Connect to Your Wallet
+                  </Button>
                 )}
-              </HStack>
+                <HStack p="16px">
+                  <Text>{parts?.name ?? ""}</Text>
+                  <Button onClick={remove}>Remove</Button>
+                  {status === "connected" && (
+                    <Button onClick={onUpload}>Upload</Button>
+                  )}
+                </HStack>
+              </VStack>
             </VStack>
-          </VStack>
-        ) : (
-          <Center w="100%" h="100%" p="20vh">
-            <Heading>Drop png file here...</Heading>
-          </Center>
-        )}
-      </Center>
+          ) : (
+            <Center w="100%" h="100%" p="20vh">
+              <VStack>
+                <Heading>Drop png file here...</Heading>
+                <Button onClick={openFileSelector}>Browse Files</Button>
+              </VStack>
+            </Center>
+          )}
+        </Center>
+      )}
     </VStack>
   );
 };
