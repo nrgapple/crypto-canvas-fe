@@ -4,15 +4,19 @@ import stc from "string-to-color";
 import { displayUserId } from "../utils/helpers";
 
 interface Props {
-  id: string;
+  id?: string;
 }
 
 const DisplayUser = ({ id }: Props) => {
   return (
-    <HStack justifyContent="start">
-      <Circle size="15px" background={stc(id)} />
-      <Text marginLeft="5px !important">{displayUserId(id)}</Text>
-    </HStack>
+    <>
+      {id && (
+        <HStack justifyContent="start">
+          <Circle size="15px" background={stc(id)} />
+          <Text marginLeft="5px !important">{displayUserId(id)}</Text>
+        </HStack>
+      )}
+    </>
   );
 };
 

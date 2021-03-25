@@ -2,19 +2,13 @@ import { config } from "../app.config";
 import Web3 from "web3";
 import { AbiItem } from "web3-utils";
 import PixelToken from "../contracts/DARToken.json";
-import {
-  checkEmptyAddress,
-  increaseResolution,
-} from "../utils/helpers";
-import {
-  Dart,
-  DartRawResp,
-  DimensionsResp,
-} from "../interfaces";
+import { checkEmptyAddress, increaseResolution } from "../utils/helpers";
+import { Dart, DartRawResp, DimensionsResp } from "../interfaces";
 import jpeg from "jpeg-js";
 import { PNG } from "pngjs";
 import DataURIParser from "datauri/parser";
 import sharp from "sharp";
+import { imageToWebp } from "../utils/node-helpers";
 
 export const getServerContract = () => {
   const provider = new Web3.providers.HttpProvider(config.infuraProviderUri);
@@ -138,4 +132,10 @@ export const getDartMetaData = async (dartId: number) => {
       : web3.utils.toUtf8(dartResp.name),
     image: `${config.baseUri}api/darts/image/${dartResp.dartId}`,
   };
+};
+
+export const convertBufferToWebp = async (buffer: Buffer) => {
+  console.log("converting");
+  //const buffer = await file.arrayBuffer();
+  return await imageToWebp(Buffer.from(buffer));
 };
