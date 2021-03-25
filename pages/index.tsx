@@ -23,7 +23,7 @@ const Home = () => {
             The First Fully Decentralized NFT
           </Heading>
           <Heading as="h3" size="lg">
-            Everything is stored in the Euthieum Blockchain
+            Everything is stored in the Ethereum Blockchain
           </Heading>
           <Center>
             <Wrap justify="center" p="16px">
