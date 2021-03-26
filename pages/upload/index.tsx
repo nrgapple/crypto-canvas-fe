@@ -13,20 +13,20 @@ const UploadPage = () => {
             Engrave your Art in the BlockChain
           </Heading>
           <Text>
-            De-Art will convert your image file to{" "}
+            deART will convert your image file to{" "}
             <Link href="https://developers.google.com/speed/webp" isExternal>
               <strong>webp</strong>
               <ExternalLinkIcon mx="2px" />
             </Link>
             . It can support up to <strong>3 KB</strong> once the file is
-            converted. We recommend uploading pixel art, using a awesome editor
+            converted. We recommend uploading pixel art, using an awesome editor
             like{" "}
             <Link
               colorScheme="blue"
               href="https://www.pixilart.com/draw"
               isExternal
             >
-              Pixil Art Editor <ExternalLinkIcon mx="2px" />
+              <strong>Pixil Art Editor</strong><ExternalLinkIcon mx="2px" />
             </Link>{" "}
             and export the actual pixel size.
           </Text>

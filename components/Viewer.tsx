@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Pixel } from "../interfaces";
-import { createImageFromPixels } from "../utils/helpers";
-import { Skeleton } from "@chakra-ui/skeleton";
+import React, { useState } from "react";
 import { Image } from "@chakra-ui/image";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
@@ -12,21 +9,17 @@ interface Props {
 }
 
 const Viewer = ({ disableLightBox = false, image }: Props): JSX.Element => {
-  const [isLoading, setIsLoading] = useState(false);
   const [isImageOpen, setImageOpen] = useState<boolean>(false);
   return (
     <>
-      {isLoading ? (
-        <Skeleton />
-      ) : (
-        <Image
-          onClick={() => !disableLightBox && setImageOpen(true)}
-          src={image}
-          objectFit="contain"
-          maxH="100%"
-          width="auto"
-        />
-      )}
+      <Image
+        onClick={() => !disableLightBox && setImageOpen(true)}
+        src={image}
+        objectFit="contain"
+        height="100%"
+        width="auto"
+        borderRadius="3px"
+      />
       {isImageOpen && (
         <Lightbox
           mainSrc={image}

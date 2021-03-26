@@ -224,3 +224,9 @@ export const reader = (file: File): Promise<string> => {
 
 export const displayUserId = (longId: string) =>
   longId.replace(/0x/, "").slice(0, 6);
+
+export const bufferToHex = (buffer: Buffer) => {
+  return [...new Uint8Array(buffer)]
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+};

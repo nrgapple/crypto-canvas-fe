@@ -1,8 +1,18 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
-export const useInputItem = <T>(defaultItem: T) => {
+type errorMessage = string;
+
+export const useInputItem = <T>(
+  defaultItem: T,
+  validate: (newItem: T) => errorMessage
+) => {
   const [item, setItem] = useState<T | undefined>(defaultItem);
   const [error, setError] = useState<string>("");
 
-  return [item, setItem, error, setError] as const;
+  const onValidate = useCallback((newItem: T) => {
+    setItem(newItem);
+    setError(validate(newItem));
+  }, []);
+
+  return [item, error, onValidate] as const;
 };

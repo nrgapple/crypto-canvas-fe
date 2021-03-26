@@ -13,7 +13,6 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
-  Square,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -63,7 +62,7 @@ export default function WithSubnavigation({ isEditor }: Props) {
             fontFamily={"heading"}
             color={useColorModeValue("gray.800", "white")}
           >
-            De-ART
+            deART
           </Text>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
@@ -76,19 +75,6 @@ export default function WithSubnavigation({ isEditor }: Props) {
           direction={"row"}
           spacing={6}
         >
-          <Link
-            display={{ base: "none", md: "inline-flex" }}
-            fontSize={"sm"}
-            fontWeight={600}
-            color={useColorModeValue("gray.600", "gray.200")}
-            href={"/profile"}
-            _hover={{
-              textDecoration: "none",
-              color: useColorModeValue("gray.800", "white"),
-            }}
-          >
-            Profile
-          </Link>
           {!isEditor && (
             <Link
               display={{ base: "none", md: "inline-flex" }}
@@ -206,7 +192,6 @@ const MobileNav = ({ isEditor }: { isEditor?: boolean }) => {
       {NAV_ITEMS.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
       ))}
-      <MobileNavItem label="Profile" href="/profile" />
       {!isEditor && <MobileNavItem label="Create" href="/upload" />}
     </Stack>
   );
