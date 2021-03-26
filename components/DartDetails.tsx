@@ -12,6 +12,7 @@ interface Props {
 
 const DartDetails = ({ dart }: Props) => {
   const imageString = useImageString(dart.dartId);
+  console.log(dart.name)
   return (
     <Box position="relative" minH="0" flex="1">
       <VStack justifyContent="start" alignItems="center" h="100%" minH="0">

@@ -10,7 +10,7 @@ const UploadPage = () => {
       <VStack p="8px" overflowY="scroll" w="100%" h="100%">
         <VStack maxW="700px" p="16px">
           <Heading as="h1" size="lg">
-            Engrave your Art in the BlockChain
+            Engrave Art in the Blockchain
           </Heading>
           <Text>
             deART will convert your image file to{" "}
