@@ -9,17 +9,20 @@ interface Props {
   disableLightBox?: boolean;
   image: string;
   direction?: Direction;
+  className?: string;
 }
 
 const Viewer = ({
   disableLightBox = false,
   image,
   direction = "height",
+  className,
 }: Props): JSX.Element => {
   const [isImageOpen, setImageOpen] = useState<boolean>(false);
   return (
     <>
       <Image
+        className={className}
         onClick={() => !disableLightBox && setImageOpen(true)}
         src={image}
         objectFit="contain"
