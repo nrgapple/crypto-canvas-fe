@@ -1,4 +1,4 @@
-import { VStack, Heading, Divider, HStack } from "@chakra-ui/react";
+import { VStack, Heading, Divider, HStack, Wrap } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import { Dart } from "../interfaces";
 import DartBox from "./DartBox";
@@ -7,9 +7,15 @@ interface Props {
   darts: Dart[];
   isLoaded?: boolean;
   setDart: (dart: Dart) => void;
+  collection?: boolean;
 }
 
-const DartSection = ({ darts, isLoaded = true, setDart }: Props) => {
+const DartSection = ({
+  darts,
+  isLoaded = true,
+  setDart,
+  collection = false,
+}: Props) => {
   const renderDarts = useMemo(
     () =>
       isLoaded
@@ -23,9 +29,17 @@ const DartSection = ({ darts, isLoaded = true, setDart }: Props) => {
   );
 
   return (
-    <HStack p="8px" overflowX="auto">
-      {renderDarts}
-    </HStack>
+    <>
+      {collection ? (
+        <Wrap justify="center" p="8px" overflowY="auto">
+          {renderDarts}
+        </Wrap>
+      ) : (
+        <HStack p="8px" overflowX="auto">
+          {renderDarts}
+        </HStack>
+      )}
+    </>
   );
 };
 
