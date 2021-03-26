@@ -27,7 +27,7 @@ const DartDetails = ({ dart }: Props) => {
           justifyContent="center"
         >
           <Viewer
-            image={`api/darts/image/${dart.dartId}`}
+            image={`/api/darts/image/${dart.dartId}`}
             disableLightBox={false}
           />
         </HStack>

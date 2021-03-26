@@ -29,7 +29,7 @@ const DartBox = ({ dart, isLoaded = true, onClick }: Props) => {
       background="var(--background)"
     >
       <VStack p="8px">
-        isLoaded ? <Viewer image={`api/darts/image/${dart?.dartId}`} /> :
+        isLoaded ? <Viewer image={`/api/darts/image/${dart?.dartId}`} /> :
         <Skeleton
           isLoaded={isLoaded}
           w={isLoaded ? "" : "100%"}
