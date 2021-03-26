@@ -2,7 +2,7 @@ import { useToast } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
 import { ImageParts } from "../interfaces";
 import useFilePicker from "./useFilePicker";
-import { useDropArea, useAsync } from "react-use";
+import { useDrop, useAsync } from "react-use";
 import bufferToDataUrl from "buffer-to-data-url";
 
 export const useUpload = (maxFileSize: number) => {
@@ -91,7 +91,7 @@ export const useUpload = (maxFileSize: number) => {
     }
   }, [selectorFiles]);
 
-  const [bond, state] = useDropArea({
+  useDrop({
     onFiles,
   });
 
@@ -117,7 +117,6 @@ export const useUpload = (maxFileSize: number) => {
     openFileSelector,
     expandedImage: expandedImageFromBuffer.value,
     convertedImage: imageFromBuffer.value,
-    bondDropArea: bond,
     remove: onRemove,
     error,
   } as const;

@@ -34,7 +34,6 @@ const FileUpload = () => {
   const {
     parts,
     loading,
-    bondDropArea,
     expandedImage,
     convertedImage,
     remove,
@@ -160,7 +159,6 @@ const FileUpload = () => {
         <FormControl isRequired isInvalid={!!uploadError}>
           <FormLabel>Upload</FormLabel>
           <Center
-            {...bondDropArea}
             w="100%"
             border="1px solid var(--chakra-colors-gray-200)"
             borderRadius="var(--chakra-radii-md)"

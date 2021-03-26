@@ -11,7 +11,7 @@ export const resizeImage = async (buffer: Buffer, size: number = 500) => {
   const { height, width } = await image.metadata();
   if (height && width) {
     const min = Math.min(height, width);
-    const diff = 500 - min > 0 ? 500 - min : 0;
+    const diff = size - min > 0 ? size - min : 0;
     if (diff !== 0) {
       const resized = image.resize(width + diff, height + diff, {
         kernel: sharp.kernel.nearest,
