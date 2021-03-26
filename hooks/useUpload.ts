@@ -14,6 +14,7 @@ export const useUpload = (maxFileSize: number) => {
   });
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState<Buffer | undefined>(undefined);
+  const [error, setError] = useState<string>("");
 
   const onFiles = useCallback(
     async (files: File[]) => {
@@ -73,8 +74,10 @@ export const useUpload = (maxFileSize: number) => {
           throw Error("File too large");
         }
         setParts(parts);
+        setError("");
       } catch (e) {
         console.log(e);
+        setError((e as Error).message);
       } finally {
         setLoading(false);
       }
@@ -116,5 +119,6 @@ export const useUpload = (maxFileSize: number) => {
     convertedImage: imageFromBuffer.value,
     bondDropArea: bond,
     remove: onRemove,
+    error,
   } as const;
 };
