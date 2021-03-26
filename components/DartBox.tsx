@@ -26,6 +26,7 @@ const DartBox = ({ dart, isLoaded = true, onClick }: Props) => {
       maxHeight="230px"
       className="shadow-border-pressable"
       p="8px"
+      cursor="pointer"
       background="var(--background)"
     >
       <VStack p="8px">
