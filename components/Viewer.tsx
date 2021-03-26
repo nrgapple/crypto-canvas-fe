@@ -3,12 +3,19 @@ import { Image } from "@chakra-ui/image";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 
+type Direction = "height" | "width";
+
 interface Props {
   disableLightBox?: boolean;
   image: string;
+  direction?: Direction;
 }
 
-const Viewer = ({ disableLightBox = false, image }: Props): JSX.Element => {
+const Viewer = ({
+  disableLightBox = false,
+  image,
+  direction = "height",
+}: Props): JSX.Element => {
   const [isImageOpen, setImageOpen] = useState<boolean>(false);
   return (
     <>
@@ -16,8 +23,8 @@ const Viewer = ({ disableLightBox = false, image }: Props): JSX.Element => {
         onClick={() => !disableLightBox && setImageOpen(true)}
         src={image}
         objectFit="contain"
-        height="100%"
-        width="auto"
+        height={direction === "height" ? "100%" : "auto"}
+        width={direction === "width" ? "100%" : "auto"}
         borderRadius="3px"
       />
       {isImageOpen && (

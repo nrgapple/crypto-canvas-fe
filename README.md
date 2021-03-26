@@ -1,8 +1,8 @@
-# D-ART (Decentralized Art) Front End
+# deART (Decentralized Art) Front End
 
 Truly decentralized NFT Art. All metadata lives on the chain.
 
-![image](https://user-images.githubusercontent.com/10817537/112189005-ee78f280-8bd9-11eb-91ba-57bef2b6ee6b.png)
+![image](https://user-images.githubusercontent.com/10817537/112679062-1cf90680-8e42-11eb-9468-2bbb08b404bb.png)
 
 ## Development
 

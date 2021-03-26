@@ -5,6 +5,7 @@ import { Box, Flex } from "@chakra-ui/layout";
 import { useRecoilValue } from "recoil";
 import { showConnectPageState } from "../state";
 import ConnectView from "./ConnectView";
+import { config } from "../app.config";
 
 type Props = {
   children?: ReactNode;
@@ -20,7 +21,7 @@ const Layout = ({
   title = "Crypto Canvas",
   description = "100% Decentralized NFTs built in a finite canvas",
   isEditor = false,
-  url = "https://cryptocanvas.vercel.app",
+  url = config.baseUri,
   image = "",
 }: Props) => {
   const showConnectPage = useRecoilValue(showConnectPageState);

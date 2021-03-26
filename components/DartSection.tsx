@@ -31,7 +31,7 @@ const DartSection = ({
   return (
     <>
       {collection ? (
-        <Wrap justify="center" p="8px" overflowY="auto">
+        <Wrap justify="center" p="8px" overflowY="auto" h="100%">
           {renderDarts}
         </Wrap>
       ) : (
