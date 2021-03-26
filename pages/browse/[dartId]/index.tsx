@@ -20,6 +20,11 @@ const BrowsePage = ({ darts: initDarts, dart }: DataProps) => {
   const [selectedDart, setSelectedDart] = useState<Dart | undefined>(dart);
   const router = useRouter();
 
+  const setDart = (d: Dart) => {
+    router.push(`/browse/${d.dartId}`);
+    setSelectedDart(d);
+  };
+
   return (
     <Layout
       title={dart ? dart.name : "Browse"}
@@ -29,7 +34,7 @@ const BrowsePage = ({ darts: initDarts, dart }: DataProps) => {
         {selectedDart && <DartDetails dart={selectedDart} />}
         <DartSection
           darts={darts}
-          setDart={(d) => router.push(`/browse/${d.dartId}`)}
+          setDart={(d) => setDart(d)}
           collection={!selectedDart}
         />
       </VStack>
