@@ -1,4 +1,5 @@
 import { useAsync } from "react-use";
+import { bufferToHex } from "../utils/helpers";
 
 export const useImageBuffer = (dartId: number) => {
   const buffer = useAsync(async () => {
@@ -14,5 +15,5 @@ export const useImageBuffer = (dartId: number) => {
 export const useImageString = (dartId: number) => {
   const buffer = useImageBuffer(dartId);
   console.log(buffer);
-  return buffer ? buffer.join("") : "";
+  return buffer ? bufferToHex(Buffer.from(buffer)) : "";
 };
