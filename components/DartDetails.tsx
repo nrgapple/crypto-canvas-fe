@@ -1,4 +1,4 @@
-import { Box, Code, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Code, Flex, HStack, Text, VStack } from "@chakra-ui/react";
 import { useImageString } from "../hooks/useImageBuffer";
 import { Dart } from "../interfaces";
 import DisplayUser from "./DisplayUser";
@@ -16,8 +16,14 @@ const DartDetails = ({ dart }: Props) => {
     <Box position="relative" minH="0" flex="1">
       <VStack justifyContent="start" alignItems="center" h="100%" minH="0">
         <HStack justifyContent="space-between" w="100%" p="16px">
-          <DisplayUser id={dart.owner} />
-          <strong>{dart.name}</strong>
+          <Box className="shadow-border" background="var(--background)" p="4px">
+            <DisplayUser id={dart.owner} />
+          </Box>
+          <Box className="shadow-border" background="var(--background)" p="4px">
+            <Text>
+              <strong>{dart.name}</strong>
+            </Text>
+          </Box>
         </HStack>
         <HStack
           cursor="pointer"
@@ -27,6 +33,7 @@ const DartDetails = ({ dart }: Props) => {
           justifyContent="center"
         >
           <Viewer
+            className="shadow-border"
             image={`/api/darts/image/${dart.dartId}`}
             disableLightBox={false}
           />
@@ -34,7 +41,7 @@ const DartDetails = ({ dart }: Props) => {
       </VStack>
       <Code
         sx={{
-          color: `rgba(75, 75, 75, 0.103)`,
+          color: `rgba(75, 75, 75, 0.2)`,
           fontSize: `2vw`,
           background: "none",
         }}
