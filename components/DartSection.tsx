@@ -27,7 +27,7 @@ const DartSection = ({ darts, isLoaded = true, setDart }: Props) => {
   );
 
   return (
-      <HStack alignItems="flex-end" flexBasis="700px" w="100%" overflowY="hidden" overflowX="auto">
+      <HStack alignItems="flex-end" flexBasis="600px" w="100%" overflowY="hidden" overflowX="auto">
         {renderDarts}
       </HStack>
   );

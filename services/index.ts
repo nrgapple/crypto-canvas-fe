@@ -59,6 +59,9 @@ export const getDartImage = async (dartId: number, size: number = 500) => {
   const dartResp = (await contract.methods
     .getDartContent(dartId)
     .call()) as DartRawResp;
+  if (size === 0) {
+    return dartResp.rgbaArray.map((x) => parseInt(x));
+  }
   return await resizeImage(
     Buffer.from(dartResp.rgbaArray.map((x) => parseInt(x))),
     size
