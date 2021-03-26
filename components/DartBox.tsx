@@ -29,13 +29,15 @@ const DartBox = ({ dart, isLoaded = true, onClick }: Props) => {
       background="var(--background)"
     >
       <VStack p="8px">
-        isLoaded ? <Viewer image={`/api/darts/image/${dart?.dartId}`} /> :
+        isLoaded ?{" "}
+        <Viewer image={`/api/darts/image/${dart?.dartId}`} direction="width" />{" "}
+        :
         <Skeleton
           isLoaded={isLoaded}
           w={isLoaded ? "" : "100%"}
           h={isLoaded ? "" : "100%"}
         >
-          <Viewer image="" />
+          <Viewer image="" direction="width" />
         </Skeleton>
       </VStack>
       <HStack w="100%" alignItems="center" justifyContent="space-between">
