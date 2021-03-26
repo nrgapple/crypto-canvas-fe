@@ -30,12 +30,6 @@ const Home = () => {
               <Link _hover={undefined} href="/upload">
                 <Button>Create</Button>
               </Link>
-              <Link
-                _hover={undefined}
-                href={`${config.openSeaBaseUri}collection/${config.tokenName}`}
-              >
-                <Button>Buy</Button>
-              </Link>
             </Wrap>
           </Center>
         </VStack>
@@ -53,7 +47,7 @@ const Home = () => {
           </VStack>
           <VStack maxW="500px">
             <Heading as="h4" size="lg">
-              De-Art
+              deART
             </Heading>
             <Image
               fallback={<Skeleton w="100%" h="100%" />}
@@ -92,7 +86,7 @@ const Home = () => {
                 Your Art Exists Everywhere
               </Heading>
               <Text>
-                With De-Art your image will exist forever on the blockchain
+                With deART your image will exist forever on the blockchain
                 along with the proof of ownership.
               </Text>
             </VStack>
@@ -108,7 +102,7 @@ const Home = () => {
         <Divider />
         <VStack p={{ base: "0px", md: "16px" }}>
           <Heading as="h3" size="lg">
-            Create your <strong>Indestructible</strong> Digital Assets
+            Create an <strong>Indestructible</strong> Digital Asset
           </Heading>
           <Center p="16px">
             <Wrap justify="center" p="16px">

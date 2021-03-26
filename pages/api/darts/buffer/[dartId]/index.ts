@@ -15,8 +15,6 @@ export default async function handle(
   const { dartId } = req.query;
   try {
     const dartIdNumber = parseInt(dartId as string);
-    console.log(dartIdNumber);
-
     const image = await getDartImage(dartIdNumber, 0);
     res.send(image);
     return;

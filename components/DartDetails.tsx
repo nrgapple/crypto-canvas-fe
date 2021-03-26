@@ -12,20 +12,20 @@ interface Props {
 const DartDetails = ({ dart }: Props) => {
   const imageString = useImageString(dart.dartId);
   return (
-    <VStack justifyContent="center" alignItems="center">
-      <HStack>
+    <VStack height="500px" justifyContent="center" alignItems="center" className="shadow-border">
+      <HStack justifyContent="space-between" w="100%" p="8px">
         <DisplayUser id={dart.owner} />
-        <div>{dart.name}</div>
+        <strong>{dart.name}</strong>
       </HStack>
-      <HStack>
+      <HStack cursor="pointer" maxW="300px" maxH="300px">
         <Viewer
           image={`api/darts/image/${dart.dartId}`}
           disableLightBox={false}
         />
       </HStack>
       <VStack w="sm" alignItems="flex-start">
-        <Text>Image data from Blockchain</Text>
-        <Code children={imageString}></Code>
+        <Text size="sm" color="grey">Image data stored in Blockchain</Text>
+        <Code wordBreak="break-all" overflowY="scroll" h="40px" children={imageString}></Code>
       </VStack>
     </VStack>
   );

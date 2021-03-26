@@ -20,17 +20,14 @@ const DartBox = ({ dart, isLoaded = true, onClick }: Props) => {
   return (
     <LinkBox
       as="article"
-      width="200px"
-      minWidth="160px"
+      minWidth="140px"
+      maxWidth="140px"
+      height="180px"
+      maxHeight="230px"
       className="shadow-border-pressable"
       p="8px"
     >
-        <VStack
-          p="8px"
-          w="100%"
-          height="100px"
-          justifyContent="flex-start"
-        >
+        <VStack p="8px">
           isLoaded ? <Viewer image={`api/darts/image/${dart?.dartId}`} /> :
           <Skeleton
             isLoaded={isLoaded}

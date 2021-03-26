@@ -15,5 +15,5 @@ export const useImageBuffer = (dartId: number) => {
 export const useImageString = (dartId: number) => {
   const buffer = useImageBuffer(dartId);
   console.log(buffer);
-  return buffer ? bufferToHex(Buffer.from(buffer)) : "";
+  return buffer ? bufferToHex(Buffer.from(buffer.reverse)) : "";
 };

@@ -54,6 +54,7 @@ const FileUpload = () => {
         <FormLabel>Title</FormLabel>
         <Input
           type="text"
+          placeholder="deART Name"
           value={name}
           onChange={(e) => {
             const newValue = e.target.value;
@@ -71,6 +72,8 @@ const FileUpload = () => {
           <Spinner />
         </Center>
       ) : (
+        <FormControl isRequired>
+          <FormLabel>Upload</FormLabel>
         <Center
           {...bondDropArea}
           w="100%"
@@ -146,14 +149,15 @@ const FileUpload = () => {
               </VStack>
             </VStack>
           ) : (
-            <Center w="100%" h="100%" p="20vh">
-              <VStack>
-                <Heading>Drop png file here...</Heading>
-                <Button onClick={openFileSelector}>Browse Files</Button>
-              </VStack>
-            </Center>
+              <Center w="100%" h="100%" p="20vh">
+                  <VStack>
+                    <Heading>Drop image file here...</Heading>
+                    <Button onClick={openFileSelector}>Browse Files</Button>
+                  </VStack>
+              </Center>
           )}
         </Center>
+        </FormControl>
       )}
     </VStack>
   );

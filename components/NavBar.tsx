@@ -13,7 +13,6 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
-  Square,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -63,7 +62,7 @@ export default function WithSubnavigation({ isEditor }: Props) {
             fontFamily={"heading"}
             color={useColorModeValue("gray.800", "white")}
           >
-            dART
+            deART
           </Text>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
