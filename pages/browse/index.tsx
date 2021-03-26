@@ -5,6 +5,7 @@ import DartDetails from "../../components/DartDetails";
 import DartSection from "../../components/DartSection";
 import Layout from "../../components/Layout";
 import { useDarts } from "../../hooks/useDarts";
+import { useImageDataSVG } from "../../hooks/useImageBuffer";
 import { Dart } from "../../interfaces";
 import { getAllDarts } from "../../services";
 
@@ -15,13 +16,12 @@ interface DataProps {
 const BrowsePage = ({ darts: initDarts }: DataProps) => {
   const { darts } = useDarts(initDarts);
   const [selectedDart, setSelectedDart] = useState<Dart | undefined>();
-
   return (
-    <Layout title="Bids">
-        <VStack h="100%" w="100%" p="8px" overflow="hidden">
-          {selectedDart && <DartDetails dart={selectedDart} />}
-          <DartSection darts={darts} setDart={setSelectedDart} />
-        </VStack> 
+    <Layout title="Browse">
+      <VStack h="100%" w="100%" alignItems="stretch" justifyContent="stretch">
+        {selectedDart && <DartDetails dart={selectedDart} />}
+        <DartSection darts={darts} setDart={setSelectedDart} />
+      </VStack>
     </Layout>
   );
 };

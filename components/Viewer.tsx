@@ -17,7 +17,7 @@ const Viewer = ({ disableLightBox = false, image }: Props): JSX.Element => {
         src={image}
         objectFit="contain"
         height="100%"
-        width="100%"
+        width="auto"
         borderRadius="3px"
       />
       {isImageOpen && (

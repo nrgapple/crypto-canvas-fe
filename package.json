@@ -42,6 +42,7 @@
     "react-draggable": "^4.4.3",
     "react-image-lightbox": "^5.1.1",
     "react-sticky-mouse-tooltip": "^0.0.1",
+    "react-textfit": "^1.1.1",
     "react-use": "^17.2.1",
     "recoil": "^0.1.2",
     "resize-png-buffer": "^1.0.1",

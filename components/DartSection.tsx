@@ -6,7 +6,7 @@ import DartBox from "./DartBox";
 interface Props {
   darts: Dart[];
   isLoaded?: boolean;
-  setDart: (dart: Dart) => void
+  setDart: (dart: Dart) => void;
 }
 
 const DartSection = ({ darts, isLoaded = true, setDart }: Props) => {
@@ -14,11 +14,7 @@ const DartSection = ({ darts, isLoaded = true, setDart }: Props) => {
     () =>
       isLoaded
         ? darts.map((dart) => (
-            <DartBox
-              key={dart.dartId}
-              dart={dart}
-              onClick={setDart}
-            />
+            <DartBox key={dart.dartId} dart={dart} onClick={setDart} />
           ))
         : Array.from(Array(5)).map((_, i) => (
             <DartBox key={i} isLoaded={true} dart={undefined} />
@@ -27,9 +23,9 @@ const DartSection = ({ darts, isLoaded = true, setDart }: Props) => {
   );
 
   return (
-      <HStack alignItems="flex-end" flexBasis="600px" w="100%" overflowY="hidden" overflowX="auto">
-        {renderDarts}
-      </HStack>
+    <HStack p="8px" overflowX="auto">
+      {renderDarts}
+    </HStack>
   );
 };
 

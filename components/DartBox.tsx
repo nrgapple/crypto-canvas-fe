@@ -13,7 +13,7 @@ import Viewer from "./Viewer";
 interface Props {
   dart?: Dart;
   isLoaded?: boolean;
-  onClick?: (dart: Dart) => void
+  onClick?: (dart: Dart) => void;
 }
 
 const DartBox = ({ dart, isLoaded = true, onClick }: Props) => {
@@ -26,28 +26,32 @@ const DartBox = ({ dart, isLoaded = true, onClick }: Props) => {
       maxHeight="230px"
       className="shadow-border-pressable"
       p="8px"
+      background="var(--background)"
     >
-        <VStack p="8px">
-          isLoaded ? <Viewer image={`api/darts/image/${dart?.dartId}`} /> :
-          <Skeleton
-            isLoaded={isLoaded}
-            w={isLoaded ? "" : "100%"}
-            h={isLoaded ? "" : "100%"}
-          >
-            <Viewer image="" />
+      <VStack p="8px">
+        isLoaded ? <Viewer image={`api/darts/image/${dart?.dartId}`} /> :
+        <Skeleton
+          isLoaded={isLoaded}
+          w={isLoaded ? "" : "100%"}
+          h={isLoaded ? "" : "100%"}
+        >
+          <Viewer image="" />
+        </Skeleton>
+      </VStack>
+      <HStack w="100%" alignItems="center" justifyContent="space-between">
+        <LinkOverlay
+          onClick={() => {
+            onClick && onClick(dart!);
+          }}
+          p="8px"
+        >
+          <Skeleton isLoaded={isLoaded}>
+            <Heading as="h5" size="md">
+              {dart?.name}
+            </Heading>
           </Skeleton>
-        </VStack>
-        <HStack w="100%" alignItems="center" justifyContent="space-between">
-          <LinkOverlay onClick={() => {
-            onClick && onClick(dart!)
-          }} p="8px">
-            <Skeleton isLoaded={isLoaded}>
-              <Heading as="h5" size="md">
-                {dart?.name}
-              </Heading>
-            </Skeleton>
-          </LinkOverlay>
-        </HStack>
+        </LinkOverlay>
+      </HStack>
     </LinkBox>
   );
 };
