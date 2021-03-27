@@ -33,7 +33,11 @@ const DartBox = ({ dart, onClick }: Props) => {
       }}
     >
       <VStack>
-        <Viewer image={`/api/darts/image/${dart?.dartId}`} direction="width" disableLightBox={true} />{" "}
+        <Viewer
+          image={`/api/darts/image/${dart?.dartId}?size=200`}
+          direction="width"
+          disableLightBox={true}
+        />{" "}
       </VStack>
     </LinkBox>
   );

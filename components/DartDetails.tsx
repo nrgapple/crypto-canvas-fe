@@ -1,4 +1,14 @@
-import { Box, Button, Code, HStack, Icon, Link, Text, useClipboard, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Code,
+  HStack,
+  Icon,
+  Link,
+  Text,
+  useClipboard,
+  VStack,
+} from "@chakra-ui/react";
 import { useImageString } from "../hooks/useImageBuffer";
 import { Dart } from "../interfaces";
 import DisplayUser from "./DisplayUser";
@@ -16,34 +26,39 @@ interface Props {
 const DartDetails = ({ dart }: Props) => {
   const location = useLocation();
   const imageString = useImageString(dart.dartId);
-  const {hasCopied, onCopy} = useClipboard(location.href)
+  const { hasCopied, onCopy } = useClipboard(location.href);
 
   return (
     <Box position="relative" minH="0" flex="1">
       <VStack justifyContent="start" alignItems="center" h="100%" minH="0">
-        <HStack w="100%" justifyContent="space-between" p="8px">
-          <Box>
+        <HStack justifyContent="space-between" w="100%" p="16px">
+          <Box
+            p="4px"
+            background="transparent"
+            sx={{ backdropFilter: "blur(2px)" }}
+          >
             <DisplayUser id={dart.owner} />
           </Box>
-          <Box>
+          <Box
+            p="4px"
+            background="transparent"
+            sx={{ backdropFilter: "blur(2px)" }}
+          >
             <Text>
               <strong>{dart.name}</strong>
             </Text>
           </Box>
         </HStack>
-        <HStack
-          flex="1 1"
-          minH="0"
-          justifyContent="center"
-        >
+        <HStack flex="1 1" minH="0" justifyContent="center">
           <Viewer
-            className="shadow-border"
             image={`/api/darts/image/${dart.dartId}`}
             disableLightBox={false}
           />
         </HStack>
         <HStack w="100%" justifyContent="flex-end" p="8px">
-          <Button onClick={onCopy}><CopyIcon /></Button>
+          <Button onClick={onCopy}>
+            <CopyIcon />
+          </Button>
         </HStack>
       </VStack>
       <Code
