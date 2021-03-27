@@ -30,7 +30,10 @@ const DartBox = ({ dart, isLoaded = true, onClick }: Props) => {
     >
       <VStack p="8px">
         isLoaded ?{" "}
-        <Viewer image={`/api/darts/image/${dart?.dartId}`} direction="width" />{" "}
+        <Viewer
+          image={`/api/darts/image/${dart?.dartId}?size=200`}
+          direction="width"
+        />{" "}
         :
         <Skeleton
           isLoaded={isLoaded}

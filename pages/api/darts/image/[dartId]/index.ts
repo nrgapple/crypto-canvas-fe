@@ -12,10 +12,13 @@ export default async function handle(
     origin: "*",
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
-  const { dartId } = req.query;
+  const { dartId, size } = req.query;
   try {
     const dartIdNumber = parseInt(dartId as string);
-    const image = await getDartImage(dartIdNumber, 500);
+    const image = await getDartImage(
+      dartIdNumber,
+      size ? parseInt(size as string) : 500
+    );
     res
       .writeHead(200, {
         "Content-Type": "image/png",
