@@ -35,7 +35,7 @@ const DartSection = ({
           {renderDarts}
         </Wrap>
       ) : (
-        <HStack p="8px" overflowX="auto">
+        <HStack p="8px" overflowX="auto" overflowY="hidden">
           {renderDarts}
         </HStack>
       )}

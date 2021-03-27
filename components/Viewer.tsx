@@ -29,6 +29,7 @@ const Viewer = ({
         height={direction === "height" ? "100%" : "auto"}
         width={direction === "width" ? "100%" : "auto"}
         borderRadius="3px"
+        cursor={disableLightBox ? "" : "pointer"}
       />
       {isImageOpen && (
         <Lightbox

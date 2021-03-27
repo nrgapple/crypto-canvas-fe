@@ -1,34 +1,37 @@
-import { Box, Code, Flex, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Code, HStack, Icon, Link, Text, useClipboard, VStack } from "@chakra-ui/react";
 import { useImageString } from "../hooks/useImageBuffer";
 import { Dart } from "../interfaces";
 import DisplayUser from "./DisplayUser";
 import Viewer from "./Viewer";
 //@ts-ignore
 import { Textfit } from "react-textfit";
+import { CopyIcon } from "@chakra-ui/icons";
+import { useRouter } from "next/dist/client/router";
+import { useLocation } from "react-use";
 
 interface Props {
   dart: Dart;
 }
 
 const DartDetails = ({ dart }: Props) => {
+  const location = useLocation();
   const imageString = useImageString(dart.dartId);
-  console.log(dart.name)
+  const {hasCopied, onCopy} = useClipboard(location.href)
+
   return (
     <Box position="relative" minH="0" flex="1">
       <VStack justifyContent="start" alignItems="center" h="100%" minH="0">
-        <HStack justifyContent="space-between" w="100%" p="16px">
-          <Box className="shadow-border" background="var(--background)" p="4px">
+        <HStack w="100%" justifyContent="space-between" p="8px">
+          <Box>
             <DisplayUser id={dart.owner} />
           </Box>
-          <Box className="shadow-border" background="var(--background)" p="4px">
+          <Box>
             <Text>
               <strong>{dart.name}</strong>
             </Text>
           </Box>
         </HStack>
         <HStack
-          cursor="pointer"
-          p="16px"
           flex="1 1"
           minH="0"
           justifyContent="center"
@@ -38,6 +41,9 @@ const DartDetails = ({ dart }: Props) => {
             image={`/api/darts/image/${dart.dartId}`}
             disableLightBox={false}
           />
+        </HStack>
+        <HStack w="100%" justifyContent="flex-end" p="8px">
+          <Button onClick={onCopy}><CopyIcon /></Button>
         </HStack>
       </VStack>
       <Code
