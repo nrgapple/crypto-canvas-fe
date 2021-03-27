@@ -16,10 +16,18 @@ const DartDetails = ({ dart }: Props) => {
     <Box position="relative" minH="0" flex="1">
       <VStack justifyContent="start" alignItems="center" h="100%" minH="0">
         <HStack justifyContent="space-between" w="100%" p="16px">
-          <Box className="shadow-border" background="var(--background)" p="4px">
+          <Box
+            p="4px"
+            background="transparent"
+            sx={{ backdropFilter: "blur(2px)" }}
+          >
             <DisplayUser id={dart.owner} />
           </Box>
-          <Box className="shadow-border" background="var(--background)" p="4px">
+          <Box
+            p="4px"
+            background="transparent"
+            sx={{ backdropFilter: "blur(2px)" }}
+          >
             <Text>
               <strong>{dart.name}</strong>
             </Text>
@@ -33,7 +41,6 @@ const DartDetails = ({ dart }: Props) => {
           justifyContent="center"
         >
           <Viewer
-            className="shadow-border"
             image={`/api/darts/image/${dart.dartId}`}
             disableLightBox={false}
           />
