@@ -36,7 +36,7 @@ export const useDarts = (initDarts?: Dart[]) => {
         const transaction = contract.methods.createDart(
           [...rgbaArray],
           dimensions,
-          web3.utils.fromAscii(name)
+          web3.utils.fromUtf8(name)
         );
 
         transaction
