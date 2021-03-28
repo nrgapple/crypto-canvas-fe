@@ -2,16 +2,12 @@ import React, { ReactNode } from "react";
 import Head from "next/head";
 import NavBar from "./NavBar";
 import { Box, Flex } from "@chakra-ui/layout";
-import { useRecoilValue } from "recoil";
-import { showConnectPageState } from "../state";
-import ConnectView from "./ConnectView";
 import { config } from "../app.config";
 
 type Props = {
   children?: ReactNode;
   title?: string;
   description?: string;
-  isEditor?: boolean;
   url?: string;
   image?: string;
 };
@@ -20,11 +16,9 @@ const Layout = ({
   children,
   title = "Crypto Canvas",
   description = "100% Decentralized NFTs built in a finite canvas",
-  isEditor = false,
   url = config.baseUri,
   image = "",
 }: Props) => {
-  const showConnectPage = useRecoilValue(showConnectPageState);
   return (
     <>
       <Head>
@@ -36,6 +30,7 @@ const Layout = ({
         />
         {/* <link rel="apple-touch-icon" sizes="192x192" href="/logo-bg-192.png" /> */}
         <meta name="theme-color" content="#6930c3" />
+        <link id="favicon" rel="shortcut icon" type="image/png" href={image} />
         <meta property="og:title" content={title} key="og-title" />
         <meta property="og:type" content="article" />
         <meta
@@ -78,14 +73,10 @@ const Layout = ({
         />
       </Head>
       <Flex direction="column" h="100vh" w="100vw">
-        <NavBar isEditor={isEditor} />
-        {showConnectPage ? (
-          <ConnectView />
-        ) : (
-          <Box w="100%" h="100%" overflowY="hidden" className="app">
-            {children}
-          </Box>
-        )}
+        <NavBar />
+        <Box w="100%" h="100%" overflowY="hidden" className="app">
+          {children}
+        </Box>
       </Flex>
     </>
   );

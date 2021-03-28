@@ -5,6 +5,7 @@ import {
   Heading,
   VStack,
   Skeleton,
+  Text,
 } from "@chakra-ui/react";
 import React from "react";
 import { Dart } from "../interfaces";
@@ -12,51 +13,32 @@ import Viewer from "./Viewer";
 
 interface Props {
   dart?: Dart;
-  isLoaded?: boolean;
   onClick?: (dart: Dart) => void;
 }
 
-const DartBox = ({ dart, isLoaded = true, onClick }: Props) => {
+const DartBox = ({ dart, onClick }: Props) => {
   return (
     <LinkBox
       as="article"
-      minWidth="140px"
-      maxWidth="140px"
-      height="180px"
-      maxHeight="230px"
+      minWidth="120px"
+      maxWidth="120px"
+      height="120px"
+      maxHeight="200px"
       className="shadow-border-pressable"
       p="8px"
+      cursor="pointer"
       background="var(--background)"
+      onClick={() => {
+        onClick && onClick(dart!);
+      }}
     >
-      <VStack p="8px">
-        isLoaded ?{" "}
+      <VStack>
         <Viewer
           image={`/api/darts/image/${dart?.dartId}?size=200`}
           direction="width"
+          disableLightBox={true}
         />{" "}
-        :
-        <Skeleton
-          isLoaded={isLoaded}
-          w={isLoaded ? "" : "100%"}
-          h={isLoaded ? "" : "100%"}
-        >
-          <Viewer image="" direction="width" />
-        </Skeleton>
       </VStack>
-      <HStack w="100%" alignItems="center" justifyContent="space-between">
-        <LinkOverlay
-          onClick={() => {
-            onClick && onClick(dart!);
-          }}
-          p="8px"
-        >
-          <Skeleton isLoaded={isLoaded}>
-            <Heading as="h5" size="md">
-              {dart?.name}
-            </Heading>
-          </Skeleton>
-        </LinkOverlay>
-      </HStack>
     </LinkBox>
   );
 };

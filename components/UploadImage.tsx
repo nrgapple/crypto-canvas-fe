@@ -16,8 +16,6 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
-  Wrap,
-  Flex,
 } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import { useDarts } from "../hooks/useDarts";
@@ -58,8 +56,7 @@ const FileUpload = () => {
   const onUpload = () => {
     if (parts?.buffer && name) {
       const array = new Uint8Array(parts.buffer);
-      console.log({ array });
-      createRaw(array, { height: 0, width: 0 }, name);
+     createRaw(array, { height: 0, width: 0 }, name);
     }
   };
 
@@ -182,7 +179,7 @@ const FileUpload = () => {
             ) : (
               <Center w="100%" h="100%">
                 <VStack>
-                  <Heading>Drop image file here...</Heading>
+                  <Text color="grey">Drop image file here...</Text>
                   <Button onClick={openFileSelector}>Browse Files</Button>
                 </VStack>
               </Center>

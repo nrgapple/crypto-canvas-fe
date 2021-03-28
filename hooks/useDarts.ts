@@ -25,7 +25,6 @@ export const useDarts = (initDarts?: Dart[]) => {
   const handleCreateRaw = useCallback(
     (rgbaArray: Uint8Array, dimensions: Dimensions, name: string) =>
       new Promise((res, rej) => {
-        console.log({ rgbaArray });
         if (!account) {
           rej(`You are not signed in`);
           return;

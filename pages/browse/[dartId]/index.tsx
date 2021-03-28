@@ -1,4 +1,10 @@
-import { Image, VStack } from "@chakra-ui/react";
+import {
+  Collapse,
+  Image,
+  Slide,
+  useDisclosure,
+  VStack,
+} from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
@@ -19,6 +25,9 @@ const BrowsePage = ({ darts: initDarts, dart }: DataProps) => {
   const { darts } = useDarts(initDarts);
   const [selectedDart, setSelectedDart] = useState<Dart | undefined>(dart);
   const router = useRouter();
+  const { onToggle: onToggleFullscreen, isOpen: isFullscreen } = useDisclosure({
+    defaultIsOpen: false,
+  });
 
   const setDart = (d: Dart) => {
     router.push(`/browse/${d.dartId}`);
@@ -31,12 +40,20 @@ const BrowsePage = ({ darts: initDarts, dart }: DataProps) => {
       image={dart ? `${config.baseUri}api/darts/image/${dart.dartId}` : ""}
     >
       <VStack h="100%" w="100%" alignItems="stretch" justifyContent="stretch">
-        {selectedDart && <DartDetails dart={selectedDart} />}
-        <DartSection
-          darts={darts}
-          setDart={(d) => setDart(d)}
-          collection={!selectedDart}
-        />
+        {selectedDart && (
+          <DartDetails
+            dart={selectedDart}
+            onFullscreen={onToggleFullscreen}
+            isFullscreen={isFullscreen}
+          />
+        )}
+        <Collapse in={!isFullscreen}>
+          <DartSection
+            darts={darts}
+            setDart={(d) => setDart(d)}
+            collection={!selectedDart}
+          />
+        </Collapse>
       </VStack>
     </Layout>
   );
