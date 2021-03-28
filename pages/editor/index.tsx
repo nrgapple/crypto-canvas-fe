@@ -108,7 +108,7 @@ const EditorPage = () => {
   }, []);
 
   return (
-    <Layout title="Editor" isEditor={true}>
+    <Layout title="Editor">
       <Draggable grid={[25, 25]} bounds="parent" handle="#handle">
         <Stack className="picker overlay" justifyContent="center" w="250px">
           <HStack

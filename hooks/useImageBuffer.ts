@@ -4,7 +4,7 @@ import { bufferToHex } from "../utils/helpers";
 export const useImageBuffer = (dartId?: number) => {
   const buffer = useAsync(async () => {
     if (dartId === undefined) return undefined;
-    const resp = await fetch(`api/darts/buffer/${dartId}`);
+    const resp = await fetch(`/api/darts/buffer/${dartId}`);
     const array = (await resp.body?.getReader().read())!.value;
     return array;
   }, [dartId]);
@@ -14,7 +14,7 @@ export const useImageBuffer = (dartId?: number) => {
 
 export const useImageString = (dartId?: number) => {
   const buffer = useImageBuffer(dartId);
-  return buffer ? bufferToHex(Buffer.from(buffer.reverse())) : "";
+  return buffer ? bufferToHex(Buffer.from(buffer)) : "";
 };
 
 export const useImageDataSVG = (dartId?: number) => {
