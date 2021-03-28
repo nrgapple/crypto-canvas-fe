@@ -72,7 +72,7 @@ const Layout = ({
           key="twitter-width"
         />
       </Head>
-      <Flex direction="column" h="100vh" w="100vw">
+      <Flex direction="column" className="layout">
         <NavBar />
         <Box w="100%" h="100%" overflowY="hidden" className="app">
           {children}
