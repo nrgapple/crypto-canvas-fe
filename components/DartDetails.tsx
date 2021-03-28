@@ -19,6 +19,7 @@ import { Textfit } from "react-textfit";
 import { CopyIcon, ArrowDownIcon, ArrowUpIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/dist/client/router";
 import { useLocation, useTimeoutFn } from "react-use";
+import QRCode from "react-qr-code";
 
 interface Props {
   dart: Dart;
@@ -53,7 +54,7 @@ const DartDetails = ({ dart, onFullscreen, isFullscreen }: Props) => {
           >
             <DisplayUser id={dart.owner} />
           </Box>
-          <Box
+          <VStack
             p="4px"
             background="transparent"
             sx={{ backdropFilter: "blur(2px)" }}
@@ -61,7 +62,8 @@ const DartDetails = ({ dart, onFullscreen, isFullscreen }: Props) => {
             <Text>
               <strong>{dart.name}</strong>
             </Text>
-          </Box>
+            <QRCode size={50} value={location.href ?? ""} />
+          </VStack>
         </HStack>
         <HStack flex="1 1" minH="0" justifyContent="center">
           <Viewer
