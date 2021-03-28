@@ -23,7 +23,7 @@ const DartSection = ({
             <DartBox key={dart.dartId} dart={dart} onClick={setDart} />
           ))
         : Array.from(Array(5)).map((_, i) => (
-            <DartBox key={i} isLoaded={true} dart={undefined} />
+            <DartBox key={i} dart={undefined} />
           )),
     [darts]
   );
