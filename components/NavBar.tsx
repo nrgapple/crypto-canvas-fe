@@ -13,16 +13,17 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
-} from "@chakra-ui/react";
+} from "@chakra-ui/react"
+import NextLink from "next/link"
 import {
   HamburgerIcon,
   CloseIcon,
   ChevronDownIcon,
   ChevronRightIcon,
-} from "@chakra-ui/icons";
+} from "@chakra-ui/icons"
 
 export default function WithSubnavigation() {
-  const { isOpen, onToggle } = useDisclosure();
+  const { isOpen, onToggle } = useDisclosure()
 
   return (
     <Box>
@@ -71,6 +72,8 @@ export default function WithSubnavigation() {
           spacing={6}
         >
           <Link
+            as={NextLink}
+            passHref
             display={{ base: "none", md: "inline-flex" }}
             fontSize={"sm"}
             fontWeight={600}
@@ -90,7 +93,7 @@ export default function WithSubnavigation() {
         <MobileNav />
       </Collapse>
     </Box>
-  );
+  )
 }
 
 const DesktopNav = () => {
@@ -101,6 +104,8 @@ const DesktopNav = () => {
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
               <Link
+                as={NextLink}
+                passHref
                 p={2}
                 href={navItem.href ?? "#"}
                 fontSize={"sm"}
@@ -135,12 +140,14 @@ const DesktopNav = () => {
         </Box>
       ))}
     </Stack>
-  );
-};
+  )
+}
 
 const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   return (
     <Link
+      as={NextLink}
+      passHref
       href={href}
       role={"group"}
       display={"block"}
@@ -172,8 +179,8 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
         </Flex>
       </Stack>
     </Link>
-  );
-};
+  )
+}
 
 const MobileNav = ({ isEditor }: { isEditor?: boolean }) => {
   return (
@@ -187,11 +194,11 @@ const MobileNav = ({ isEditor }: { isEditor?: boolean }) => {
       ))}
       {!isEditor && <MobileNavItem label="Create" href="/upload" />}
     </Stack>
-  );
-};
+  )
+}
 
 const MobileNavItem = ({ label, children, href }: NavItem) => {
-  const { isOpen, onToggle } = useDisclosure();
+  const { isOpen, onToggle } = useDisclosure()
 
   return (
     <Stack spacing={4} onClick={children && onToggle}>
@@ -233,21 +240,27 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         >
           {children &&
             children.map((child) => (
-              <Link key={child.label} py={2} href={child.href}>
+              <Link
+                as={NextLink}
+                passHref
+                key={child.label}
+                py={2}
+                href={child.href}
+              >
                 {child.label}
               </Link>
             ))}
         </Stack>
       </Collapse>
     </Stack>
-  );
-};
+  )
+}
 
 interface NavItem {
-  label: string;
-  subLabel?: string;
-  children?: Array<NavItem>;
-  href?: string;
+  label: string
+  subLabel?: string
+  children?: Array<NavItem>
+  href?: string
 }
 
 const NAV_ITEMS: Array<NavItem> = [
@@ -263,4 +276,4 @@ const NAV_ITEMS: Array<NavItem> = [
     label: "About",
     href: "/about",
   },
-];
+]
