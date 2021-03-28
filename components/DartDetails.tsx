@@ -1,15 +1,4 @@
-import {
-  Box,
-  Button,
-  Code,
-  HStack,
-  Icon,
-  Link,
-  Text,
-  useClipboard,
-  useToast,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Button, Code, HStack, Text, useClipboard, useToast, VStack } from "@chakra-ui/react";
 import { useImageString } from "../hooks/useImageBuffer";
 import { Dart } from "../interfaces";
 import DisplayUser from "./DisplayUser";
@@ -17,7 +6,6 @@ import Viewer from "./Viewer";
 //@ts-ignore
 import { Textfit } from "react-textfit";
 import { CopyIcon, ArrowDownIcon, ArrowUpIcon } from "@chakra-ui/icons";
-import { useRouter } from "next/dist/client/router";
 import { useLocation, useTimeoutFn } from "react-use";
 import QRCode from "react-qr-code";
 
