@@ -20,13 +20,8 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
-import SigninButton from "./SigninButton";
 
-interface Props {
-  isEditor?: boolean;
-}
-
-export default function WithSubnavigation({ isEditor }: Props) {
+export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -75,21 +70,19 @@ export default function WithSubnavigation({ isEditor }: Props) {
           direction={"row"}
           spacing={6}
         >
-          {!isEditor && (
-            <Link
-              display={{ base: "none", md: "inline-flex" }}
-              fontSize={"sm"}
-              fontWeight={600}
-              color={useColorModeValue("gray.600", "gray.200")}
-              href={"/upload"}
-              _hover={{
-                textDecoration: "none",
-                color: useColorModeValue("gray.800", "white"),
-              }}
-            >
-              Create
-            </Link>
-          )}
+          <Link
+            display={{ base: "none", md: "inline-flex" }}
+            fontSize={"sm"}
+            fontWeight={600}
+            color={useColorModeValue("gray.600", "gray.200")}
+            href={"/upload"}
+            _hover={{
+              textDecoration: "none",
+              color: useColorModeValue("gray.800", "white"),
+            }}
+          >
+            Create
+          </Link>
         </Stack>
       </Flex>
 
