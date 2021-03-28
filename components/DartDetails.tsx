@@ -7,6 +7,7 @@ import {
   Link,
   Text,
   useClipboard,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { useImageString } from "../hooks/useImageBuffer";
@@ -15,18 +16,31 @@ import DisplayUser from "./DisplayUser";
 import Viewer from "./Viewer";
 //@ts-ignore
 import { Textfit } from "react-textfit";
-import { CopyIcon } from "@chakra-ui/icons";
+import { CopyIcon, ArrowDownIcon, ArrowUpIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/dist/client/router";
-import { useLocation } from "react-use";
+import { useLocation, useTimeoutFn } from "react-use";
 
 interface Props {
   dart: Dart;
+  isFullscreen: boolean;
+  onFullscreen: () => void;
 }
 
-const DartDetails = ({ dart }: Props) => {
+const DartDetails = ({ dart, onFullscreen, isFullscreen }: Props) => {
   const location = useLocation();
   const imageString = useImageString(dart.dartId);
   const { hasCopied, onCopy } = useClipboard(location.href);
+  const toast = useToast();
+
+  const onCopyItem = () => {
+    onCopy();
+    toast({
+      title: "Copied to Clipboard",
+      position: "top-right",
+      isClosable: true,
+      status: "success",
+    });
+  };
 
   return (
     <Box position="relative" minH="0" flex="1">
@@ -55,8 +69,11 @@ const DartDetails = ({ dart }: Props) => {
             disableLightBox={false}
           />
         </HStack>
-        <HStack w="100%" justifyContent="flex-end" p="8px">
-          <Button onClick={onCopy}>
+        <HStack w="100%" justifyContent="space-between" p="8px">
+          <Button onClick={onFullscreen}>
+            {isFullscreen ? <ArrowUpIcon /> : <ArrowDownIcon />}
+          </Button>
+          <Button onClick={onCopyItem}>
             <CopyIcon />
           </Button>
         </HStack>
