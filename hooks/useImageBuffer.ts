@@ -14,7 +14,7 @@ export const useImageBuffer = (dartId?: number) => {
 
 export const useImageString = (dartId?: number) => {
   const buffer = useImageBuffer(dartId);
-  return buffer ? bufferToHex(Buffer.from(buffer.reverse())) : "";
+  return buffer ? bufferToHex(Buffer.from(buffer)) : "";
 };
 
 export const useImageDataSVG = (dartId?: number) => {

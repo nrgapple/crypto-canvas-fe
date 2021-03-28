@@ -26,7 +26,7 @@ const Layout = ({
         <meta charSet="utf-8" />
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+          content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
         {/* <link rel="apple-touch-icon" sizes="192x192" href="/logo-bg-192.png" /> */}
         <meta name="theme-color" content="#6930c3" />
