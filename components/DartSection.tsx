@@ -1,4 +1,4 @@
-import { VStack, Heading, Divider, HStack, Wrap } from "@chakra-ui/react";
+import { HStack, Wrap } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import { Dart } from "../interfaces";
 import DartBox from "./DartBox";

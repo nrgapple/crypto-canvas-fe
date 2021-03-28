@@ -1,4 +1,4 @@
-import { Box, Button, Code, HStack, Icon, Link, Text, useClipboard, VStack } from "@chakra-ui/react";
+import { Box, Button, Code, HStack, Text, useClipboard, VStack } from "@chakra-ui/react";
 import { useImageString } from "../hooks/useImageBuffer";
 import { Dart } from "../interfaces";
 import DisplayUser from "./DisplayUser";
@@ -6,7 +6,6 @@ import Viewer from "./Viewer";
 //@ts-ignore
 import { Textfit } from "react-textfit";
 import { CopyIcon } from "@chakra-ui/icons";
-import { useRouter } from "next/dist/client/router";
 import { useLocation } from "react-use";
 
 interface Props {
@@ -16,7 +15,7 @@ interface Props {
 const DartDetails = ({ dart }: Props) => {
   const location = useLocation();
   const imageString = useImageString(dart.dartId);
-  const {hasCopied, onCopy} = useClipboard(location.href)
+  const {hasCopied, onCopy} = useClipboard(location.href!)
 
   return (
     <Box position="relative" minH="0" flex="1">
