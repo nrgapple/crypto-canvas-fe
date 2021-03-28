@@ -29,7 +29,7 @@ interface Props {
 const DartDetails = ({ dart, onFullscreen, isFullscreen }: Props) => {
   const location = useLocation();
   const imageString = useImageString(dart.dartId);
-  const { hasCopied, onCopy } = useClipboard(location.href);
+  const { hasCopied, onCopy } = useClipboard(location.href || "");
   const toast = useToast();
 
   const onCopyItem = () => {
