@@ -47,13 +47,12 @@ const BrowsePage = ({ darts: initDarts, dart }: DataProps) => {
             isFullscreen={isFullscreen}
           />
         )}
-        <Collapse in={!isFullscreen}>
-          <DartSection
-            darts={darts}
-            setDart={(d) => setDart(d)}
-            collection={!selectedDart}
-          />
-        </Collapse>
+        <DartSection
+          darts={darts}
+          setDart={(d) => setDart(d)}
+          collection={!selectedDart}
+          isCollapsed={!isFullscreen}
+        />
       </VStack>
     </Layout>
   );
