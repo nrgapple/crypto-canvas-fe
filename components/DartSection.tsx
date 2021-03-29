@@ -1,27 +1,18 @@
-import {
-  VStack,
-  Heading,
-  Divider,
-  HStack,
-  Wrap,
-  Collapse,
-} from "@chakra-ui/react";
-import React, { useMemo } from "react";
-import { Dart } from "../interfaces";
-import DartBox from "./DartBox";
+import { HStack, Wrap, Collapse } from "@chakra-ui/react"
+import React, { useMemo } from "react"
+import { Dart } from "../interfaces"
+import DartBox from "./DartBox"
 
 interface Props {
-  darts: Dart[];
-  isLoaded?: boolean;
-  setDart: (dart: Dart) => void;
-  collection?: boolean;
-  isCollapsed?: boolean;
+  darts: Dart[]
+  isLoaded?: boolean
+  collection?: boolean
+  isCollapsed?: boolean
 }
 
 const DartSection = ({
   darts,
   isLoaded = true,
-  setDart,
   collection = false,
   isCollapsed = false,
 }: Props) => {
@@ -29,13 +20,13 @@ const DartSection = ({
     () =>
       isLoaded
         ? darts.map((dart) => (
-            <DartBox key={dart.dartId} dart={dart} onClick={setDart} />
+            <DartBox key={dart.dartId} dart={dart} />
           ))
         : Array.from(Array(5)).map((_, i) => (
             <DartBox key={i} dart={undefined} />
           )),
     [darts]
-  );
+  )
 
   return (
     <>
@@ -57,7 +48,7 @@ const DartSection = ({
         </Collapse>
       )}
     </>
-  );
-};
+  )
+}
 
-export default DartSection;
+export default DartSection

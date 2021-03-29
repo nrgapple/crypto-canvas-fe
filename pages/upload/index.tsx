@@ -1,8 +1,8 @@
-import { ExternalLinkIcon } from "@chakra-ui/icons";
-import { Center, Heading, VStack, Text, Link } from "@chakra-ui/react";
-import React from "react";
-import Layout from "../../components/Layout";
-import FileUpload from "../../components/UploadImage";
+import { ExternalLinkIcon } from "@chakra-ui/icons"
+import { Center, Heading, VStack, Text, Link } from "@chakra-ui/react"
+import React from "react"
+import Layout from "../../components/Layout"
+import FileUpload from "../../components/UploadImage"
 
 const UploadPage = () => {
   return (
@@ -26,7 +26,8 @@ const UploadPage = () => {
               href="https://www.pixilart.com/draw"
               isExternal
             >
-              <strong>Pixil Art Editor</strong><ExternalLinkIcon mx="2px" />
+              <strong>Pixil Art Editor</strong>
+              <ExternalLinkIcon mx="2px" />
             </Link>{" "}
             and export the actual pixel size.
           </Text>
@@ -34,7 +35,7 @@ const UploadPage = () => {
         <FileUpload />
       </VStack>
     </Layout>
-  );
-};
+  )
+}
 
-export default UploadPage;
+export default UploadPage

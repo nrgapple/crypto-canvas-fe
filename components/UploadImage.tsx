@@ -16,6 +16,7 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
+  Link,
 } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import { useDarts } from "../hooks/useDarts";
@@ -23,6 +24,7 @@ import { useContractAndAccount } from "../hooks/useContractAndAccount";
 import DisplayUser from "./DisplayUser";
 import { useUpload } from "../hooks/useUpload";
 import { useInputItem } from "../hooks/useInputItem";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 const MAX_FILE_SIZE = 3000;
 
@@ -56,7 +58,7 @@ const FileUpload = () => {
   const onUpload = () => {
     if (parts?.buffer && name) {
       const array = new Uint8Array(parts.buffer);
-     createRaw(array, { height: 0, width: 0 }, name);
+      createRaw(array, { height: 0, width: 0 }, name);
     }
   };
 
@@ -116,6 +118,12 @@ const FileUpload = () => {
           </HStack>
         ) : status === "connecting" ? (
           <Spinner />
+        ) : status === "error" ? (
+          <Text>
+            <Link href="https://metamask.io/" isExternal>
+              MetaMask Required <ExternalLinkIcon mx="2px" />
+            </Link>
+          </Text>
         ) : (
           <Button disabled={isErrors} onClick={() => connect("injected")}>
             Connect to Your Wallet
