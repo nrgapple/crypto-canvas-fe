@@ -19,9 +19,7 @@ const Home = () => {
     <Layout title="Home">
       <VStack p="8px" overflowY="scroll" w="100%" h="100%">
         <VStack p={{ base: "8px", md: "32px" }}>
-          <Heading as="h1" size="3xl">
-            First Truly Decentralized NFT
-          </Heading>
+          <Heading size="3xl">First Truly Decentralized NFT</Heading>
           <Heading as="h3" size="lg">
             Everything is stored directly in the Ethereum Blockchain
           </Heading>
@@ -86,8 +84,8 @@ const Home = () => {
                 Your Art Exists Everywhere
               </Heading>
               <Text>
-                With deART your image will exist forever on the blockchain
-                along with the proof of ownership.
+                With deART your image will exist forever on the blockchain along
+                with the proof of ownership.
               </Text>
             </VStack>
           </Center>

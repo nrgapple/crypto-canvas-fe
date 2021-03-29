@@ -24,6 +24,11 @@ const Layout = ({
       <Head>
         <title>{title}</title>
         <meta charSet="utf-8" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&family=Nunito:ital,wght@0,200;0,300;1,200&display=swap"
+          rel="stylesheet"
+        />
         <meta
           name="viewport"
           content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"

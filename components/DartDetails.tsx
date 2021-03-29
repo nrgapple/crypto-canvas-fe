@@ -34,7 +34,7 @@ const DartDetails = ({ dart, onFullscreen, isFullscreen }: Props) => {
   return (
     <Box position="relative" minH="0" flex="1">
       <VStack justifyContent="start" alignItems="center" h="100%" minH="0">
-        <HStack justifyContent="space-between" w="100%" p="16px">
+        <HStack alignItems="flex-start" justifyContent="space-between" w="100%" p="16px">
           <Box
             p="4px"
             background="transparent"
