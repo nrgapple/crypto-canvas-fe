@@ -13,17 +13,17 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
-} from "@chakra-ui/react"
-import NextLink from "next/link"
+} from "@chakra-ui/react";
+import NextLink from "next/link";
 import {
   HamburgerIcon,
   CloseIcon,
   ChevronDownIcon,
   ChevronRightIcon,
-} from "@chakra-ui/icons"
+} from "@chakra-ui/icons";
 
 export default function WithSubnavigation() {
-  const { isOpen, onToggle } = useDisclosure()
+  const { isOpen, onToggle } = useDisclosure();
 
   return (
     <Box>
@@ -93,7 +93,7 @@ export default function WithSubnavigation() {
         <MobileNav />
       </Collapse>
     </Box>
-  )
+  );
 }
 
 const DesktopNav = () => {
@@ -140,8 +140,8 @@ const DesktopNav = () => {
         </Box>
       ))}
     </Stack>
-  )
-}
+  );
+};
 
 const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   return (
@@ -179,8 +179,8 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
         </Flex>
       </Stack>
     </Link>
-  )
-}
+  );
+};
 
 const MobileNav = ({ isEditor }: { isEditor?: boolean }) => {
   return (
@@ -194,39 +194,42 @@ const MobileNav = ({ isEditor }: { isEditor?: boolean }) => {
       ))}
       {!isEditor && <MobileNavItem label="Create" href="/upload" />}
     </Stack>
-  )
-}
+  );
+};
 
 const MobileNavItem = ({ label, children, href }: NavItem) => {
-  const { isOpen, onToggle } = useDisclosure()
+  const { isOpen, onToggle } = useDisclosure();
 
   return (
-    <Stack spacing={4} onClick={children && onToggle}>
+    <Stack spacing={4} cursor="pointer" onClick={children && onToggle}>
       <Flex
         py={2}
-        as={Link}
+        as={NextLink}
         href={href ?? "#"}
+        passHref
         justify={"space-between"}
         align={"center"}
         _hover={{
           textDecoration: "none",
         }}
       >
-        <Text
-          fontWeight={600}
-          color={useColorModeValue("gray.600", "gray.200")}
-        >
-          {label}
-        </Text>
-        {children && (
-          <Icon
-            as={ChevronDownIcon}
-            transition={"all .25s ease-in-out"}
-            transform={isOpen ? "rotate(180deg)" : ""}
-            w={6}
-            h={6}
-          />
-        )}
+        <Box>
+          <Text
+            fontWeight={600}
+            color={useColorModeValue("gray.600", "gray.200")}
+          >
+            {label}
+          </Text>
+          {children && (
+            <Icon
+              as={ChevronDownIcon}
+              transition={"all .25s ease-in-out"}
+              transform={isOpen ? "rotate(180deg)" : ""}
+              w={6}
+              h={6}
+            />
+          )}
+        </Box>
       </Flex>
 
       <Collapse in={isOpen} animateOpacity style={{ marginTop: "0!important" }}>
@@ -253,14 +256,14 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         </Stack>
       </Collapse>
     </Stack>
-  )
-}
+  );
+};
 
 interface NavItem {
-  label: string
-  subLabel?: string
-  children?: Array<NavItem>
-  href?: string
+  label: string;
+  subLabel?: string;
+  children?: Array<NavItem>;
+  href?: string;
 }
 
 const NAV_ITEMS: Array<NavItem> = [
@@ -276,4 +279,4 @@ const NAV_ITEMS: Array<NavItem> = [
     label: "About",
     href: "/about",
   },
-]
+];
