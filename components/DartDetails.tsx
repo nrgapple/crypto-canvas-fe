@@ -1,4 +1,15 @@
-import { Box, Button, Code, HStack, Text, useClipboard, useToast, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Code,
+  HStack,
+  Text,
+  useBreakpoint,
+  useBreakpointValue,
+  useClipboard,
+  useToast,
+  VStack,
+} from "@chakra-ui/react";
 import { useImageString } from "../hooks/useImageBuffer";
 import { Dart } from "../interfaces";
 import DisplayUser from "./DisplayUser";
@@ -20,7 +31,9 @@ const DartDetails = ({ dart, onFullscreen, isFullscreen }: Props) => {
   const imageString = useImageString(dart.dartId);
   const { hasCopied, onCopy } = useClipboard(location.href || "");
   const toast = useToast();
+  //const breakpoint = useBreakpoint();
 
+  //console.log(breakpoint);
   const onCopyItem = () => {
     onCopy();
     toast({
@@ -34,7 +47,12 @@ const DartDetails = ({ dart, onFullscreen, isFullscreen }: Props) => {
   return (
     <Box position="relative" minH="0" flex="1">
       <VStack justifyContent="start" alignItems="center" h="100%" minH="0">
-        <HStack alignItems="flex-start" justifyContent="space-between" w="100%" p="16px">
+        <HStack
+          alignItems="flex-start"
+          justifyContent="space-between"
+          w="100%"
+          p="16px"
+        >
           <Box
             p="4px"
             background="transparent"
