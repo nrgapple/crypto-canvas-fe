@@ -49,6 +49,7 @@ const DartDetails = ({ dart, onFullscreen, isFullscreen }: Props) => {
         w="100%"
         p="16px"
         flex={1}
+        minH="0"
         flexWrap={{ base: "wrap", md: "nowrap" }}
       >
         <Box
@@ -61,8 +62,9 @@ const DartDetails = ({ dart, onFullscreen, isFullscreen }: Props) => {
         </Box>
         <HStack
           order={{ base: 2, md: 1 }}
-          flex="1"
+          flex="1 1"
           flexBasis={{ base: "100%", md: "auto" }}
+          maxH="100%"
           alignSelf="stretch"
           minH="0"
           justifyContent="center"
