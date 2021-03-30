@@ -59,7 +59,7 @@ const About = () => {
           own every part of the digital asset they create.
         </Text>
         <Heading fontWeight="normal">Creators</Heading>
-        <Wrap justifyContent="center">
+        <Wrap justify="center">
           <VStack>
             <Image h="200px" src={`/api/darts/image/12`} borderRadius="3px" />
             <NextLink href="/browse/12">deART#12</NextLink>
