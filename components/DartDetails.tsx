@@ -4,8 +4,6 @@ import {
   Code,
   HStack,
   Text,
-  useBreakpoint,
-  useBreakpointValue,
   useClipboard,
   useToast,
   VStack,
@@ -17,8 +15,9 @@ import Viewer from "./Viewer";
 //@ts-ignore
 import { Textfit } from "react-textfit";
 import { CopyIcon, ArrowDownIcon, ArrowUpIcon } from "@chakra-ui/icons";
-import { useLocation, useTimeoutFn } from "react-use";
+import { useLocation } from "react-use";
 import QRCode from "react-qr-code";
+import { useMemo } from "react";
 
 interface Props {
   dart: Dart;
@@ -31,9 +30,7 @@ const DartDetails = ({ dart, onFullscreen, isFullscreen }: Props) => {
   const imageString = useImageString(dart.dartId);
   const { hasCopied, onCopy } = useClipboard(location.href || "");
   const toast = useToast();
-  //const breakpoint = useBreakpoint();
 
-  //console.log(breakpoint);
   const onCopyItem = () => {
     onCopy();
     toast({
@@ -44,39 +41,63 @@ const DartDetails = ({ dart, onFullscreen, isFullscreen }: Props) => {
     });
   };
 
-  return (
-    <Box position="relative" minH="0" flex="1">
-      <VStack justifyContent="start" alignItems="center" h="100%" minH="0">
-        <HStack
-          alignItems="flex-start"
-          justifyContent="space-between"
-          w="100%"
-          p="16px"
+  const renderView = useMemo(
+    () => (
+      <HStack
+        alignItems="center"
+        justifyContent="space-between"
+        w="100%"
+        p="16px"
+        flex={1}
+        flexWrap={{ base: "wrap", md: "nowrap" }}
+      >
+        <Box
+          p="4px"
+          background="transparent"
+          sx={{ backdropFilter: "blur(2px)" }}
+          alignSelf="start"
         >
-          <Box
-            p="4px"
-            background="transparent"
-            sx={{ backdropFilter: "blur(2px)" }}
-          >
-            <DisplayUser id={dart.owner} />
-          </Box>
-          <VStack
-            p="4px"
-            background="transparent"
-            sx={{ backdropFilter: "blur(2px)" }}
-          >
-            <Text>
-              <strong>{dart.name}</strong>
-            </Text>
-            <QRCode size={50} value={location.href ?? ""} />
-          </VStack>
-        </HStack>
-        <HStack flex="1 1" minH="0" justifyContent="center">
+          <DisplayUser id={dart.owner} />
+        </Box>
+        <HStack
+          order={{ base: 2, md: 1 }}
+          flex="1"
+          flexBasis={{ base: "100%", md: "auto" }}
+          alignSelf="stretch"
+          minH="0"
+          justifyContent="center"
+        >
           <Viewer
             image={`/api/darts/image/${dart.dartId}`}
             disableLightBox={false}
           />
         </HStack>
+        <VStack
+          order={{ base: 1, md: 2 }}
+          p="4px"
+          background="transparent"
+          sx={{ backdropFilter: "blur(2px)" }}
+          alignSelf="start"
+        >
+          <Text>
+            <strong>{dart.name}</strong>
+          </Text>
+          <QRCode size={50} value={location.href ?? ""} />
+        </VStack>
+      </HStack>
+    ),
+    [dart, location],
+  );
+
+  return (
+    <Box position="relative" minH="0" flex="1">
+      <VStack
+        justifyContent="space-between"
+        alignItems="center"
+        h="100%"
+        minH="0"
+      >
+        {renderView}
         <HStack w="100%" justifyContent="space-between" p="8px">
           <Button onClick={onFullscreen}>
             {isFullscreen ? <ArrowUpIcon /> : <ArrowDownIcon />}
