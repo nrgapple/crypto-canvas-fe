@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Image } from "@chakra-ui/image";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
+import { Skeleton } from "@chakra-ui/skeleton";
 
 type Direction = "height" | "width";
 
@@ -30,6 +31,7 @@ const Viewer = ({
         width={direction === "width" ? "100%" : "auto"}
         borderRadius="3px"
         cursor={disableLightBox ? "" : "pointer"}
+        fallback={<Skeleton height="100%" width="100%" borderRadius="3px" />}
       />
       {isImageOpen && (
         <Lightbox
