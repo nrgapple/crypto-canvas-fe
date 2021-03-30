@@ -1,12 +1,16 @@
 import {
   Box,
   Button,
+  Center,
   Code,
+  Grid,
+  GridItem,
   HStack,
   Text,
   useClipboard,
   useToast,
   VStack,
+  Wrap,
 } from "@chakra-ui/react";
 import { useImageString } from "../hooks/useImageBuffer";
 import { Dart } from "../interfaces";
@@ -17,7 +21,7 @@ import { Textfit } from "react-textfit";
 import { CopyIcon, ArrowDownIcon, ArrowUpIcon } from "@chakra-ui/icons";
 import { useLocation } from "react-use";
 import QRCode from "react-qr-code";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 
 interface Props {
   dart: Dart;
@@ -43,50 +47,58 @@ const DartDetails = ({ dart, onFullscreen, isFullscreen }: Props) => {
 
   const renderView = useMemo(
     () => (
-      <HStack
-        alignItems="center"
-        justifyContent="space-between"
+      <Grid
         w="100%"
-        p="16px"
         flex={1}
         minH="0"
-        flexWrap={{ base: "wrap", md: "nowrap" }}
+        paddingTop="8px"
+        templateColumns={{ base: "auto auto", md: "1fr 2fr 1fr" }}
+        alignItems="stretch"
+        justifyItems="center"
+        gridGap="8px"
       >
-        <Box
-          p="4px"
-          background="transparent"
-          sx={{ backdropFilter: "blur(2px)" }}
-          alignSelf="start"
-        >
-          <DisplayUser id={dart.owner} />
-        </Box>
-        <HStack
-          order={{ base: 2, md: 1 }}
-          flex="1 1"
-          flexBasis={{ base: "100%", md: "auto" }}
-          maxH="100%"
+        <GridItem>
+          <Center>
+            <Box
+              p="4px"
+              background="transparent"
+              sx={{ backdropFilter: "blur(2px)" }}
+              alignSelf="start"
+            >
+              <DisplayUser id={dart.owner} />
+            </Box>
+          </Center>
+        </GridItem>
+        <GridItem
           alignSelf="stretch"
+          justifySelf="center"
+          colSpan={{ base: 2, md: 1 }}
+          order={{ base: 3, md: 2 }}
           minH="0"
-          justifyContent="center"
         >
-          <Viewer
-            image={`/api/darts/image/${dart.dartId}`}
-            disableLightBox={false}
-          />
-        </HStack>
-        <VStack
-          order={{ base: 1, md: 2 }}
-          p="4px"
-          background="transparent"
-          sx={{ backdropFilter: "blur(2px)" }}
-          alignSelf="start"
-        >
-          <Text>
-            <strong>{dart.name}</strong>
-          </Text>
-          <QRCode size={50} value={location.href ?? ""} />
-        </VStack>
-      </HStack>
+          <HStack minH="0" h="100%" w="100%" justifyContent="center">
+            <Viewer
+              image={`/api/darts/image/${dart.dartId}`}
+              disableLightBox={false}
+            />
+          </HStack>
+        </GridItem>
+        <GridItem order={{ base: 0, md: 2 }}>
+          <Center>
+            <VStack
+              p="4px"
+              background="transparent"
+              sx={{ backdropFilter: "blur(2px)" }}
+              alignSelf="start"
+            >
+              <Text>
+                <strong>{dart.name}</strong>
+              </Text>
+              <QRCode size={50} value={location.href ?? ""} />
+            </VStack>
+          </Center>
+        </GridItem>
+      </Grid>
     ),
     [dart, location],
   );
