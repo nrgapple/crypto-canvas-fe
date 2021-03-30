@@ -6,18 +6,19 @@ import Viewer from "./Viewer";
 
 interface Props {
   dart?: Dart;
+  scale?: boolean;
 }
 
-const DartBox = ({ dart }: Props) => {
+const DartBox = ({ dart, scale = false }: Props) => {
   return (
     <NextLink href={`/browse/${dart?.dartId}`} passHref>
       <LinkBox
         as="article"
         cursor="pointer"
-        minWidth="120px"
-        maxWidth="120px"
-        height="120px"
-        maxHeight="200px"
+        minWidth={scale ? { base: "75px", md: "120" } : "120px"}
+        maxWidth={scale ? { base: "75px", md: "120" } : "120px"}
+        height={scale ? { base: "75px", md: "120" } : "120px"}
+        maxHeight={scale ? { base: "75px", md: "120" } : "120px"}
         className="shadow-border-pressable"
         p="8px"
         background="var(--background)"
