@@ -71,3 +71,9 @@ export const dartsState = atom({
   key: "darts",
   default: [] as Dart[],
 });
+
+export const authTokenState = atom({
+  key: "auth-token",
+  default: undefined as string | undefined,
+  effects_UNSTABLE: [localStorageEffect("auth_token")],
+});

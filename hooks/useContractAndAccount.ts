@@ -23,9 +23,9 @@ export const useContractAndAccount = (connectOnMount: boolean = false) => {
       web3 = new Web3(ethereum as any) as Web3;
       contract = new web3.eth.Contract(
         PixelToken.abi as AbiItem[] | AbiItem,
-        config.contractAddress
+        config.contractAddress,
       ) as Contract;
-      console.log(contract.methods.tokenURI(3).call())
+      console.log(contract.methods.tokenURI(3).call());
     }
   }, [ethereum, contract]);
 
@@ -66,4 +66,35 @@ export const useRequireLogin = (status: string) => {
       }
     }
   }, [status, hadError]);
+};
+
+export const useAuth = () => {
+  const { web3, connect, account } = useContractAndAccount();
+
+  useEffect(() => {
+    connect("injected");
+  }, []);
+
+  const signin = async () => {
+    console.log({ web3, account });
+    if (account && web3) {
+      console.log(account);
+
+      const signature = await web3?.eth.personal.sign(
+        `${config.signMsg} 1`,
+        account!,
+        "",
+      );
+      const response = await fetch(`${config.baseUri}api/auth/login`, {
+        method: "POST",
+        body: JSON.stringify({
+          publicAddress: account,
+          signature,
+        }),
+      });
+      console.log(await response.json());
+    }
+  };
+
+  return { signin } as const;
 };
