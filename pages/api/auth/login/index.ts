@@ -19,7 +19,7 @@ const Login: NextApiHandler = async (req, res) => {
 
   if (!user) return res.status(401).send({ error: "User not found" });
 
-  const msg = `${config.signMsg} ${user.id}`;
+  const msg = `${config.signMsg} ${user.nonce}`;
   const msgBufferHex = bufferToHex(Buffer.from(msg, "utf8"));
 
   const address = recoverPersonalSignature({

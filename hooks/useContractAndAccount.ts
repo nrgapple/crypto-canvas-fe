@@ -5,7 +5,11 @@ import { useWallet } from "use-wallet";
 import Web3 from "web3";
 import { config } from "../app.config";
 import { Contract } from "web3-eth-contract/types";
-import { showConnectPageState, wasSignedInState } from "../state";
+import {
+  authTokenState,
+  showConnectPageState,
+  wasSignedInState,
+} from "../state";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
 let web3: Web3 | undefined = undefined;
@@ -70,18 +74,32 @@ export const useRequireLogin = (status: string) => {
 
 export const useAuth = () => {
   const { web3, connect, account } = useContractAndAccount();
+  const setAuthToken = useSetRecoilState(authTokenState);
 
   useEffect(() => {
     connect("injected");
   }, []);
 
   const signin = async () => {
-    console.log({ web3, account });
     if (account && web3) {
-      console.log(account);
+      const nonceResponse = await fetch(
+        `${config.baseUri}api/user/nonce?publicAddress=${account}`,
+      );
+
+      let nonce = (await nonceResponse.json()).nonce;
+
+      if (nonce === undefined) {
+        const signupResp = await fetch(`${config.baseUri}api/auth/signup`, {
+          method: "POST",
+          body: JSON.stringify({
+            publicAddress: account,
+          }),
+        });
+        nonce = (await signupResp.json()).nonce;
+      }
 
       const signature = await web3?.eth.personal.sign(
-        `${config.signMsg} 1`,
+        `${config.signMsg} ${nonce}`,
         account!,
         "",
       );
@@ -92,7 +110,8 @@ export const useAuth = () => {
           signature,
         }),
       });
-      console.log(await response.json());
+      const token = (await response.json()).token;
+      setAuthToken(token);
     }
   };
 

@@ -9,7 +9,7 @@ export const config = {
   infuraProviderUri:
     "https://rinkeby.infura.io/v3/566baaea6f1246d8b5e3762f833bc321",
   chainId: WalletId.rin.valueOf(),
-  baseUri: "https://deart.vercel.app/",
+  baseUri: "http://localhost:3000/",
   openSeaBaseUri: "https://testnets.opensea.io/",
   tokenName: "decentralizedart-v3",
   signMsg: "Killer Klowns From Outerspace 1989 nonce:",
