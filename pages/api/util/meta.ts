@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { convertBufferToWebp } from "../../../services";
 import nextConnect from "next-connect";
 import multer from "multer";
 import { promises as fs } from "fs";

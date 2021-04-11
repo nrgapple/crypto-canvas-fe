@@ -21,32 +21,32 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.7.4+commit.3f05b770\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"proxies\",\"outputs\":[{\"internalType\":\"contract OwnableDelegateProxy\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/matthewruddy/Desktop/Projects/DAPP/contracts/ProxyRegistry.sol\":\"ProxyRegistry\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/matthewruddy/Desktop/Projects/DAPP/contracts/OwnableDelegateProxy.sol\":{\"keccak256\":\"0x65b885f3991d861386d0906ac031d5f8df26b3083a2d1d3aca5bae4128fcc021\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://90270b8e7c6e49188198b24c6f8280dafc775fb666be3ff67e31f7e3b51883de\",\"dweb:/ipfs/QmcASoCVowjwJqTry3rmJGZVmzf3HEk9PkbnTi4NhAwGf7\"]},\"/Users/matthewruddy/Desktop/Projects/DAPP/contracts/ProxyRegistry.sol\":{\"keccak256\":\"0x48908188602cc652cdf0956f79fed58dae2c25df0a43ce596cd1183eb03aa9af\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c479d7aef1159bd1189795b0132fad94dade5bfcaabf395196ba8c83c1a31243\",\"dweb:/ipfs/QmcTjNheyvQYuRfRRGe5hquNVVCMFB8XQWeMsFajiFttbe\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b50610101806100206000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c8063c455279114602d575b600080fd5b606c60048036036020811015604157600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506098565b604051808273ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60006020528060005260406000206000915054906101000a900473ffffffffffffffffffffffffffffffffffffffff168156fea26469706673582212208f5bf8f6de5cd569a3ce686941ef95c926c3fdf34203efabbd480e9c31eca91664736f6c63430007040033",
-  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c8063c455279114602d575b600080fd5b606c60048036036020811015604157600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506098565b604051808273ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60006020528060005260406000206000915054906101000a900473ffffffffffffffffffffffffffffffffffffffff168156fea26469706673582212208f5bf8f6de5cd569a3ce686941ef95c926c3fdf34203efabbd480e9c31eca91664736f6c63430007040033",
+  "metadata": "{\"compiler\":{\"version\":\"0.7.4+commit.3f05b770\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"proxies\",\"outputs\":[{\"internalType\":\"contract OwnableDelegateProxy\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/matthewruddy/Projects/DAPP/contracts/ProxyRegistry.sol\":\"ProxyRegistry\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/matthewruddy/Projects/DAPP/contracts/OwnableDelegateProxy.sol\":{\"keccak256\":\"0x65b885f3991d861386d0906ac031d5f8df26b3083a2d1d3aca5bae4128fcc021\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://90270b8e7c6e49188198b24c6f8280dafc775fb666be3ff67e31f7e3b51883de\",\"dweb:/ipfs/QmcASoCVowjwJqTry3rmJGZVmzf3HEk9PkbnTi4NhAwGf7\"]},\"/Users/matthewruddy/Projects/DAPP/contracts/ProxyRegistry.sol\":{\"keccak256\":\"0x48908188602cc652cdf0956f79fed58dae2c25df0a43ce596cd1183eb03aa9af\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c479d7aef1159bd1189795b0132fad94dade5bfcaabf395196ba8c83c1a31243\",\"dweb:/ipfs/QmcTjNheyvQYuRfRRGe5hquNVVCMFB8XQWeMsFajiFttbe\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50610101806100206000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c8063c455279114602d575b600080fd5b606c60048036036020811015604157600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506098565b604051808273ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60006020528060005260406000206000915054906101000a900473ffffffffffffffffffffffffffffffffffffffff168156fea26469706673582212206092ea92d3f01990af0e81fd1a848a9f4a1ba824c9808194d7cc09921b1a803e64736f6c63430007040033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c8063c455279114602d575b600080fd5b606c60048036036020811015604157600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506098565b604051808273ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60006020528060005260406000206000915054906101000a900473ffffffffffffffffffffffffffffffffffffffff168156fea26469706673582212206092ea92d3f01990af0e81fd1a848a9f4a1ba824c9808194d7cc09921b1a803e64736f6c63430007040033",
   "immutableReferences": {},
   "generatedSources": [],
   "deployedGeneratedSources": [],
   "sourceMap": "124:87:2:-:0;;;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "124:87:2:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;153:55;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity 0.7.4;\n\nimport { OwnableDelegateProxy } from \"./OwnableDelegateProxy.sol\";\n\ncontract ProxyRegistry {\n    mapping(address => OwnableDelegateProxy) public proxies;\n}",
-  "sourcePath": "/Users/matthewruddy/Desktop/Projects/DAPP/contracts/ProxyRegistry.sol",
+  "sourcePath": "/Users/matthewruddy/Projects/DAPP/contracts/ProxyRegistry.sol",
   "ast": {
-    "absolutePath": "/Users/matthewruddy/Desktop/Projects/DAPP/contracts/ProxyRegistry.sol",
+    "absolutePath": "/Users/matthewruddy/Projects/DAPP/contracts/ProxyRegistry.sol",
     "exportedSymbols": {
       "OwnableDelegateProxy": [
-        408
+        260
       ],
       "ProxyRegistry": [
-        417
+        269
       ]
     },
-    "id": 418,
+    "id": 270,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 410,
+        "id": 262,
         "literals": [
           "solidity",
           "0.7",
@@ -56,17 +56,17 @@
         "src": "32:22:2"
       },
       {
-        "absolutePath": "/Users/matthewruddy/Desktop/Projects/DAPP/contracts/OwnableDelegateProxy.sol",
+        "absolutePath": "/Users/matthewruddy/Projects/DAPP/contracts/OwnableDelegateProxy.sol",
         "file": "./OwnableDelegateProxy.sol",
-        "id": 412,
+        "id": 264,
         "nodeType": "ImportDirective",
-        "scope": 418,
-        "sourceUnit": 409,
+        "scope": 270,
+        "sourceUnit": 261,
         "src": "56:66:2",
         "symbolAliases": [
           {
             "foreign": {
-              "id": 411,
+              "id": 263,
               "name": "OwnableDelegateProxy",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
@@ -83,9 +83,9 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 417,
+        "id": 269,
         "linearizedBaseContracts": [
-          417
+          269
         ],
         "name": "ProxyRegistry",
         "nodeType": "ContractDefinition",
@@ -93,22 +93,22 @@
           {
             "constant": false,
             "functionSelector": "c4552791",
-            "id": 416,
+            "id": 268,
             "mutability": "mutable",
             "name": "proxies",
             "nodeType": "VariableDeclaration",
-            "scope": 417,
+            "scope": 269,
             "src": "153:55:2",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_address_$_t_contract$_OwnableDelegateProxy_$408_$",
+              "typeIdentifier": "t_mapping$_t_address_$_t_contract$_OwnableDelegateProxy_$260_$",
               "typeString": "mapping(address => contract OwnableDelegateProxy)"
             },
             "typeName": {
-              "id": 415,
+              "id": 267,
               "keyType": {
-                "id": 413,
+                "id": 265,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "161:7:2",
@@ -120,17 +120,17 @@
               "nodeType": "Mapping",
               "src": "153:40:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_address_$_t_contract$_OwnableDelegateProxy_$408_$",
+                "typeIdentifier": "t_mapping$_t_address_$_t_contract$_OwnableDelegateProxy_$260_$",
                 "typeString": "mapping(address => contract OwnableDelegateProxy)"
               },
               "valueType": {
-                "id": 414,
+                "id": 266,
                 "name": "OwnableDelegateProxy",
                 "nodeType": "UserDefinedTypeName",
-                "referencedDeclaration": 408,
+                "referencedDeclaration": 260,
                 "src": "172:20:2",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_contract$_OwnableDelegateProxy_$408",
+                  "typeIdentifier": "t_contract$_OwnableDelegateProxy_$260",
                   "typeString": "contract OwnableDelegateProxy"
                 }
               }
@@ -138,138 +138,123 @@
             "visibility": "public"
           }
         ],
-        "scope": 418,
+        "scope": 270,
         "src": "124:87:2"
       }
     ],
     "src": "32:179:2"
   },
   "legacyAST": {
-    "attributes": {
-      "absolutePath": "/Users/matthewruddy/Desktop/Projects/DAPP/contracts/ProxyRegistry.sol",
-      "exportedSymbols": {
-        "OwnableDelegateProxy": [
-          408
-        ],
-        "ProxyRegistry": [
-          417
-        ]
-      },
-      "license": "MIT"
+    "absolutePath": "/Users/matthewruddy/Projects/DAPP/contracts/ProxyRegistry.sol",
+    "exportedSymbols": {
+      "OwnableDelegateProxy": [
+        260
+      ],
+      "ProxyRegistry": [
+        269
+      ]
     },
-    "children": [
+    "id": 270,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
       {
-        "attributes": {
-          "literals": [
-            "solidity",
-            "0.7",
-            ".4"
-          ]
-        },
-        "id": 410,
-        "name": "PragmaDirective",
+        "id": 262,
+        "literals": [
+          "solidity",
+          "0.7",
+          ".4"
+        ],
+        "nodeType": "PragmaDirective",
         "src": "32:22:2"
       },
       {
-        "attributes": {
-          "SourceUnit": 409,
-          "absolutePath": "/Users/matthewruddy/Desktop/Projects/DAPP/contracts/OwnableDelegateProxy.sol",
-          "file": "./OwnableDelegateProxy.sol",
-          "scope": 418,
-          "symbolAliases": [
-            {
-              "foreign": {
-                "attributes": {
-                  "overloadedDeclarations": [
-                    null
-                  ],
-                  "value": "OwnableDelegateProxy"
-                },
-                "id": 411,
-                "name": "Identifier",
-                "src": "65:20:2"
-              }
-            }
-          ],
-          "unitAlias": ""
-        },
-        "id": 412,
-        "name": "ImportDirective",
-        "src": "56:66:2"
-      },
-      {
-        "attributes": {
-          "abstract": false,
-          "baseContracts": [
-            null
-          ],
-          "contractDependencies": [
-            null
-          ],
-          "contractKind": "contract",
-          "fullyImplemented": true,
-          "linearizedBaseContracts": [
-            417
-          ],
-          "name": "ProxyRegistry",
-          "scope": 418
-        },
-        "children": [
+        "absolutePath": "/Users/matthewruddy/Projects/DAPP/contracts/OwnableDelegateProxy.sol",
+        "file": "./OwnableDelegateProxy.sol",
+        "id": 264,
+        "nodeType": "ImportDirective",
+        "scope": 270,
+        "sourceUnit": 261,
+        "src": "56:66:2",
+        "symbolAliases": [
           {
-            "attributes": {
-              "constant": false,
-              "functionSelector": "c4552791",
-              "mutability": "mutable",
-              "name": "proxies",
-              "scope": 417,
-              "stateVariable": true,
-              "storageLocation": "default",
-              "type": "mapping(address => contract OwnableDelegateProxy)",
-              "visibility": "public"
-            },
-            "children": [
-              {
-                "attributes": {
-                  "type": "mapping(address => contract OwnableDelegateProxy)"
-                },
-                "children": [
-                  {
-                    "attributes": {
-                      "name": "address",
-                      "type": "address"
-                    },
-                    "id": 413,
-                    "name": "ElementaryTypeName",
-                    "src": "161:7:2"
-                  },
-                  {
-                    "attributes": {
-                      "name": "OwnableDelegateProxy",
-                      "referencedDeclaration": 408,
-                      "type": "contract OwnableDelegateProxy"
-                    },
-                    "id": 414,
-                    "name": "UserDefinedTypeName",
-                    "src": "172:20:2"
-                  }
-                ],
-                "id": 415,
-                "name": "Mapping",
-                "src": "153:40:2"
-              }
-            ],
-            "id": 416,
-            "name": "VariableDeclaration",
-            "src": "153:55:2"
+            "foreign": {
+              "id": 263,
+              "name": "OwnableDelegateProxy",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "src": "65:20:2",
+              "typeDescriptions": {}
+            }
           }
         ],
-        "id": 417,
-        "name": "ContractDefinition",
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 269,
+        "linearizedBaseContracts": [
+          269
+        ],
+        "name": "ProxyRegistry",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "functionSelector": "c4552791",
+            "id": 268,
+            "mutability": "mutable",
+            "name": "proxies",
+            "nodeType": "VariableDeclaration",
+            "scope": 269,
+            "src": "153:55:2",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_contract$_OwnableDelegateProxy_$260_$",
+              "typeString": "mapping(address => contract OwnableDelegateProxy)"
+            },
+            "typeName": {
+              "id": 267,
+              "keyType": {
+                "id": 265,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "161:7:2",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "153:40:2",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_contract$_OwnableDelegateProxy_$260_$",
+                "typeString": "mapping(address => contract OwnableDelegateProxy)"
+              },
+              "valueType": {
+                "id": 266,
+                "name": "OwnableDelegateProxy",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 260,
+                "src": "172:20:2",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_contract$_OwnableDelegateProxy_$260",
+                  "typeString": "contract OwnableDelegateProxy"
+                }
+              }
+            },
+            "visibility": "public"
+          }
+        ],
+        "scope": 270,
         "src": "124:87:2"
       }
     ],
-    "id": 418,
-    "name": "SourceUnit",
     "src": "32:179:2"
   },
   "compiler": {
@@ -277,8 +262,8 @@
     "version": "0.7.4+commit.3f05b770.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.3.4",
-  "updatedAt": "2021-03-22T23:34:03.158Z",
+  "schemaVersion": "3.2.5",
+  "updatedAt": "2021-04-11T19:12:24.220Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

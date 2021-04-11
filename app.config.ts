@@ -12,5 +12,5 @@ export const config = {
   baseUri: "https://deart.vercel.app/",
   openSeaBaseUri: "https://testnets.opensea.io/",
   tokenName: "decentralizedart-v3",
-  signMsg: "Killer Klowns From Outerspace 1989 ",
+  signMsg: "Killer Klowns From Outerspace 1989 nonce:",
 };

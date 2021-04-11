@@ -1,29 +1,29 @@
 {
   "contractName": "OwnableDelegateProxy",
   "abi": [],
-  "metadata": "{\"compiler\":{\"version\":\"0.7.4+commit.3f05b770\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/matthewruddy/Desktop/Projects/DAPP/contracts/OwnableDelegateProxy.sol\":\"OwnableDelegateProxy\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/matthewruddy/Desktop/Projects/DAPP/contracts/OwnableDelegateProxy.sol\":{\"keccak256\":\"0x65b885f3991d861386d0906ac031d5f8df26b3083a2d1d3aca5bae4128fcc021\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://90270b8e7c6e49188198b24c6f8280dafc775fb666be3ff67e31f7e3b51883de\",\"dweb:/ipfs/QmcASoCVowjwJqTry3rmJGZVmzf3HEk9PkbnTi4NhAwGf7\"]}},\"version\":1}",
-  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220faf09a9740dd975df84c64b56fbfb7f3607352b468379d45f13f494204b09eba64736f6c63430007040033",
-  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220faf09a9740dd975df84c64b56fbfb7f3607352b468379d45f13f494204b09eba64736f6c63430007040033",
+  "metadata": "{\"compiler\":{\"version\":\"0.7.4+commit.3f05b770\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/matthewruddy/Projects/DAPP/contracts/OwnableDelegateProxy.sol\":\"OwnableDelegateProxy\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/matthewruddy/Projects/DAPP/contracts/OwnableDelegateProxy.sol\":{\"keccak256\":\"0x65b885f3991d861386d0906ac031d5f8df26b3083a2d1d3aca5bae4128fcc021\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://90270b8e7c6e49188198b24c6f8280dafc775fb666be3ff67e31f7e3b51883de\",\"dweb:/ipfs/QmcASoCVowjwJqTry3rmJGZVmzf3HEk9PkbnTi4NhAwGf7\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220705d692ac397642cb68d3bff1dc3f9363b93dba6d8d60f5eff71e5814fbfd5f164736f6c63430007040033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220705d692ac397642cb68d3bff1dc3f9363b93dba6d8d60f5eff71e5814fbfd5f164736f6c63430007040033",
   "immutableReferences": {},
   "generatedSources": [],
   "deployedGeneratedSources": [],
   "sourceMap": "56:32:1:-:0;;;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "56:32:1:-:0;;;;;",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity 0.7.4;\n\ncontract OwnableDelegateProxy {}\n",
-  "sourcePath": "/Users/matthewruddy/Desktop/Projects/DAPP/contracts/OwnableDelegateProxy.sol",
+  "sourcePath": "/Users/matthewruddy/Projects/DAPP/contracts/OwnableDelegateProxy.sol",
   "ast": {
-    "absolutePath": "/Users/matthewruddy/Desktop/Projects/DAPP/contracts/OwnableDelegateProxy.sol",
+    "absolutePath": "/Users/matthewruddy/Projects/DAPP/contracts/OwnableDelegateProxy.sol",
     "exportedSymbols": {
       "OwnableDelegateProxy": [
-        408
+        260
       ]
     },
-    "id": 409,
+    "id": 261,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 407,
+        "id": 259,
         "literals": [
           "solidity",
           "0.7",
@@ -38,69 +38,57 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 408,
+        "id": 260,
         "linearizedBaseContracts": [
-          408
+          260
         ],
         "name": "OwnableDelegateProxy",
         "nodeType": "ContractDefinition",
         "nodes": [],
-        "scope": 409,
+        "scope": 261,
         "src": "56:32:1"
       }
     ],
     "src": "32:57:1"
   },
   "legacyAST": {
-    "attributes": {
-      "absolutePath": "/Users/matthewruddy/Desktop/Projects/DAPP/contracts/OwnableDelegateProxy.sol",
-      "exportedSymbols": {
-        "OwnableDelegateProxy": [
-          408
-        ]
-      },
-      "license": "MIT"
+    "absolutePath": "/Users/matthewruddy/Projects/DAPP/contracts/OwnableDelegateProxy.sol",
+    "exportedSymbols": {
+      "OwnableDelegateProxy": [
+        260
+      ]
     },
-    "children": [
+    "id": 261,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
       {
-        "attributes": {
-          "literals": [
-            "solidity",
-            "0.7",
-            ".4"
-          ]
-        },
-        "id": 407,
-        "name": "PragmaDirective",
+        "id": 259,
+        "literals": [
+          "solidity",
+          "0.7",
+          ".4"
+        ],
+        "nodeType": "PragmaDirective",
         "src": "32:22:1"
       },
       {
-        "attributes": {
-          "abstract": false,
-          "baseContracts": [
-            null
-          ],
-          "contractDependencies": [
-            null
-          ],
-          "contractKind": "contract",
-          "fullyImplemented": true,
-          "linearizedBaseContracts": [
-            408
-          ],
-          "name": "OwnableDelegateProxy",
-          "nodes": [
-            null
-          ],
-          "scope": 409
-        },
-        "id": 408,
-        "name": "ContractDefinition",
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 260,
+        "linearizedBaseContracts": [
+          260
+        ],
+        "name": "OwnableDelegateProxy",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 261,
         "src": "56:32:1"
       }
     ],
-    "id": 409,
-    "name": "SourceUnit",
     "src": "32:57:1"
   },
   "compiler": {
@@ -108,8 +96,8 @@
     "version": "0.7.4+commit.3f05b770.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.3.4",
-  "updatedAt": "2021-03-22T23:34:03.153Z",
+  "schemaVersion": "3.2.5",
+  "updatedAt": "2021-04-11T19:12:24.219Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

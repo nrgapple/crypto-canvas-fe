@@ -8,9 +8,6 @@ import { config } from "../../../../app.config";
 const Login: NextApiHandler = async (req, res) => {
   if (req.method !== "POST") res.status(404).send({});
   const { signature, publicAddress } = JSON.parse(req.body);
-
-  console.log({ signature, publicAddress });
-
   if (!signature || !publicAddress)
     return res
       .status(400)
@@ -23,23 +20,15 @@ const Login: NextApiHandler = async (req, res) => {
   if (!user) return res.status(401).send({ error: "User not found" });
 
   const msg = `${config.signMsg} ${user.id}`;
-  console.log(msg);
-
   const msgBufferHex = bufferToHex(Buffer.from(msg, "utf8"));
 
   const address = recoverPersonalSignature({
     data: msgBufferHex,
     sig: signature,
   });
-
-  console.log({ address, publicAddress });
-
   if (address.toLowerCase() !== publicAddress.toLowerCase()) {
     return res.status(401).send({ error: "Signature not verified" });
   }
-
-  console.log("Match! creating JWT");
-
   const token = jwt.sign(
     {
       payload: {
@@ -47,12 +36,9 @@ const Login: NextApiHandler = async (req, res) => {
         publicAddress,
       },
     },
-    "shhhhh",
+    process.env.JWT_SECRET!,
     { algorithm: "HS256" },
   );
-
-  console.log(token);
-
   return res.status(200).send({ token });
 };
 

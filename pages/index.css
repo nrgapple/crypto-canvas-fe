@@ -24,34 +24,6 @@ body {
   height: calc(var(--vh, 1vh) * 100);
 }
 
-/* #__next {
-  height: 100vh;
-} */
-
-.chrome-picker {
-  box-shadow: none !important;
-  background: none !important;
-  /* width: 100% !important;
-  height: 100% !important; */
-  /* display: flex !important; */
-}
-
-canvas {
-  position: absolute !important;
-}
-
-.world {
-  height: 100%;
-  width: 100%;
-  position: relative !important;
-}
-
-.picker {
-  position: absolute;
-  top: 5rem;
-  left: 1rem;
-}
-
 .overlay {
   background: var(--background);
   border-radius: 4px;
