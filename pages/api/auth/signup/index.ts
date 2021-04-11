@@ -4,7 +4,6 @@ import prisma from "../../../../lib/prisma";
 const Signup: NextApiHandler = async (req, res) => {
   if (req.method !== "POST") res.status(404).send({});
   const { publicAddress } = JSON.parse(req.body);
-  console.log(publicAddress);
 
   const user = await prisma.user.create({
     data: {
