@@ -11,6 +11,7 @@ import {
   wasSignedInState,
 } from "../state";
 import { useRecoilState, useSetRecoilState } from "recoil";
+import { NextRouter } from "next/dist/client/router";
 
 let web3: Web3 | undefined = undefined;
 let contract: Contract | undefined = undefined;
@@ -29,7 +30,6 @@ export const useContractAndAccount = (connectOnMount: boolean = false) => {
         PixelToken.abi as AbiItem[] | AbiItem,
         config.contractAddress,
       ) as Contract;
-      console.log(contract.methods.tokenURI(3).call());
     }
   }, [ethereum, contract]);
 
@@ -80,7 +80,7 @@ export const useAuth = () => {
     connect("injected");
   }, []);
 
-  const signin = async () => {
+  const signin = async (router: NextRouter) => {
     if (account && web3) {
       const nonceResponse = await fetch(
         `${config.baseUri}api/user/nonce?publicAddress=${account}`,
@@ -112,8 +112,13 @@ export const useAuth = () => {
       });
       const token = (await response.json()).token;
       setAuthToken(token);
+      router.push("/profile");
     }
   };
 
-  return { signin } as const;
+  const logout = () => {
+    setAuthToken(undefined as string | undefined);
+  };
+
+  return { signin, logout } as const;
 };

@@ -13,7 +13,7 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
-  MenuItem,
+  Button,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import {
@@ -22,9 +22,31 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
+import { useRecoilValue } from "recoil";
+import { authTokenState } from "../state";
+import { useEffect, useState } from "react";
+import { useAuth } from "../hooks/useContractAndAccount";
+import { useRouter } from "next/dist/client/router";
 
 export default function WithSubnavigation() {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const token = useRecoilValue(authTokenState);
   const { isOpen, onToggle } = useDisclosure();
+  const { logout } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [token]);
+
+  const handleLogOut = async () => {
+    logout();
+    router.push("/login");
+  };
 
   return (
     <Box>
@@ -72,21 +94,38 @@ export default function WithSubnavigation() {
           direction={"row"}
           spacing={6}
         >
-          <Link
-            as={NextLink}
-            passHref
-            display={{ base: "none", md: "inline-flex" }}
-            fontSize={"sm"}
-            fontWeight={600}
-            color={useColorModeValue("gray.600", "gray.200")}
-            href={"/upload"}
-            _hover={{
-              textDecoration: "none",
-              color: useColorModeValue("gray.800", "white"),
-            }}
-          >
-            Create
-          </Link>
+          {!isLoggedIn ? (
+            <Link
+              as={NextLink}
+              passHref
+              display={{ base: "none", md: "inline-flex" }}
+              fontSize={"sm"}
+              fontWeight={600}
+              color={useColorModeValue("gray.600", "gray.200")}
+              href={"/login"}
+              _hover={{
+                textDecoration: "none",
+                color: useColorModeValue("gray.800", "white"),
+              }}
+            >
+              Login
+            </Link>
+          ) : (
+            <Link
+              as={Button}
+              display={{ base: "none", md: "inline-flex" }}
+              fontSize={"sm"}
+              fontWeight={600}
+              color={useColorModeValue("gray.600", "gray.200")}
+              _hover={{
+                textDecoration: "none",
+                color: useColorModeValue("gray.800", "white"),
+              }}
+              onClick={handleLogOut}
+            >
+              Logout
+            </Link>
+          )}
         </Stack>
       </Flex>
 

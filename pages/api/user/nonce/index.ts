@@ -8,12 +8,7 @@ const UserNonce: NextApiHandler = async (req, res) => {
     where: { wallet: publicAddress },
   });
   if (user) {
-    const nonce = user.nonce;
-    prisma.user.update({
-      where: { wallet: publicAddress },
-      data: { nonce: nonce + 1 },
-    });
-    return res.status(200).send({ nonce });
+    return res.status(200).send({ nonce: user.nonce });
   } else {
     return res.status(400).send({ error: "Error" });
   }

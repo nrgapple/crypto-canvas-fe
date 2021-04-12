@@ -39,6 +39,10 @@ const Login: NextApiHandler = async (req, res) => {
     process.env.JWT_SECRET!,
     { algorithm: "HS256" },
   );
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { nonce: user.nonce + 1 },
+  });
   return res.status(200).send({ token });
 };
 

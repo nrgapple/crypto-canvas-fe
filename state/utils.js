@@ -12,7 +12,7 @@ export const localStorageEffect = (key) => ({ setSelf, onSet, resetSelf }) => {
 
   onSet((newValue) => {
     if (typeof window === "undefined") return;
-    if (newValue instanceof DefaultValue) {
+    if (newValue === undefined) {
       localStorage.removeItem(key);
     } else {
       localStorage.setItem(key, JSON.stringify(newValue));

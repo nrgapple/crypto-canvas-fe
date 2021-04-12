@@ -2,7 +2,7 @@ import "./index.css";
 import { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React from "react";
 import { UseWalletProvider } from "use-wallet";
 import { config } from "../app.config";
 import { useMobileResize } from "../hooks/useMobileResize";

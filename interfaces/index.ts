@@ -35,3 +35,13 @@ export interface ImageParts {
   name?: string;
   dimensions: Dimensions;
 }
+
+export interface User {
+  createdAt: Date;
+  email?: string;
+  id: number;
+  name?: string;
+  nonce: number;
+  updatedAt: Date;
+  wallet: string;
+}
