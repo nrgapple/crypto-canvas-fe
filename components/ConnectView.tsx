@@ -1,15 +1,35 @@
-import { Box, Button, Center, Heading, VStack } from "@chakra-ui/react";
-import React, { useEffect, useRef } from "react";
-import { useContractAndAccount } from "../hooks/useContractAndAccount";
+import {
+  Box,
+  Button,
+  Center,
+  Heading,
+  Spinner,
+  VStack,
+} from "@chakra-ui/react";
+import React, { useEffect, useRef, useState } from "react";
+import { useAuth, useContractAndAccount } from "../hooks/useContractAndAccount";
 //@ts-ignore
 import MetaMaskLogo from "metamask-logo";
 import { useSetRecoilState } from "recoil";
 import { showConnectPageState } from "../state";
+import { useRouter } from "next/dist/client/router";
 
 const ConnectView = () => {
-  const { connect, error } = useContractAndAccount();
+  const { connect, error, status } = useContractAndAccount();
   const logoParentRef = useRef<HTMLDivElement>(null);
   const setShowConnectPage = useSetRecoilState(showConnectPageState);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { signin } = useAuth();
+  const router = useRouter();
+
+  const handleSignin = async () => {
+    try {
+      setIsLoading(true);
+      await signin(router);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const onConnect = async () => {
     await connect("injected");
@@ -24,13 +44,8 @@ const ConnectView = () => {
       pxNotRatio: true,
       width: 500,
       height: 400,
-      // pxNotRatio: false,
-      // width: 0.9,
-      // height: 0.9,
-
       // To make the face follow the mouse.
       followMouse: false,
-
       // head should slowly drift (overrides lookAt)
       slowDrift: false,
     });
@@ -51,7 +66,15 @@ const ConnectView = () => {
       <VStack>
         <Box ref={logoParentRef} />
         {error && <Heading>{error.name}</Heading>}
-        <Button onClick={() => onConnect()}>Refresh</Button>
+        {status === "connected" && (
+          <Button isLoading={isLoading} onClick={handleSignin}>
+            Login with Wallet
+          </Button>
+        )}
+        {status === "disconnected" && (
+          <Button onClick={onConnect}>Connect Wallet</Button>
+        )}
+        {status === "connecting" && <Spinner />}
       </VStack>
     </Center>
   );

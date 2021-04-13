@@ -14,6 +14,13 @@ import {
   useBreakpointValue,
   useDisclosure,
   Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuIcon,
+  MenuItem,
+  Portal,
+  MenuDivider,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import {
@@ -94,37 +101,24 @@ export default function WithSubnavigation() {
           direction={"row"}
           spacing={6}
         >
-          {!isLoggedIn ? (
-            <Link
-              as={NextLink}
-              passHref
-              display={{ base: "none", md: "inline-flex" }}
-              fontSize={"sm"}
-              fontWeight={600}
-              color={useColorModeValue("gray.600", "gray.200")}
-              href={"/login"}
-              _hover={{
-                textDecoration: "none",
-                color: useColorModeValue("gray.800", "white"),
-              }}
-            >
-              Login
-            </Link>
+          {isLoggedIn === true ? (
+            <Menu>
+              <MenuButton as={IconButton} icon={<HamburgerIcon />} />
+              <Portal>
+                <MenuList>
+                  <MenuItem>
+                    <NextLink href="/profile">Profile</NextLink>
+                  </MenuItem>
+                  <MenuItem>
+                    <NextLink href="/upload">Upload NFT</NextLink>
+                  </MenuItem>
+                  <MenuDivider />
+                  <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+                </MenuList>
+              </Portal>
+            </Menu>
           ) : (
-            <Link
-              as={Button}
-              display={{ base: "none", md: "inline-flex" }}
-              fontSize={"sm"}
-              fontWeight={600}
-              color={useColorModeValue("gray.600", "gray.200")}
-              _hover={{
-                textDecoration: "none",
-                color: useColorModeValue("gray.800", "white"),
-              }}
-              onClick={handleLogOut}
-            >
-              Logout
-            </Link>
+            <NextLink href="/login">Login</NextLink>
           )}
         </Stack>
       </Flex>

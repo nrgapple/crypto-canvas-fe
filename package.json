@@ -7,7 +7,8 @@
     "start": "next start",
     "type-check": "tsc",
     "upc": "npx prisma generate",
-    "udb": "npx prisma db push --preview-feature"
+    "udb": "npx prisma db push --preview-feature",
+    "ufm": "npm prisma format"
   },
   "dependencies": {
     "@bencevans/color-array-average": "^1.0.1",
