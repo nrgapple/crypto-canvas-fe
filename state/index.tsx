@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { Dart } from "../interfaces";
+import { Dart, User } from "../interfaces";
 import { localStorageEffect } from "./utils";
 
 export const showConnectPageState = atom({
@@ -22,4 +22,9 @@ export const authTokenState = atom({
   key: "auth-token",
   default: undefined as string | undefined,
   effects_UNSTABLE: [localStorageEffect("auth_token")],
+});
+
+export const userState = atom({
+  key: "user",
+  default: undefined as User | undefined,
 });

@@ -11,6 +11,7 @@ const User: NextApiHandler = async (req, res) => {
     case "GET":
       return getUser(res, id);
     case "POST":
+      return postUser(req, res, id);
     default:
       return res.status(404).send({});
   }
@@ -19,6 +20,7 @@ const User: NextApiHandler = async (req, res) => {
 const getUser = async (res: NextApiResponse, id: number) => {
   const user = await prisma.user.findFirst({
     where: { id: id },
+    include: { profile: true },
   });
   if (user) {
     return res.status(200).send({ user: user });
@@ -27,8 +29,22 @@ const getUser = async (res: NextApiResponse, id: number) => {
   }
 };
 
-const postUser = async (res: NextApiResponse, body: any, id: number) => {
-  
-}
+const postUser = async (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  id: number,
+) => {
+  const { username, about } = JSON.parse(req.body);
+  const profile = await prisma.user.update({
+    where: { id },
+    data: {
+      profile: {
+        update: { username, about },
+      },
+    },
+    include: { profile: true },
+  });
+  res.status(200).send(profile);
+};
 
 export default User;

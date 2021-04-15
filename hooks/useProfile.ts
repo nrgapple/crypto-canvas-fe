@@ -1,12 +1,13 @@
 import { useCallback, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { config } from "../app.config";
 import { User } from "../interfaces";
-import { authTokenState } from "../state";
+import { authTokenState, userState } from "../state";
 
 export const useProfile = () => {
   const token = useRecoilValue(authTokenState);
-  const [user, setUser] = useState<User | undefined>(undefined);
+  const setUser = useSetRecoilState(userState);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getProfile = useCallback(async () => {
     if (token) {
@@ -20,5 +21,30 @@ export const useProfile = () => {
     }
   }, [token]);
 
-  return { getProfile, user } as const;
+  const updateProfile = useCallback(
+    async (username: string, about: string) => {
+      try {
+        if (username && about) {
+          setIsLoading(true);
+          const resp = await fetch(`${config.baseUri}api/user`, {
+            method: "POST",
+            headers: { Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ username, about }),
+          });
+          if (resp) {
+            const newUser = (await resp.json()) as User;
+            setUser(newUser);
+          }
+        }
+        return true;
+      } catch (error) {
+        return false;
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [token],
+  );
+
+  return { getProfile, updateProfile, isLoading } as const;
 };

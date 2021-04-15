@@ -9,6 +9,9 @@ const Signup: NextApiHandler = async (req, res) => {
     data: {
       wallet: publicAddress,
       nonce: 0,
+      profile: {
+        create: {},
+      },
     },
   });
   if (user) {

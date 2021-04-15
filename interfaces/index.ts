@@ -44,4 +44,10 @@ export interface User {
   nonce: number;
   updatedAt: Date;
   wallet: string;
+  profile?: Profile;
+}
+
+export interface Profile {
+  about?: string;
+  username?: string;
 }
